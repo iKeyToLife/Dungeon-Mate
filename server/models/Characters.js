@@ -122,7 +122,7 @@ const CharacterSchema = new Schema(
         }],
     },
     {
-        timestamps: true,
+        timestamps: true, // createdAt, updatedAt
         toJSON: { virtuals: true },
         id: false
     }
