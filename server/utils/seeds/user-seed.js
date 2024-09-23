@@ -43,7 +43,9 @@ const users = [
 
 const seedUsers = async () => {
     try {
-        await User.insertMany(users)
+        for (let i = 0; i < users.length; i++) {
+            await User.create(users[i]);
+        }
     } catch (e) {
         console.error('Error seeding users:', e);
         mongoose.connection.close();
