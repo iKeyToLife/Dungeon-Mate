@@ -1,10 +1,5 @@
 const mongoose = require('mongoose');
-const User = require('../models/User');
-
-mongoose.connect('mongodb://localhost:27017/dnd_project', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const User = require('../../models/User');
 
 const users = [
     {
@@ -46,12 +41,13 @@ const users = [
 ];
 
 
-User.insertMany(users)
-    .then(() => {
-        console.log('-------------------- †USERS SEEDS† --------------------');
+const seedUsers = async () => {
+    try {
+        await User.insertMany(users)
+    } catch (e) {
+        console.error('Error seeding users:', e);
         mongoose.connection.close();
-    })
-    .catch((error) => {
-        console.error('Error seeding users:', error);
-        mongoose.connection.close();
-    });
+    }
+}
+
+module.exports = seedUsers;
