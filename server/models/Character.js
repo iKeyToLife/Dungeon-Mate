@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const AttributesSchema = require('./Attributes');
 
 // Schema to create Character model
 const CharacterSchema = new Schema(
@@ -40,48 +41,8 @@ const CharacterSchema = new Schema(
             min: 1
         },
         attributes: {
-            strength: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            dexterity: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            constitution: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            intelligence: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            wisdom: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            charisma: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
+            type: AttributesSchema,
+            required: true
         },
         spells: [{
             required: false,
