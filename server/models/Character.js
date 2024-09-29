@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const AttributesSchema = require('./Attributes');
+const SpellSchema = require('./Spells');
 
 // Schema to create Character model
 const CharacterSchema = new Schema(
@@ -44,24 +45,7 @@ const CharacterSchema = new Schema(
             type: AttributesSchema,
             required: true
         },
-        spells: [{
-            required: false,
-            name: {
-                type: String,
-                required: true
-            },
-            // If level 0, it is a normal ability that does not require a spell cell.
-            level: {
-                type: Number,
-                required: true,
-                min: 0,
-                max: 9
-            },
-            description: {
-                type: String,
-                required: true
-            }
-        }],
+        spells: [SpellSchema],
         inventory: [{
             name: {
                 type: String,
