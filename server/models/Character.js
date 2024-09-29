@@ -20,6 +20,11 @@ const CharacterSchema = new Schema(
             required: true,
             enum: ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Half-Orc', 'Halfling', 'Human', 'Tiefling'],
         },
+        gender: {
+            type: String,
+            required: true,
+            enum: ['Male', 'Female'],
+        },
         class: [{
             className: {
                 type: String,
