@@ -19,9 +19,9 @@ const userSchema = new Schema(
             required: true,
         },
         role: {
-            type: String,
+            type: [String],
             enum: ['master', 'player'],
-            default: 'player',
+            default: ['player'],
         },
         profile: {
             firstName: String,
