@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+const AttributesSchema = require('./Attributes');
+const SpellSchema = require('./Spells');
 
 // Schema to create Character model
 const CharacterSchema = new Schema(
@@ -17,6 +19,11 @@ const CharacterSchema = new Schema(
             type: String,
             required: true,
             enum: ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Half-Orc', 'Halfling', 'Human', 'Tiefling'],
+        },
+        gender: {
+            type: String,
+            required: true,
+            enum: ['Male', 'Female'],
         },
         class: [{
             className: {
@@ -40,67 +47,10 @@ const CharacterSchema = new Schema(
             min: 1
         },
         attributes: {
-            strength: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            dexterity: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            constitution: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            intelligence: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            wisdom: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
-            charisma: {
-                type: Number,
-                required: true,
-                default: 8,
-                min: 1,
-                max: 30
-            },
+            type: AttributesSchema,
+            required: true
         },
-        spells: [{
-            required: false,
-            name: {
-                type: String,
-                required: true
-            },
-            // If level 0, it is a normal ability that does not require a spell cell.
-            level: {
-                type: Number,
-                required: true,
-                min: 0,
-                max: 9
-            },
-            description: {
-                type: String,
-                required: true
-            }
-        }],
+        spells: [SpellSchema],
         inventory: [{
             name: {
                 type: String,
@@ -122,7 +72,7 @@ const CharacterSchema = new Schema(
         }],
     },
     {
-        timestamps: true,
+        timestamps: true, // createdAt, updatedAt
         toJSON: { virtuals: true },
         id: false
     }
