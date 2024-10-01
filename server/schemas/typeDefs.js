@@ -41,9 +41,36 @@ const typeDefs = gql`
     attributes: Attributes!
   }
 
+  type Class {
+  _id: ID
+  className: [String!]
+  level: String
+  }
+
+  type Attributes {
+  strength: String
+  dexterity: String
+  constitution: String
+  intelligence: String
+  wisdom: String
+  charisma: String
+  }
+
+  type Character {
+  _id: ID
+  name: String!
+  race: [String!]
+  gender: String
+  class: Class
+  charcterImg: String
+  level: String
+  attributes: Attributes
+
+  }
+
   type Query {
     users: [User]
-    characters(userId: ID!): [Character]
+    characters: [Character]
   }
 
 `;
