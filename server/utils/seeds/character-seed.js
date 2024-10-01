@@ -30,6 +30,8 @@ const seedCharacters = async () => {
         const races = await fetchData('https://www.dnd5eapi.co/api/races');
         // get classes
         const classes = await fetchData('https://www.dnd5eapi.co/api/classes');
+        // get spells
+        const spells = await fetchData('https://www.dnd5eapi.co/api/spells');
         // get all users
         const users = await User.find();
 
@@ -39,6 +41,7 @@ const seedCharacters = async () => {
             const randomClass = getRandomElement(classes.results).name;
             const randomGender = getRandomGender();
             const imageCharacter = getCharacterImagePath(randomRace, randomClass, randomGender);
+            const randomSpell = getRandomElement(spells.results);
 
             const character = new Character({
                 userId: user._id,
@@ -60,7 +63,7 @@ const seedCharacters = async () => {
                     wisdom: getRandomAttribute(),
                     charisma: getRandomAttribute(),
                 },
-                spells: [],
+                spells: [randomSpell],
                 inventory: [],
             });
 
