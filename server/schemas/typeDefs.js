@@ -62,7 +62,7 @@ const typeDefs = gql`
   race: [String!]
   gender: String
   class: Class
-  charcterImg: String
+  characterImg: String
   level: String
   attributes: Attributes
 
