@@ -20,16 +20,16 @@ const typeDefs = gql`
   type Class {
   _id: ID
   className: [String!]
-  level: Number
+  level: String
   }
 
   type Attributes {
-  strength: Number
-  dexterity: Number
-  constitution: Number
-  intelligence: Number
-  wisdom: Number
-  charisma: Number
+  strength: String
+  dexterity: String
+  constitution: String
+  intelligence: String
+  wisdom: String
+  charisma: String
   }
 
   type Character {
@@ -39,13 +39,14 @@ const typeDefs = gql`
   gender: String
   class: Class
   charcterImg: String
-  level: Number
+  level: String
   attributes: Attributes
 
   }
 
   type Query {
     users: [User]
+    characters: [Character]
   }
 
 `;

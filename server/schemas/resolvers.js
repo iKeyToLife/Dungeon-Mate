@@ -1,4 +1,4 @@
-const { User, Character, Dungeon } = require('../models');
+const { User, Character, Dungeon } = require("../models");
 
 const resolvers = {
   Query: {
@@ -6,17 +6,16 @@ const resolvers = {
       const users = await User.find();
 
       return users;
-    }
-  },
-  characters: async (parent, args, context) => {
-    const userId = context.user.id;
-    
-    // Fetch all characters that belong to the logged-in user
-    const characters = await Character.find({ userId });
+    },
+    characters: async (parent, args, context) => {
+      const userId = context.user.id;
 
-    return characters;
+      // Fetch all characters that belong to the logged-in user
+      const characters = await Character.find({ userId });
+      return characters;
+    },
+    // Mutation: {}
   },
-  // Mutation: {}
 };
 
 module.exports = resolvers;
