@@ -15,12 +15,12 @@ const typeDefs = gql`
   }
 
   type Attributes {
-    strength: Int
-    dexterity: Int
-    constitution: Int
-    intelligence: Int
-    wisdom: Int
-    charisma: Int
+    strength: Int!
+    dexterity: Int!
+    constitution: Int!
+    intelligence: Int!
+    wisdom: Int!
+    charisma: Int!
   }
 
   type User {
@@ -32,6 +32,7 @@ const typeDefs = gql`
   }
 
   type Character {
+    _id: ID
     name: String!
     race: String!
     gender: String!
@@ -39,33 +40,6 @@ const typeDefs = gql`
     class: [Class]!
     characterImg: String
     attributes: Attributes!
-  }
-
-  type Class {
-  _id: ID
-  className: [String!]
-  level: String
-  }
-
-  type Attributes {
-  strength: String
-  dexterity: String
-  constitution: String
-  intelligence: String
-  wisdom: String
-  charisma: String
-  }
-
-  type Character {
-  _id: ID
-  name: String!
-  race: [String!]
-  gender: String
-  class: Class
-  characterImg: String
-  level: String
-  attributes: Attributes
-
   }
 
   type Query {
