@@ -17,6 +17,33 @@ const typeDefs = gql`
   profile: Profile
   }
 
+  type Class {
+  _id: ID
+  className: [String!]
+  level: Number
+  }
+
+  type Attributes {
+  strength: Number
+  dexterity: Number
+  constitution: Number
+  intelligence: Number
+  wisdom: Number
+  charisma: Number
+  }
+
+  type Character {
+  _id: ID
+  name: String!
+  race: [String!]
+  gender: String
+  class: Class
+  charcterImg: String
+  level: Number
+  attributes: Attributes
+
+  }
+
   type Query {
     users: [User]
   }

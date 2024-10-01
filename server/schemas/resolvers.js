@@ -9,7 +9,7 @@ const resolvers = {
     }
   },
   characters: async (parent, args, context) => {
-    const userId = context.user.id; // assuming you have the user ID from authentication middleware
+    const userId = context.user.id;
     
     // Fetch all characters that belong to the logged-in user
     const characters = await Character.find({ userId });
