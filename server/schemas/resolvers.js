@@ -10,7 +10,6 @@ const resolvers = {
       return users;
     },
     characters: async (parent, args, context) => {
-      console.log(context.user)
       if (!context.user) {
         throw new AuthenticationError('You must be logged in');
       }
