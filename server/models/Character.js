@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const AttributesSchema = require('./Attributes');
-const SpellSchema = require('./Spells');
 
 // Schema to create Character model
 const CharacterSchema = new Schema(
@@ -50,7 +49,17 @@ const CharacterSchema = new Schema(
             type: AttributesSchema,
             required: true
         },
-        spells: [SpellSchema],
+        spells: [{
+            // for fetch data dnd
+            index: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String,
+                required: true
+            }
+        }],
         inventory: [{
             name: {
                 type: String,
