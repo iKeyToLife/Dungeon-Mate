@@ -14,6 +14,17 @@ const typeDefs = gql`
     level: Int!
   }
 
+  type Spell {
+    index: String!
+    name: String!
+  }
+
+  type Item {
+    name: String!
+    type: String!
+    description: String!
+  }
+
   type Attributes {
     strength: Int!
     dexterity: Int!
@@ -40,6 +51,9 @@ const typeDefs = gql`
     class: [Class]!
     characterImg: String
     attributes: Attributes!
+    alignment: String!
+    spells: [Spell]
+    inventory: [Item]
   }
 
   type Auth {
@@ -60,7 +74,7 @@ const typeDefs = gql`
       gender: String!,
       class: [ClassInput]!,
       level: Int!,
-      characterImg: String!,
+      characterImg: String,
       attributes: AttributesInput!,
       spells: [SpellsInput!],
       inventory: [InventoryInput!],
