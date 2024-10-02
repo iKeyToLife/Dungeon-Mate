@@ -66,6 +66,7 @@ const resolvers = {
             attributes,
             spells,
             inventory,
+            alignment,
           });
 
           await newCharacter.save(); // Save the character to the database

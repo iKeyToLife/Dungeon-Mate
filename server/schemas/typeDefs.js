@@ -63,7 +63,8 @@ const typeDefs = gql`
       characterImg: String!,
       attributes: AttributesInput!,
       spells: [SpellsInput!],
-      inventory: [InventoryInput!]
+      inventory: [InventoryInput!],
+      alignment: String!
     ): Character
   }
 
