@@ -38,6 +38,15 @@ const CharacterSchema = new Schema(
         characterImg: {
             type: String,
         },
+        alignment: {
+            type: String,
+            enum: [
+                'Lawful Good', 'Neutral Good', 'Chaotic Good',
+                'Lawful Neutral', 'True Neutral', 'Chaotic Neutral',
+                'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
+            ],
+            required: true
+        },        
         // level character
         level: {
             type: Number,
