@@ -81,6 +81,19 @@ const typeDefs = gql`
       alignment: String!
     ): Character
     deleteCharacter(characterId: ID!): Character
+    updateCharacter(
+      characterId: ID!,
+      name: String,
+      race: String,
+      gender: String,
+      class: [ClassInput],
+      level: Int,
+      characterImg: String,
+      attributes: AttributesInput,
+      spells: [SpellsInput],
+      inventory: [InventoryInput],
+      alignment: String
+      ): Character
   }
 
   input ClassInput {
@@ -89,12 +102,12 @@ const typeDefs = gql`
   }
 
   input AttributesInput {
-    strength: Int!
-    dexterity: Int!
-    constitution: Int!
-    intelligence: Int!
-    wisdom: Int!
-    charisma: Int!
+    strength: Int
+    dexterity: Int
+    constitution: Int
+    intelligence: Int
+    wisdom: Int
+    charisma: Int
   }
 
   input SpellsInput {
