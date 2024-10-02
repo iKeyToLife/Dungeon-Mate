@@ -54,6 +54,42 @@ const typeDefs = gql`
 
   type Mutation {
     login(email: String!, password: String!): Auth
+    addCharacter(
+      name: String!,
+      race: String!,
+      gender: String!,
+      class: [ClassInput]!,
+      level: Int!,
+      characterImg: String!,
+      attributes: AttributesInput!,
+      spells: [SpellsInput!],
+      inventory: [InventoryInput!]
+    ): Character
+  }
+
+  input ClassInput {
+    className: String!
+    level: Int!
+  }
+
+  input AttributesInput {
+    strength: Int!
+    dexterity: Int!
+    constitution: Int!
+    intelligence: Int!
+    wisdom: Int!
+    charisma: Int!
+  }
+
+  input SpellsInput {
+    index: String!
+    name: String!
+  }
+
+  input InventoryInput {
+    name: String!
+    type: String!
+    description: String!
   }
 
 `;
