@@ -79,6 +79,25 @@ const resolvers = {
 
       throw new AuthenticationError("Invalid credentials");
     },
+    deleteCharacter: async (_, { characterId }, context) => {
+      if (context.user) {
+        try {
+          const character = await Character.findOne({ _id: characterId, userId: context.user._id });
+    
+          if (!character) {
+            throw new Error("Character not found or you don't have permission to delete it.");
+          }
+    
+          await Character.deleteOne({ _id: characterId });
+    
+          return character;
+        } catch (error) {
+          throw new Error("Failed to delete character: " + error.message);
+        }
+      }
+    
+      throw new AuthenticationError("You must be logged in to delete a character.");
+    },
   },
 };
 

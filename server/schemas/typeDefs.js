@@ -66,6 +66,7 @@ const typeDefs = gql`
       inventory: [InventoryInput!],
       alignment: String!
     ): Character
+    deleteCharacter(characterId: ID!): Character
   }
 
   input ClassInput {
