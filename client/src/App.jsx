@@ -8,6 +8,7 @@ import Characters from './pages/Characters';
 import Campaigns from './pages/Campaigns';
 import Encounters from './pages/Encounters';
 import Bestiary from './pages/Bestiary';
+import SingleCreature from './pages/SingleCreature';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/encounters" element={<Encounters />} />
             <Route path="/bestiary" element={<Bestiary />} />
+            <Route path="/creature/:id" element={<SingleCreature />} />
           </Routes>
         </div>
         <Footer /> 
