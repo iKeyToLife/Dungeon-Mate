@@ -73,6 +73,12 @@ const resolvers = {
 
       return { token, user };
     },
+    createUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user }
+    },
     addCharacter: async (parent, args, context) => {
       if (context.user) {
         try {
