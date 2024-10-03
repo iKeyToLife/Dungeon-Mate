@@ -1,55 +1,57 @@
-import decode from 'jwt-decode';
-
 class AuthService {
-    getProfile() {
-        try {
-            return decode(this.getToken());
-        } catch (err) {
-            console.error('Failed to decode token:', err);
-            return null;
-        }
+    // Decode the token to get user information
+    async getProfile() {
+      try {
+        const { default: jwt_decode } = await import('jwt-decode'); 
+        return jwt_decode(this.getToken());
+      } catch (err) {
+        console.error('Failed to decode token:', err);
+        return null;
+      }
     }
-
-    loggedIn() {
-        // Checks if there is a saved token and it's still valid
-        const token = this.getToken();
-        return !!token && !this.isTokenExpired(token);
+  
+    // Check if the user is still logged in by checking if the token is valid and not expired
+    async loggedIn() {
+      const token = this.getToken();
+      return !!token && !await this.isTokenExpired(token);
     }
-
-    isTokenExpired(token) {
-        try {
-            const decoded = decode(token);
-            if (decoded.exp < Date.now() / 1000) {
-                return true;
-            } else return false;
-            // eslint-disable-next-line no-unused-vars
-        } catch (err) {
-            return false;
-        }
+  
+    // Check if the token is expired
+    async isTokenExpired(token) {
+      try {
+        const { default: jwt_decode } = await import('jwt-decode');
+        const decoded = jwt_decode(token);
+        return decoded.exp < Date.now() / 1000;
+      } catch (err) {
+        console.error('Error checking if token is expired:', err);
+        return false;
+      }
     }
-
+  
+    // Get the token from localStorage
     getToken() {
-        // Retrieves the user token from localStorage
-        return localStorage.getItem('id_token');
+      return localStorage.getItem('id_token'); 
     }
-
+  
+    // Save the token to localStorage and redirect to the homepage
     login(idToken) {
-        try {
-            localStorage.setItem('id_token', idToken);
-            window.location.assign('/');
-        } catch (err) {
-            console.error('Failed to save token:', err);
-        }
+      try {
+        localStorage.setItem('id_token', idToken); 
+        window.location.assign('/'); 
+      } catch (err) {
+        console.error('Failed to save token:', err);
+      }
     }
-
+  
+    // Remove the token and reload the page
     logout() {
-        try {
-            localStorage.removeItem('id_token');
-            window.location.assign('/');
-        } catch (err) {
-            console.error('Failed to remove token:', err);
-        }
+      try {
+        localStorage.removeItem('id_token');
+        window.location.assign('/');
+      } catch (err) {
+        console.error('Failed to remove token:', err);
+      }
     }
-}
-
-export default new AuthService();
+  }
+  
+  export default new AuthService();
