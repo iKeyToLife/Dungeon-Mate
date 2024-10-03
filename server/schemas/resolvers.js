@@ -18,6 +18,23 @@ const resolvers = {
       const userId = context.user._id;
       return Character.find({ userId });
     },
+    character: async (_, { characterId }, context) => {
+      if (context.user) {
+        try {
+          const character = await Character.findOne({ _id: characterId, userId: context.user._id });
+
+          if (!character) {
+            throw new Error("Character not found or you do not have access rights to this character");
+          }
+
+          return character;
+        } catch (error) {
+          throw new Error(`Failed to delete character: ${error.message}`);
+        }
+      } else {
+        throw AuthenticationError;
+      }
+    }
   },
   Mutation: {
     login: async (parent, { email, password }) => {
