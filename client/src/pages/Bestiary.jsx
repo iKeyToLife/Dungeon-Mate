@@ -10,11 +10,13 @@ const Bestiary = () => {
   const [size, setSize] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [monstersPerPage] = useState(15);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   // Fetch monsters on page load
   useEffect(() => {
     const fetchMonsters = async () => {
+      setLoading(true); 
       try {
         const response = await fetch('https://www.dnd5eapi.co/api/monsters');
         const data = await response.json();
@@ -28,9 +30,11 @@ const Bestiary = () => {
         );
 
         setMonsters(detailedMonsters);
-        setFilteredMonsters(detailedMonsters); // Initialize with all monsters
+        setFilteredMonsters(detailedMonsters); 
       } catch (error) {
         console.error('Error fetching monsters:', error);
+      } finally {
+        setLoading(false); 
       }
     };
     fetchMonsters();
@@ -39,6 +43,7 @@ const Bestiary = () => {
   // Handle filter form submission
   const handleFilter = (e) => {
     e.preventDefault();
+    setLoading(true); 
     let filtered = monsters;
 
     // Filter by name
@@ -64,7 +69,8 @@ const Bestiary = () => {
     }
 
     setFilteredMonsters(filtered);
-    setCurrentPage(1); // Reset to page 1 after filtering
+    setCurrentPage(1); 
+    setLoading(false);
   };
 
   // Calculate monsters to display based on current page
@@ -118,7 +124,7 @@ const Bestiary = () => {
   
           <div>
             <label>Size</label>
-            <select value={size} onChange={(e) => setSize(e.target.value)}>
+            <select className="bestiary-select" value={size} onChange={(e) => setSize(e.target.value)}>
               <option value="">Any</option>
               <option value="tiny">Tiny</option>
               <option value="small">Small</option>
@@ -134,7 +140,9 @@ const Bestiary = () => {
       </div>
   
       <div className="monster-list">
-        {currentMonsters.length > 0 ? (
+        {loading ? ( // Display "Loading..." while fetching data
+          <p>Loading Creatures...</p>
+        ) : currentMonsters.length > 0 ? (
           <table>
             <thead>
               <tr>

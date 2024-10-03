@@ -323,3 +323,17 @@ tbody tr:nth-child(odd) {
   display: block;
   margin-bottom: 5px;
 }
+
+.bestiary-select {
+  background-color: rgba(0, 0, 0, 0.8); 
+  color: #ffcc00; 
+  border: 1px solid #ffcc00; 
+  padding: 10px;
+  border-radius: 5px;
+  appearance: none; 
+}
+
+.bestiary-select option {
+  background-color: #000;
+  color: #ffcc00; 
+}
