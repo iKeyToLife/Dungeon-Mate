@@ -59,6 +59,7 @@ userSchema.statics.validatePassword = function (password) {
 userSchema.pre('save', async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
+    this.email = this.email.toLowerCase();
     next();
 })
 
@@ -72,6 +73,10 @@ userSchema.pre('findOneAndUpdate', async function (next) {
         }
         const saltRounds = 10;
         update.password = await bcrypt.hash(update.password, saltRounds);
+    }
+
+    if (update.email) {
+        update.email = update.email.toLowerCase();
     }
 
     next();
