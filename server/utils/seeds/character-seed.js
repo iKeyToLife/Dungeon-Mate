@@ -65,6 +65,7 @@ const seedCharacters = async () => {
                 },
                 spells: [randomSpell],
                 inventory: [],
+                alignment: "Lawful Good"
             });
 
             await character.save();
