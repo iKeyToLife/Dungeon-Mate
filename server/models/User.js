@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const Character = require('./Character');
+const Dungeon = require('./Dungeon');
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -71,6 +73,18 @@ userSchema.pre('findOneAndUpdate', async function (next) {
         const saltRounds = 10;
         update.password = await bcrypt.hash(update.password, saltRounds);
     }
+
+    next();
+});
+
+userSchema.pre('findOneAndDelete', async function (next) {
+
+    const query = this.getQuery();
+    // Retrieve userId from query
+    const userId = query._id;
+
+    await Character.deleteMany({ userId: userId }); // Delete all characters by userId
+    await Dungeon.deleteMany({ userId: userId }); // Delete all Dungeon by userId
 
     next();
 });
