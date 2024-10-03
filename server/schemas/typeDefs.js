@@ -84,6 +84,7 @@ const typeDefs = gql`
       role: String
       profile: ProfileInput
     ): User
+    deleteUser: User
     addCharacter(
       name: String!,
       race: String!,
