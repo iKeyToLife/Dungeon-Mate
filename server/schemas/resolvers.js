@@ -9,6 +9,24 @@ const resolvers = {
 
       return users;
     },
+    user: async (_, args, context) => {
+      if (context.user) {
+        try {
+          const userId = context.user._id;
+          const user = await User.findOne({ _id: userId });
+
+          if (!user) {
+            throw new Error("User not found");
+          }
+
+          return user;
+        } catch (error) {
+          throw new Error(`Failed to delete character: ${error.message}`);
+        }
+      } else {
+        throw AuthenticationError;
+      }
+    },
     characters: async (parent, args, context) => {
       if (!context.user) {
         throw AuthenticationError;

@@ -63,6 +63,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
+    user: User
     characters: [Character]
     character(characterId: ID!): Character
   }
