@@ -77,6 +77,13 @@ const typeDefs = gql`
       role: String
       profile: ProfileInput
     ): Auth
+    updateUser(
+      username: String
+      email: String
+      password: String
+      role: String
+      profile: ProfileInput
+    ): User
     addCharacter(
       name: String!,
       race: String!,

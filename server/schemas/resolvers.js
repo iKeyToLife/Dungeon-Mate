@@ -79,6 +79,12 @@ const resolvers = {
 
       return { token, user }
     },
+    updateUser: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+      }
+      throw AuthenticationError;
+    },
     addCharacter: async (parent, args, context) => {
       if (context.user) {
         try {

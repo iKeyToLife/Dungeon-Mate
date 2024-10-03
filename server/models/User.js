@@ -7,6 +7,7 @@ const userSchema = new Schema(
         username: {
             type: String,
             required: true,
+            unique: true
         },
         email: {
             type: String,
@@ -46,11 +47,34 @@ const userSchema = new Schema(
     }
 );
 
+// check validate password
+userSchema.statics.validatePassword = function (password) {
+    const passwordRegex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}/;
+    return passwordRegex.test(password);
+};
+
 
 userSchema.pre('save', async function (next) {
-    this.password = await bcrypt.hash(this.password, 10);
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(this.password, saltRounds);
     next();
 })
+
+userSchema.pre('findOneAndUpdate', async function (next) {
+    const update = this.getUpdate();
+    if (update.password) {
+        const User = model('user');
+
+        if (!User.validatePassword(update.password)) {
+            return next(new Error('Password validation failed. Password must contain at least 8 characters, including letters, numbers, and special characters.'));
+        }
+        const saltRounds = 10;
+        update.password = await bcrypt.hash(update.password, saltRounds);
+    }
+
+    next();
+});
+
 userSchema.virtual('fullName').get(function () {
     return `${this.profile.firstName} ${this.profile.lastName}`;
 });
