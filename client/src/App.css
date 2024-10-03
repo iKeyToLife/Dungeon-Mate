@@ -1,42 +1,264 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+#login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.login-form-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  border: 4px solid #8B4513;
+  border-radius: 15px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.8);
+  max-width: 400px;
+  width: 100%;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h2 {
+  color: #FFD700;
+  font-weight: bold;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+label {
+  color: #FFD700;
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+input {
+  background-color: #333;
+  color: #FFD700;
+  border: 2px solid #8B4513;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
-.card {
-  padding: 2em;
+input:focus {
+  border-color: #FFD700;
 }
 
-.read-the-docs {
-  color: #888;
+.login-form-container p {
+  color: #FFD700;
+}
+
+.login-form-container a {
+  color: #FFD700;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.login-form-container a:hover {
+  color: #fff;
+}
+
+.text-danger {
+  color: #FF4500;
+  font-weight: bold;
+}
+
+.bestiary-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #FFD700; 
+}
+
+.filter-form {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filter-form div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.filter-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #FFD700; 
+}
+
+.filter-form input,
+.filter-form select {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #FFD700;
+  border: 1px solid #FFD700;
+  padding: 5px;
+  border-radius: 5px;
+  width: 150px;
+}
+
+button {
+  background-color: #800000;
+  color: #FFD700;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #a50000;
+}
+
+.monster-list {
+  width: 100%;
+  max-width: 1200px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #FFD700; 
+}
+
+th, td {
+  border: 1px solid #FFD700;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #800000; 
+  font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  background-color: #800000;
+  color: #FFD700;
+  border: 1px solid #FFD700;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pagination-controls button:hover {
+  background-color: #a50000;
+}
+
+.pagination-controls button.active {
+  background-color: #FFD700;
+  color: #800000;
+  font-weight: bold;
+}
+
+.monster-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(0, 0, 0, 0.7); 
+}
+
+.monster-list th, .monster-list td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #FFD700;
+  color: #FFD700; 
+}
+
+.monster-list thead {
+  background-color: rgba(128, 0, 0, 0.9); 
+}
+
+.monster-list tbody tr:hover {
+  background-color: rgba(128, 0, 0, 0.8); 
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-row:hover {
+  background-color: rgba(128, 0, 0, 0.8); 
+}
+
+.monster-details {
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 5px;
+  color: #FFD700;
+}
+
+.creature-details {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.9); 
+  border-radius: 8px;
+  border: 2px solid #FFD700; 
+  color: #FFD700;
+}
+
+.creature-details h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #FFD700;
+}
+
+.creature-details strong {
+  color: #FFD700;
+}
+
+.creature-details p, 
+.creature-details ul {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.creature-details ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.creature-details li {
+  margin-bottom: 10px;
+}
+
+.back-button {
+  background-color: #800000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.back-button:hover {
+  background-color: #a50000;
 }

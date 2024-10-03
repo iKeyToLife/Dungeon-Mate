@@ -7,11 +7,12 @@
   "scripts": {
     "start:dev": "concurrently \"cd server && npm run server\" \"cd client && npm run dev\"",
     "start": "npm run build && cd server && node server.js",
-    "server": "cd server nodemon server.js --ignore client",
+    "server": "cd server && npm run server",
     "build": "cd client && npm run build",
     "install": "cd server && npm i && cd ../client && npm i",
-    "client": "cd client && npm start",
-    "seed": "cd server && npm run seed"
+    "client": "cd client && npm run dev",
+    "seed": "cd server && npm run seed",
+    "develop": "concurrently \"npm run server\" \"cd client && npm run dev\""
   },
   "keywords": [],
   "author": "",
