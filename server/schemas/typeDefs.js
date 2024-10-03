@@ -63,12 +63,28 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
+    user: User
     characters: [Character]
     character(characterId: ID!): Character
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
+    createUser(
+      username: String!
+      email: String!
+      password: String!
+      role: String
+      profile: ProfileInput
+    ): Auth
+    updateUser(
+      username: String
+      email: String
+      password: String
+      role: String
+      profile: ProfileInput
+    ): User
+    deleteUser: User
     addCharacter(
       name: String!,
       race: String!,
@@ -95,6 +111,13 @@ const typeDefs = gql`
       inventory: [InventoryInput],
       alignment: String
       ): Character
+  }
+
+  input ProfileInput {
+    firstName: String
+    lastName: String
+    avatar: String
+    bio: String
   }
 
   input ClassInput {

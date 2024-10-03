@@ -9,6 +9,24 @@ const resolvers = {
 
       return users;
     },
+    user: async (_, args, context) => {
+      if (context.user) {
+        try {
+          const userId = context.user._id;
+          const user = await User.findOne({ _id: userId }); // find by userId
+
+          if (!user) {
+            throw new Error("User not found"); // if not found, throw error
+          }
+
+          return user;
+        } catch (error) {
+          throw new Error(`Failed to delete character: ${error.message}`);
+        }
+      } else {
+        throw AuthenticationError;
+      }
+    },
     characters: async (parent, args, context) => {
       if (!context.user) {
         throw AuthenticationError;
@@ -54,6 +72,41 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+    createUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user }
+    },
+    updateUser: async (parent, args, context) => {
+      if (context.user) {
+        try {
+
+          return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+
+        } catch (error) {
+          throw new Error(`Failed to update user: ${error.message}`);
+        }
+      }
+      throw AuthenticationError;
+    },
+    deleteUser: async (parent, args, context) => {
+      if (context.user) {
+        try {
+          const user = await User.findByIdAndDelete(context.user._id);
+
+          if (!user) {
+            throw new Error(`User not found`);
+          }
+
+          return user
+        } catch (error) {
+          throw new Error(`Failed to delete user: ${error.message}`);
+        }
+      } else {
+        throw AuthenticationError
+      }
     },
     addCharacter: async (parent, args, context) => {
       if (context.user) {
@@ -103,7 +156,7 @@ const resolvers = {
           await character.save();
           return character;
         } catch (error) {
-          throw new Error(`Failed to update the character: \n${error.message}`);
+          throw new Error(`Failed to update the character: ${error.message}`);
         }
       } else {
         throw AuthenticationError;
