@@ -32,7 +32,8 @@ const CharacterSchema = new Schema(
             },
             level: {
                 type: Number,
-                required: true
+                required: true,
+                min: 1
             }
         }],
         characterImg: {
@@ -46,7 +47,7 @@ const CharacterSchema = new Schema(
                 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'
             ],
             required: true
-        },        
+        },
         // level character
         level: {
             type: Number,
@@ -98,10 +99,21 @@ const CharacterSchema = new Schema(
 
 
 CharacterSchema.pre('save', function (next) {
-    const totalClassLevel = this.class.reduce((sum, cls) => sum + cls.level, 0);
-    if (totalClassLevel !== this.level) {
-        return next(new Error('Total class levels must match character level'));
+    // find classNames
+    const classNames = this.class.map(cls => cls.className);
+    // check class is already
+    const hasDuplicates = classNames.length !== new Set(classNames).size;
+
+    // if there is already one in the array
+    if (hasDuplicates) {
+        return next(new Error('Class names must be unique in the class array.'));
     }
+    // totalClassLevel must be the same or less
+    const totalClassLevel = this.class.reduce((sum, cls) => sum + cls.level, 0);
+    if (totalClassLevel > this.level) {
+        return next(new Error("The overall class level must match or be less than the character's level."));
+    }
+
     next();
 });
 
