@@ -119,6 +119,12 @@ const typeDefs = gql`
       inventory: [InventoryInput],
       alignment: String
       ): Character
+    addEncounter(
+      title: String!,
+      details: String!
+    ): Encounter
+    deleteEncounter(encounterId: ID!): Encounter
+    updateEncounter(encounterId: ID!, title: String, details: String): Encounter
   }
 
   input ProfileInput {
