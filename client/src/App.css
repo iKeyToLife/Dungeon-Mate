@@ -262,3 +262,78 @@ tbody tr:nth-child(odd) {
 .back-button:hover {
   background-color: #a50000;
 }
+
+.search-input {
+  width: 275px !important; 
+  padding: 10px; 
+  border-radius: 5px; 
+  border: 1px solid #ccc;
+}
+
+.search-container {
+  background-color: rgba(0, 0, 0, 0.7); 
+  border: 2px solid gold; 
+  padding: 20px;
+  border-radius: 10px; 
+  width: 1000px; 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  flex-wrap: wrap;
+  margin-bottom: 20px; 
+}
+
+.search-container div {
+  margin-bottom: 10px;
+  flex: 1; 
+  min-width: 200px; 
+  margin-right: 10px; 
+}
+
+.filter-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  width: 100%;
+  gap: 20px; 
+}
+
+.filter-form input, .filter-form select {
+  width: 100%; 
+  padding: 10px;
+  border: 1px solid #ffcc00;
+  background-color: rgba(0, 0, 0, 0.6); 
+  border-radius: 5px;
+  color: #8d8d8d;
+}
+
+.filter-form button {
+  padding: 10px 20px;
+  background-color: #C5160D; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex: 0 0 auto; 
+}
+
+.search-container label {
+  font-weight: bold;
+  color: #ffcc00;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.bestiary-select {
+  background-color: rgba(0, 0, 0, 0.8); 
+  color: #ffcc00; 
+  border: 1px solid #ffcc00; 
+  padding: 10px;
+  border-radius: 5px;
+  appearance: none; 
+}
+
+.bestiary-select option {
+  background-color: #000;
+  color: #ffcc00; 
+}
