@@ -142,7 +142,7 @@ const Bestiary = () => {
             </select>
           </div>
   
-          <button type="submit">Filter Monsters</button>
+          <button type="submit">Filter Creatures</button>
         </form>
       </div>
   

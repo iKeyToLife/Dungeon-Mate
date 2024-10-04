@@ -1,12 +1,12 @@
-import gsap from 'gsap';
+import { gsap } from 'gsap';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Container, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
+import { useLocation, NavLink as RouterNavLink } from 'react-router-dom'; 
+import { Container, Nav, Navbar, NavbarBrand, NavItem } from 'reactstrap';
 import DMLogoTrans from '../../DungeonMateLogo2.png';
 import AuthService from '../utils/auth';
 
 const Header = () => {
-  const location = useLocation(); // Get the current route
+  const location = useLocation(); 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLogout, setIsLogout] = useState(false);
 
@@ -31,20 +31,29 @@ const Header = () => {
     }
   }, [isLogout]);
 
-
-
   useEffect(() => {
-    const activeLink = document.querySelector(`.nav-link[href='${location.pathname}']`);
+    const allLinks = document.querySelectorAll('.nav-link');
+    const activeLink = document.querySelector('.nav-link.active');
+
+    // Kill any existing animations on all links to prevent lingering effects
+    gsap.killTweensOf(allLinks);
+
+    // Reset the style for all links
+    allLinks.forEach(link => {
+      gsap.to(link, { textShadow: 'none', color: '', duration: 0.5 });
+    });
+
+    // Apply glowing effect to the active link
     if (activeLink) {
       gsap.to(activeLink, {
         textShadow: '0px 0px 15px gold',
         color: 'gold',
-        duration: 0.75,
+        duration: 0.9,
         repeat: -1,
         yoyo: true
       });
     }
-  }, [location]);
+  }, [location]); 
 
   return (
     <Navbar color="dark" dark expand="md" style={{ padding: '0 1rem' }}>
@@ -54,22 +63,22 @@ const Header = () => {
         </NavbarBrand>
         <Nav className="ml-3 d-flex align-items-end" navbar style={{ fontSize: '1.25rem' }}>
           <NavItem>
-            <NavLink href="/characters" className={location.pathname === '/characters' ? 'active' : ''}>Characters</NavLink>
+            <RouterNavLink to="/characters" className="nav-link" activeClassName="active">Characters</RouterNavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/campaigns" className={location.pathname === '/campaigns' ? 'active' : ''}>Campaigns</NavLink>
+            <RouterNavLink to="/campaigns" className="nav-link" activeClassName="active">Campaigns</RouterNavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/encounters" className={location.pathname === '/encounters' ? 'active' : ''}>Encounters</NavLink>
+            <RouterNavLink to="/encounters" className="nav-link" activeClassName="active">Encounters</RouterNavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/bestiary" className={location.pathname === '/bestiary' ? 'active' : ''}>Bestiary</NavLink>
+            <RouterNavLink to="/bestiary" className="nav-link" activeClassName="active">Bestiary</RouterNavLink>
           </NavItem>
           <NavItem>
             {isLoggedIn ? (
-              <NavLink href="/" onClick={() => setIsLogout(true)}>Logout</NavLink>
+              <RouterNavLink to="/" className="nav-link" onClick={() => setIsLogout(true)}>Logout</RouterNavLink>
             ) : (
-              <NavLink href="/login" className={location.pathname === '/login' ? 'active' : ''}>Login/Signup</NavLink>
+              <RouterNavLink to="/login" className="nav-link" activeClassName="active">Login/Signup</RouterNavLink>
             )}
           </NavItem>
         </Nav>
