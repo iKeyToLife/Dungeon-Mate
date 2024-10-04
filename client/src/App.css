@@ -337,3 +337,169 @@ tbody tr:nth-child(odd) {
   background-color: #000;
   color: #ffcc00; 
 }
+
+.encounter-container {
+  background: rgba(0, 0, 0, 0.5); 
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  max-width: 900px; 
+  margin: 20px auto;
+}
+
+.encounter-title {
+  text-align: center;
+}
+
+.encounter-title-input {
+  width: 300px; 
+  height: 30px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 1px solid gold;
+}
+
+.encounter-input {
+  width: 100%; 
+  height: 100px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.6); 
+  color: white;
+  border: 1px solid gold;
+}
+
+.save-encounter-button {
+  width: 200px !important; 
+  padding: 10px;
+  background-color: #8b0000; 
+  color: gold;
+  border: 2px solid gold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-encounter-button:hover {
+  background-color: #a30000; 
+}
+
+.created-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.encounter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+  margin-top: 20px;
+}
+
+.encounter-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid gold;
+  padding: 12px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between; 
+  min-height: 200px; 
+  word-wrap: break-word; 
+  overflow-wrap: break-word;
+}
+
+.encounter-button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.encounter-button-edit, .encounter-button-delete {
+  width: 100px !important; 
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  background-color: #b22222; 
+  border: 2px outset gold;
+  color: white;
+  cursor: pointer;
+}
+
+.encounter-grid p {
+  color: white;
+}
+
+.encounter-button-edit:hover, .encounter-button-delete:hover {
+  background-color: darkred; 
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.encounter-error-message {
+  color: red;
+  background-color: black;
+  border: 1px outset red;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  margin: 5px 0;
+  padding: 4px;
+}
+
+.parchment-modal {
+  background-image: url('../scroll.png'); 
+  background-size: 130% 130%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 15px; 
+  padding: 65px;
+  width: 600px;
+  height: 350px;
+  font-weight: bold;
+  max-width: 100%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+  font-family: 'MedievalSharp', serif;
+  font-size: 20px;
+}
+
+.parchment-modal .modal-content {
+  background-color: transparent; 
+  border: none; 
+}
+
+.parchment-modal .modal-footer {
+  display: flex;
+  justify-content: center; 
+  gap: 20px; 
+}
+
+.parchment-modal h5, .parchment-modal p {
+  font-family: 'MedievalSharp', serif; 
+  color: #4b3e32; 
+  font-weight: bold;
+  font-size: 34px;
+}
+
+.parchment-modal .btn {
+  background-color: rgba(255, 0, 0, 0) !important; 
+  border: none !important;
+  color: rgb(0, 0, 0) !important;
+  width: 140px !important;
+}
+
+.parchment-modal .btn:hover {
+  background-color: gold !important; 
+  border: 4px outset darkred !important;
+}
+
+.parchment-modal .modal-header, 
+.parchment-modal .modal-footer, 
+.parchment-modal .modal-body {
+  border: none; 
+  outline: none; 
+}
