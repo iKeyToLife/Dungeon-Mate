@@ -55,7 +55,6 @@ const Login = () => {
           return;
         }
 
-        console.log(formState)
         const { data } = await signUp({
           variables: { username: formState.username, email: formState.email, password: formState.password },
         });
