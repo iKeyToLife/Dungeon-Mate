@@ -1,6 +1,19 @@
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Container } from 'reactstrap';
+import { useEffect, useState } from 'react';
+import { Container, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
+import AuthService from '../utils/auth';
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const loggedIn = await AuthService.loggedIn();
+      setIsLoggedIn(loggedIn);
+    };
+
+    checkAuthStatus();
+  }, []);
+
   return (
     <Navbar color="dark" dark expand="md">
       <Container>
