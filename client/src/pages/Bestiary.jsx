@@ -140,7 +140,7 @@ const Bestiary = () => {
       </div>
   
       <div className="monster-list">
-        {loading ? ( // Display "Loading..." while fetching data
+        {loading ? ( 
           <p>Loading Creatures...</p>
         ) : currentMonsters.length > 0 ? (
           <table>
