@@ -1,21 +1,47 @@
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Container } from 'reactstrap';
-import DMLogoTrans from '../../DungeonMateLogo2.png';
-import { useEffect } from 'react';
 import gsap from 'gsap';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Container, Nav, Navbar, NavbarBrand, NavItem, NavLink } from 'reactstrap';
+import DMLogoTrans from '../../DungeonMateLogo2.png';
+import AuthService from '../utils/auth';
 
 const Header = () => {
   const location = useLocation(); // Get the current route
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLogout, setIsLogout] = useState(false);
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const loggedIn = await AuthService.loggedIn();
+      setIsLoggedIn(loggedIn);
+    };
+
+    checkAuthStatus();
+  }, []);
+
+  useEffect(() => {
+    const logout = async () => {
+      await AuthService.logout();
+      setIsLoggedIn(false);
+    };
+
+    if (isLogout) {
+      logout();
+      setIsLogout(false);
+    }
+  }, [isLogout]);
+
+
 
   useEffect(() => {
     const activeLink = document.querySelector(`.nav-link[href='${location.pathname}']`);
     if (activeLink) {
       gsap.to(activeLink, {
-        textShadow: '0px 0px 15px gold', 
-        color: 'gold', 
+        textShadow: '0px 0px 15px gold',
+        color: 'gold',
         duration: 0.75,
-        repeat: -1, 
-        yoyo: true 
+        repeat: -1,
+        yoyo: true
       });
     }
   }, [location]);
@@ -40,7 +66,11 @@ const Header = () => {
             <NavLink href="/bestiary" className={location.pathname === '/bestiary' ? 'active' : ''}>Bestiary</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="/login" className={location.pathname === '/login' ? 'active' : ''}>Login/Signup</NavLink>
+            {isLoggedIn ? (
+              <NavLink href="/" onClick={() => setIsLogout(true)}>Logout</NavLink>
+            ) : (
+              <NavLink href="/login" className={location.pathname === '/login' ? 'active' : ''}>Login/Signup</NavLink>
+            )}
           </NavItem>
         </Nav>
       </Container>
