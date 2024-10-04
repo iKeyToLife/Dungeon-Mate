@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'reactstrap';
 
 const Bestiary = () => {
   const [monsters, setMonsters] = useState([]);
@@ -11,6 +12,7 @@ const Bestiary = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [monstersPerPage] = useState(15);
   const [loading, setLoading] = useState(true);
+  const [tooltipOpen, setTooltipOpen] = useState(null);
   const navigate = useNavigate();
 
   // Fetch monsters on page load
@@ -88,6 +90,11 @@ const Bestiary = () => {
     setCurrentPage(pageNumber);
   };
 
+  // Toggle the tooltip
+  const toggleTooltip = (monsterIndex) => {
+    setTooltipOpen((prevTooltipOpen) => (prevTooltipOpen === monsterIndex ? null : monsterIndex));
+  };
+
   // Pagination logic
   const totalPages = Math.ceil(filteredMonsters.length / monstersPerPage);
 
@@ -154,17 +161,29 @@ const Bestiary = () => {
               </tr>
             </thead>
             <tbody>
-              {currentMonsters.map((monster) => (
+              {currentMonsters.map((monster, index) => (
                 <tr
                   key={monster.index}
                   onClick={() => handleRowClick(monster)}
                   className="clickable-row"
+                  id={`tooltip-${index}`} 
+                  onMouseEnter={() => toggleTooltip(index)}  
+                  onMouseLeave={() => toggleTooltip(index)} 
                 >
                   <td>{monster.name}</td>
                   <td>{monster.challenge_rating}</td>
                   <td>{monster.type}</td>
                   <td>{monster.size}</td>
                   <td>{monster.alignment}</td>
+                  {/* Tooltip for each row */}
+                  <Tooltip
+                    placement="left"
+                    isOpen={tooltipOpen === index}
+                    target={`tooltip-${index}`}
+                    toggle={() => toggleTooltip(index)}
+                  >
+                    Click to learn more
+                  </Tooltip>
                 </tr>
               ))}
             </tbody>
