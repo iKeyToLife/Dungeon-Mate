@@ -1,15 +1,29 @@
-import { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { useMutation, useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { ADD_ENCOUNTER, DELETE_ENCOUNTER, UPDATE_ENCOUNTER } from '../utils/mutations';
+import { GET_ENCOUNTERS } from '../utils/queries';
 
 const Encounters = () => {
   const [encounters, setEncounters] = useState([]);
+  const encountersResult = useQuery(GET_ENCOUNTERS);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
-  const [titleError, setTitleError] = useState(''); 
+  const [titleError, setTitleError] = useState('');
   const [detailsError, setDetailsError] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [encounterToDelete, setEncounterToDelete] = useState(null);
+  const [createEncounter] = useMutation(ADD_ENCOUNTER);
+  const [updateEncounter] = useMutation(UPDATE_ENCOUNTER);
+  const [deleteEncounter] = useMutation(DELETE_ENCOUNTER);
+
+  // Apply the received data from the server
+  useEffect(() => {
+    if (encountersResult.data && encountersResult.data.encounters) {
+      setEncounters(encountersResult.data.encounters);
+    }
+  }, [encountersResult]);
 
   // Handle opening the delete modal
   const openDeleteModal = (index) => {
@@ -24,13 +38,24 @@ const Encounters = () => {
   };
 
   // Confirm and delete the encounter
-  const handleDelete = () => {
-    const updatedEncounters = encounters.filter((_, i) => i !== encounterToDelete);
-    setEncounters(updatedEncounters);
-    closeDeleteModal(); // Close the modal after deletion
+  const handleDelete = async () => {
+    try {
+      // try delete
+      await deleteEncounter({
+        variables: { encounterId: encounters[encounterToDelete].id },
+      });
+
+      // if deleted, update encounters
+      setEncounters(encounters.filter((_, index) => index !== encounterToDelete));
+      closeDeleteModal(); // Close the modal after deletion
+
+    } catch (error) {
+      // Error
+      alert(error.message);
+    }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     let valid = true;
     setTitleError('');
     setDetailsError('');
@@ -45,10 +70,17 @@ const Encounters = () => {
     }
 
     if (valid) {
-      const newEncounter = { title, details };
-      setEncounters([...encounters, newEncounter]);
-      setTitle('');
-      setDetails('');
+      try {
+        const { data } = await createEncounter({
+          variables: { title, details },
+        });
+        const newEncounter = data.addEncounter;
+        setEncounters([...encounters, newEncounter]);
+        setTitle('');
+        setDetails('');
+      } catch (error) {
+        alert(error.message)
+      }
     }
   };
 
@@ -58,13 +90,21 @@ const Encounters = () => {
     setDetails(encounters[index].details);
   };
 
-  const handleUpdate = () => {
-    const updatedEncounters = [...encounters];
-    updatedEncounters[editingIndex] = { title, details };
-    setEncounters(updatedEncounters);
-    setTitle('');
-    setDetails('');
-    setEditingIndex(null);
+  const handleUpdate = async () => {
+    try {
+      const { data } = await updateEncounter({
+        variables: { encounterId: encounters[editingIndex].id, title, details },
+      });
+
+      const updatedEncounters = [...encounters];
+      updatedEncounters[editingIndex] = data.updateEncounter;
+      setEncounters(updatedEncounters);
+      setTitle('');
+      setDetails('');
+      setEditingIndex(null);
+    } catch (error) {
+      alert(error.message)
+    }
   };
 
   return (

@@ -6,3 +6,23 @@ export const GET_USERS = gql`
       username
   }
 }`;
+
+export const GET_ENCOUNTERS = gql`
+  query getAllEncounters {
+  encounters {
+    id
+    title
+    details
+  }
+}
+`
+
+export const GET_ENCOUNTER = gql`
+  query getEncounterById($encounterId: ID!) {
+  encounter(encounterId: $encounterId) {
+    id
+    title
+    details
+  }
+}
+`
