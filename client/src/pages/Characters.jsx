@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import CharacterModal from '../components/createCharacterModal';
+import CharacterModal from '../components/CharacterModal';
 import { Button } from 'reactstrap'; 
 
 const Characters = () => {
