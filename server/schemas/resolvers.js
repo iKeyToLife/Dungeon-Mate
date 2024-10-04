@@ -1,4 +1,4 @@
-const { User, Character, Dungeon } = require("../models");
+const { User, Character, Dungeon, Encounter } = require("../models");
 const { AuthenticationError, signToken } = require("../utils/auth");
 const bcrypt = require("bcrypt");
 
@@ -47,12 +47,46 @@ const resolvers = {
 
           return character;
         } catch (error) {
-          throw new Error(`Failed to delete character: ${error.message}`);
+          throw new Error(`Failed to get character: ${error.message}`);
         }
       } else {
         throw AuthenticationError;
       }
-    }
+    },
+    encounters: async (_, args, context) => {
+      if (context.user) {
+        try {
+          const userId = context.user._id;
+          const encounters = await Encounter.find({ userId });
+
+          if (!encounters) {
+            throw new Error("Encounters not found");
+          }
+
+          return encounters; // return all encounters
+        } catch (err) {
+          throw new Error(`Failed getEncounters: ${err.message}`)
+        }
+      } else {
+        throw AuthenticationError;
+      }
+    },
+    encounter: async (_, { encounterId }, context) => {
+      if (context.user) {
+        try {
+          const userId = context.user._id;
+          const encounter = await Encounter.findOne({ _id: encounterId, userId: userId });
+          if (!encounter) {
+            throw new Error("Encounter not found or you do not have access rights to this encounter");
+          }
+          return encounter; // return encounter
+        } catch (err) {
+          throw new Error(`Failed getEncounter: ${err.message}`)
+        }
+      } else {
+        throw AuthenticationError;
+      }
+    },
   },
   Mutation: {
     login: async (parent, { email, password }) => {

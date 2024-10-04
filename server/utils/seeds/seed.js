@@ -1,6 +1,7 @@
 const connection = require('../../config/connection');
 const userSeeds = require('./user-seed');
 const characterSeeds = require('./character-seed');
+const seedEncounters = require('./encounter-seed');
 
 connection.on('error', (err) => err);
 
@@ -17,6 +18,9 @@ connection.once('open', async () => {
 
         await characterSeeds();
         console.log('-------------------- CHARACTERS SEEDS --------------------');
+
+        await seedEncounters();
+        console.log('-------------------- ENCOUNTERS SEEDS --------------------')
 
         connection.close();
         console.log('-------------------- CONNECTION CLOSED --------------------');

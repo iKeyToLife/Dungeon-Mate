@@ -61,11 +61,19 @@ const typeDefs = gql`
     user: User
   }
 
+  type Encounter {
+    id: ID!
+    title: String!
+    details: String!
+  }
+
   type Query {
     users: [User]
     user: User
     characters: [Character]
     character(characterId: ID!): Character
+    encounters: [Encounter]
+    encounter(encounterId: ID!): Encounter
   }
 
   type Mutation {
