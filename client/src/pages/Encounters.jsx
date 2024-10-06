@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import { useMutation } from '@apollo/client';
-import { ADD_ENCOUNTER } from '../utils/mutations';
+import { useState } from 'react';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
+import { ADD_ENCOUNTER } from '../utils/mutations';
 
 const Encounters = () => {
   const [encounters, setEncounters] = useState([]);
@@ -20,7 +20,7 @@ const Encounters = () => {
   const [addEncounter] = useMutation(ADD_ENCOUNTER, {
     onError: (error) => {
       // Catching authentication errors here
-      if (error.message.includes('AuthenticationError')) {
+      if (error.message.includes('not authenticate')) {
         setModalMessage('Please login to save encounters.');
         setLoginModalOpen(true);  // Show modal with error message
       }
