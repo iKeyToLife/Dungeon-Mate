@@ -64,7 +64,10 @@ const Encounters = () => {
 
     } catch (error) {
       // Error
-      alert(error.message); // TODO IN TO MODAL
+      if (error.message.includes('not authenticate')) {
+        setModalMessage('Please login to delete encounters.');
+        setLoginModalOpen(true);  // Show modal with error message
+      }
     }
   };
 
@@ -127,7 +130,10 @@ const Encounters = () => {
       setDetails('');
       setEditingIndex(null);
     } catch (error) {
-      alert(error.message); // TODO IN TO MODAL
+      if (error.message.includes('not authenticate')) {
+        setModalMessage('Please login to update encounters.');
+        setLoginModalOpen(true);  // Show modal with error message
+      }
     }
   };
 
