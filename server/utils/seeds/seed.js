@@ -2,6 +2,9 @@ const connection = require('../../config/connection');
 const userSeeds = require('./user-seed');
 const characterSeeds = require('./character-seed');
 const seedEncounters = require('./encounter-seed');
+const seedQuests = require('./quest-seed');
+const seedDungeons = require('./dungeon-seed');
+const seedCampaigns = require('./campaign-seed');
 
 connection.on('error', (err) => err);
 
@@ -20,7 +23,16 @@ connection.once('open', async () => {
         console.log('-------------------- CHARACTERS SEEDS --------------------');
 
         await seedEncounters();
-        console.log('-------------------- ENCOUNTERS SEEDS --------------------')
+        console.log('-------------------- ENCOUNTERS SEEDS --------------------');
+
+        await seedQuests();
+        console.log('-------------------- QUESTS SEEDS --------------------');
+
+        await seedDungeons();
+        console.log('-------------------- DUNGEONS SEEDS --------------------');
+
+        await seedCampaigns();
+        console.log('-------------------- CAMPAIGNS SEEDS --------------------');
 
         connection.close();
         console.log('-------------------- CONNECTION CLOSED --------------------');
