@@ -64,7 +64,7 @@ const Encounters = () => {
 
     } catch (error) {
       // Error
-      alert(error.message);
+      alert(error.message); // TODO IN TO MODAL
     }
   };
 
@@ -127,7 +127,7 @@ const Encounters = () => {
       setDetails('');
       setEditingIndex(null);
     } catch (error) {
-      alert(error.message)
+      alert(error.message); // TODO IN TO MODAL
     }
   };
 
