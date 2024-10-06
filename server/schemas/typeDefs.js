@@ -50,6 +50,7 @@ const typeDefs = gql`
     level: Int!
     class: [Class]!
     characterImg: String
+    bio: String
     attributes: Attributes!
     alignment: String!
     spells: [Spell]

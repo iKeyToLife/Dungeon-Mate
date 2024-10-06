@@ -18,20 +18,14 @@ const DungeonSchema = new Schema(
             type: String,
         },
         encounters: [{
-            name: {
-                type: String,
-                required: true,
-            },
-            description: {
-                type: String,
-                required: true
-            }
+            type: Schema.Types.ObjectId,
+            ref: 'encounter',
+            required: true
         }],
     },
     {
         timestamps: true, // createdAt, updatedAt
         toJSON: { virtuals: true },
-        id: false
     }
 )
 
