@@ -209,7 +209,7 @@ const resolvers = {
           throw new Error("Failed to create encounter: " + error.message);
         }
       }
-      throw AuthenticationError("Please login to save encounters.");
+      throw AuthenticationError;
     },
     updateEncounter: async (_, args, context) => {
       if (context.user) {
