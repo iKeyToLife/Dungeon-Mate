@@ -58,27 +58,27 @@ const Header = () => {
   return (
     <Navbar color="dark" dark expand="md" style={{ padding: '0 1rem' }}>
       <Container className="d-flex justify-content-between align-items-end">
-        <NavbarBrand href="/" className="d-flex align-items-center">
+        <NavbarBrand tag={RouterNavLink} to="/"className="d-flex align-items-center">
           <img src={DMLogoTrans} alt="Dungeon Mate Logo" style={{ height: '90px', marginRight: '20px', width: '125px' }} />
         </NavbarBrand>
         <Nav className="ml-3 d-flex align-items-end" navbar style={{ fontSize: '1.25rem' }}>
           <NavItem>
-            <RouterNavLink to="/characters" className="nav-link" activeClassName="active">Characters</RouterNavLink>
+            <RouterNavLink to="/characters" className="nav-link" activeclassname="active">Characters</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/campaigns" className="nav-link" activeClassName="active">Campaigns</RouterNavLink>
+            <RouterNavLink to="/campaigns" className="nav-link" activeclassname="active">Campaigns</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/encounters" className="nav-link" activeClassName="active">Encounters</RouterNavLink>
+            <RouterNavLink to="/encounters" className="nav-link" activeclassname="active">Encounters</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/bestiary" className="nav-link" activeClassName="active">Bestiary</RouterNavLink>
+            <RouterNavLink to="/bestiary" className="nav-link" activeclassname="active">Bestiary</RouterNavLink>
           </NavItem>
           <NavItem>
             {isLoggedIn ? (
               <RouterNavLink to="/" className="nav-link" onClick={() => setIsLogout(true)}>Logout</RouterNavLink>
             ) : (
-              <RouterNavLink to="/login" className="nav-link" activeClassName="active">Login/Signup</RouterNavLink>
+              <RouterNavLink to="/login" className="nav-link" activeclassname="active">Login/Signup</RouterNavLink>
             )}
           </NavItem>
         </Nav>

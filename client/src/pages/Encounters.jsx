@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import AuthService from '../utils/auth';
 import { ADD_ENCOUNTER, DELETE_ENCOUNTER, UPDATE_ENCOUNTER } from '../utils/mutations';
 import { GET_ENCOUNTERS } from '../utils/queries';
 
@@ -14,16 +15,28 @@ const Encounters = () => {
   const [detailsError, setDetailsError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [encounterToDelete, setEncounterToDelete] = useState(null);
-  const [createEncounter] = useMutation(ADD_ENCOUNTER);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const [updateEncounter] = useMutation(UPDATE_ENCOUNTER);
   const [deleteEncounter] = useMutation(DELETE_ENCOUNTER);
 
-  // Apply the received data from the server
   useEffect(() => {
     if (encountersResult.data && encountersResult.data.encounters) {
       setEncounters(encountersResult.data.encounters);
     }
   }, [encountersResult]);
+
+
+  // Define the addEncounter mutation
+  const [addEncounter] = useMutation(ADD_ENCOUNTER, {
+    onError: (error) => {
+      // Catching authentication errors here
+      if (error.message.includes('not authenticate')) {
+        setModalMessage('Please login to save encounters.');
+        setLoginModalOpen(true);  // Show modal with error message
+      }
+    }
+  });
 
   // Handle opening the delete modal
   const openDeleteModal = (index) => {
@@ -55,6 +68,7 @@ const Encounters = () => {
     }
   };
 
+  // Check if user is logged in before saving
   const handleSave = async () => {
     let valid = true;
     setTitleError('');
@@ -70,16 +84,26 @@ const Encounters = () => {
     }
 
     if (valid) {
+      // Check if user is logged in
+      const loggedIn = AuthService.loggedIn();
+      if (!loggedIn) {
+        setModalMessage('Please login to save encounters.');
+        setLoginModalOpen(true); // Open the login modal with custom message
+        return;
+      }
+
+      // Proceed with saving encounter if logged in and mutation is successful
       try {
-        const { data } = await createEncounter({
-          variables: { title, details },
-        });
-        const newEncounter = data.addEncounter;
-        setEncounters([...encounters, newEncounter]);
-        setTitle('');
-        setDetails('');
-      } catch (error) {
-        alert(error.message)
+        const { data } = await addEncounter({ variables: { title, details } }); // Call the mutation
+
+        if (data) {
+          const newEncounter = { title: data.addEncounter.title, details: data.addEncounter.details }; // Use returned data from mutation
+          setEncounters([...encounters, newEncounter]); // Only update the state when mutation succeeds
+          setTitle('');
+          setDetails('');
+        }
+      } catch (err) {
+        console.error("Encounter saving failed", err);
       }
     }
   };
@@ -159,13 +183,24 @@ const Encounters = () => {
 
       {/* Reactstrap Modal for delete confirmation */}
       <Modal isOpen={isModalOpen} toggle={closeDeleteModal} className="parchment-modal">
-        <ModalHeader toggle={false}>Confirm Delete</ModalHeader>
+        <ModalHeader>Confirm Delete</ModalHeader>
         <ModalBody>
           Are you sure you want to delete this encounter?
         </ModalBody>
         <ModalFooter>
           <Button color="danger" onClick={handleDelete}>Yes, Delete</Button>
           <Button color="secondary" onClick={closeDeleteModal}>No, Cancel</Button>
+        </ModalFooter>
+      </Modal>
+
+      {/* Modal for login requirement */}
+      <Modal isOpen={loginModalOpen} toggle={() => setLoginModalOpen(false)} className="parchment-modal">
+        <ModalHeader>Error</ModalHeader>
+        <ModalBody>
+          {modalMessage}
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={() => setLoginModalOpen(false)}>OK</Button>
         </ModalFooter>
       </Modal>
     </div>
