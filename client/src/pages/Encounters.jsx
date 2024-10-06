@@ -97,7 +97,7 @@ const Encounters = () => {
         const { data } = await addEncounter({ variables: { title, details } }); // Call the mutation
 
         if (data) {
-          const newEncounter = { title: data.addEncounter.title, details: data.addEncounter.details }; // Use returned data from mutation
+          const newEncounter = { id: data.addEncounter.id, title: data.addEncounter.title, details: data.addEncounter.details }; // Use returned data from mutation
           setEncounters([...encounters, newEncounter]); // Only update the state when mutation succeeds
           setTitle('');
           setDetails('');
