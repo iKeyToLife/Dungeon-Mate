@@ -5,6 +5,7 @@ const encounterTypeDefs = require('./typeDefs/encounter');
 const classTypeDefs = require('./typeDefs/class');
 const itemTypeDefs = require('./typeDefs/item');
 const spellTypeDefs = require('./typeDefs/spell');
+const questTypeDefs = require('./typeDefs/quest');
 
 const typeDefs = gql`
   ${userTypeDefs}
@@ -13,6 +14,7 @@ const typeDefs = gql`
   ${classTypeDefs}
   ${itemTypeDefs}
   ${spellTypeDefs}
+  ${questTypeDefs}
 
   type Query {
     users: [User]
@@ -21,6 +23,8 @@ const typeDefs = gql`
     character(characterId: ID!): Character
     encounters: [Encounter]
     encounter(encounterId: ID!): Encounter
+    quests: [Quest]
+    quest(questId: ID!): Quest
   }
 
   type Mutation {
@@ -71,7 +75,20 @@ const typeDefs = gql`
       details: String!
     ): Encounter
     deleteEncounter(encounterId: ID!): Encounter
-    updateEncounter(encounterId: ID!, title: String, details: String): Encounter
+    updateEncounter(encounterId: ID!, 
+    title: String!, 
+    details: String!): Encounter
+    addQuest(
+      title: String!,
+      details: String!
+      rewards: String!
+    ): Quest
+    deleteQuest(questId: ID!): Quest
+    updateQuest(
+      questId: ID!, 
+      title: String!, 
+      details: String!, 
+      rewards: String!): Quest
   }
 `;
 
