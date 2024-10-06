@@ -1,6 +1,8 @@
 const User = require('./User');
 const Character = require('./Character');
-const Dungeon = require('./Dungeon');
 const Encounter = require('./Encounter');
+const Quest = require('./Quest');
+const Campaign = require('./Campaign');
+const Dungeon = require('./Dungeon');
 
-module.exports = { User, Character, Dungeon, Encounter }
+module.exports = { User, Character, Campaign, Encounter, Quest, Dungeon }

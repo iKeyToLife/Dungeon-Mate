@@ -1,27 +1,26 @@
 const { Schema, model } = require('mongoose');
 
-// Schema to create Dungeon model
-const DungeonSchema = new Schema(
+// Schema to create Quest model
+const QuestSchema = new Schema(
     {
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'user',
             required: true
         },
-        // name Dungeon
+        // name Quest
         title: {
             type: String,
             required: true
         },
-        // story
-        description: {
+        details: {
             type: String,
-        },
-        encounters: [{
-            type: Schema.Types.ObjectId,
-            ref: 'encounter',
             required: true
-        }],
+        },
+        rewards: {
+            type: String,
+            required: true
+        }
     },
     {
         timestamps: true, // createdAt, updatedAt
@@ -29,7 +28,7 @@ const DungeonSchema = new Schema(
     }
 )
 
-// Initialize our Dungeon model
-const Dungeon = model('dungeon', DungeonSchema);
+// Initialize our Quest model
+const Quest = model('quest', QuestSchema);
 
-module.exports = Dungeon;
+module.exports = Quest;

@@ -1,71 +1,18 @@
 const { gql } = require('graphql-tag');
+const userTypeDefs = require('./typeDefs/user');
+const characterTypeDefs = require('./typeDefs/character');
+const encounterTypeDefs = require('./typeDefs/encounter');
+const classTypeDefs = require('./typeDefs/class');
+const itemTypeDefs = require('./typeDefs/item');
+const spellTypeDefs = require('./typeDefs/spell');
 
 const typeDefs = gql`
-
-  type Profile {
-    firstName: String
-    lastName: String
-    avatar: String
-    bio: String
-  }
-
-  type Class {
-    className: String!
-    level: Int!
-  }
-
-  type Spell {
-    index: String!
-    name: String!
-  }
-
-  type Item {
-    name: String!
-    type: String!
-    description: String!
-  }
-
-  type Attributes {
-    strength: Int!
-    dexterity: Int!
-    constitution: Int!
-    intelligence: Int!
-    wisdom: Int!
-    charisma: Int!
-  }
-
-  type User {
-    _id: ID
-    username: String!
-    email: String!
-    role: [String]
-    profile: Profile
-  }
-
-  type Character {
-    _id: ID
-    name: String!
-    race: String!
-    gender: String!
-    level: Int!
-    class: [Class]!
-    characterImg: String
-    attributes: Attributes!
-    alignment: String!
-    spells: [Spell]
-    inventory: [Item]
-  }
-
-  type Auth {
-    token: ID!
-    user: User
-  }
-
-  type Encounter {
-    id: ID!
-    title: String!
-    details: String!
-  }
+  ${userTypeDefs}
+  ${characterTypeDefs}
+  ${encounterTypeDefs}
+  ${classTypeDefs}
+  ${itemTypeDefs}
+  ${spellTypeDefs}
 
   type Query {
     users: [User]
@@ -126,39 +73,6 @@ const typeDefs = gql`
     deleteEncounter(encounterId: ID!): Encounter
     updateEncounter(encounterId: ID!, title: String, details: String): Encounter
   }
-
-  input ProfileInput {
-    firstName: String
-    lastName: String
-    avatar: String
-    bio: String
-  }
-
-  input ClassInput {
-    className: String!
-    level: Int!
-  }
-
-  input AttributesInput {
-    strength: Int
-    dexterity: Int
-    constitution: Int
-    intelligence: Int
-    wisdom: Int
-    charisma: Int
-  }
-
-  input SpellsInput {
-    index: String!
-    name: String!
-  }
-
-  input InventoryInput {
-    name: String!
-    type: String!
-    description: String!
-  }
-
 `;
 
 module.exports = typeDefs;

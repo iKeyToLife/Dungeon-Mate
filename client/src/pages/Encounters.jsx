@@ -1,11 +1,13 @@
-import { useMutation } from '@apollo/client';
-import { useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
-import { ADD_ENCOUNTER } from '../utils/mutations';
+import { ADD_ENCOUNTER, DELETE_ENCOUNTER, UPDATE_ENCOUNTER } from '../utils/mutations';
+import { GET_ENCOUNTERS } from '../utils/queries';
 
 const Encounters = () => {
   const [encounters, setEncounters] = useState([]);
+  const encountersResult = useQuery(GET_ENCOUNTERS);
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
@@ -15,6 +17,15 @@ const Encounters = () => {
   const [encounterToDelete, setEncounterToDelete] = useState(null);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
+  const [updateEncounter] = useMutation(UPDATE_ENCOUNTER);
+  const [deleteEncounter] = useMutation(DELETE_ENCOUNTER);
+
+  useEffect(() => {
+    if (encountersResult.data && encountersResult.data.encounters) {
+      setEncounters(encountersResult.data.encounters);
+    }
+  }, [encountersResult]);
+
 
   // Define the addEncounter mutation
   const [addEncounter] = useMutation(ADD_ENCOUNTER, {
@@ -40,10 +51,21 @@ const Encounters = () => {
   };
 
   // Confirm and delete the encounter
-  const handleDelete = () => {
-    const updatedEncounters = encounters.filter((_, i) => i !== encounterToDelete);
-    setEncounters(updatedEncounters);
-    closeDeleteModal(); // Close the modal after deletion
+  const handleDelete = async () => {
+    try {
+      // try delete
+      await deleteEncounter({
+        variables: { encounterId: encounters[encounterToDelete].id },
+      });
+
+      // if deleted, update encounters
+      setEncounters(encounters.filter((_, index) => index !== encounterToDelete));
+      closeDeleteModal(); // Close the modal after deletion
+
+    } catch (error) {
+      // Error
+      alert(error.message); // TODO IN TO MODAL
+    }
   };
 
   // Check if user is logged in before saving
@@ -92,13 +114,21 @@ const Encounters = () => {
     setDetails(encounters[index].details);
   };
 
-  const handleUpdate = () => {
-    const updatedEncounters = [...encounters];
-    updatedEncounters[editingIndex] = { title, details };
-    setEncounters(updatedEncounters);
-    setTitle('');
-    setDetails('');
-    setEditingIndex(null);
+  const handleUpdate = async () => {
+    try {
+      const { data } = await updateEncounter({
+        variables: { encounterId: encounters[editingIndex].id, title, details },
+      });
+
+      const updatedEncounters = [...encounters];
+      updatedEncounters[editingIndex] = data.updateEncounter;
+      setEncounters(updatedEncounters);
+      setTitle('');
+      setDetails('');
+      setEditingIndex(null);
+    } catch (error) {
+      alert(error.message); // TODO IN TO MODAL
+    }
   };
 
   return (

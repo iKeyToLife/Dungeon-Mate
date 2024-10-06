@@ -48,6 +48,9 @@ const CharacterSchema = new Schema(
             ],
             required: true
         },
+        bio: {
+            type: String,
+        },
         // level character
         level: {
             type: Number,
