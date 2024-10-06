@@ -63,6 +63,13 @@ userSchema.pre('save', async function (next) {
     next();
 })
 
+userSchema.pre('findOne', function (next) {
+    if (this.getQuery().email) {
+        this.getQuery().email = this.getQuery().email.toLowerCase();
+    }
+    next();
+});
+
 userSchema.pre('findOneAndUpdate', async function (next) {
     const update = this.getUpdate();
     if (update.password) {
