@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
-import { ADD_DUNGEON, DELETE_DUNGEON, UPDATE_DUNGEON } from '../utils/mutations';
+import { ADD_DUNGEON, DELETE_DUNGEON, UPDATE_DUNGEON, ADD_ENCOUNTER_TO_DUNGEON, ADD_QUEST_TO_DUNGEON } from '../utils/mutations';
 import { GET_DUNGEONS, GET_ENCOUNTERS, GET_QUESTS } from '../utils/queries';
 import { RedirectToLoginError } from '../components/Error';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +27,27 @@ const Dungeons = () => {
     const dungeonsResult = useQuery(GET_DUNGEONS);
     const encountersResult = useQuery(GET_ENCOUNTERS);
     const questsResult = useQuery(GET_QUESTS);
+    const [addEncounterToDungeon] = useMutation(ADD_ENCOUNTER_TO_DUNGEON);
+    const [addQuestToDungeon] = useMutation(ADD_QUEST_TO_DUNGEON);
     const navigate = useNavigate();
+
+     // Load dungeon data from localStorage when the component mounts
+     useEffect(() => {
+        const savedDungeon = localStorage.getItem('unsavedDungeon');
+        if (savedDungeon) {
+            const { title, description, encounters, quests } = JSON.parse(savedDungeon);
+            setTitle(title || '');
+            setDescription(description || '');
+            setDungeonEncounters(encounters || []);
+            setDungeonQuests(quests || []);
+        }
+    }, []);
+
+    // Save the dungeon state to localStorage on updates to title, description, encounters, or quests
+    useEffect(() => {
+        const unsavedDungeon = { title, description, encounters: dungeonEncounters, quests: dungeonQuests };
+        localStorage.setItem('unsavedDungeon', JSON.stringify(unsavedDungeon));
+    }, [title, description, dungeonEncounters, dungeonQuests]);
 
     useEffect(() => {
         if (dungeonsResult.data && dungeonsResult.data.dungeons) {
@@ -79,7 +99,7 @@ const Dungeons = () => {
     const handleDelete = async () => {
         try {
             await deleteDungeon({
-                variables: { dungeonId: dungeons[dungeonToDelete].id },
+                variables: { dungeonId: dungeons[dungeonToDelete]._id },
                 refetchQueries: [{ query: GET_DUNGEONS }]
             });
             closeDeleteModal();
@@ -94,7 +114,7 @@ const Dungeons = () => {
         let valid = true;
         setTitleError('');
         setDescriptionError('');
-
+    
         if (title.trim() === '') {
             setTitleError('Please enter a title for your dungeon');
             valid = false;
@@ -103,30 +123,40 @@ const Dungeons = () => {
             setDescriptionError('Please enter some details for your dungeon');
             valid = false;
         }
-
+    
         if (valid) {
             const loggedIn = AuthService.loggedIn();
             if (!loggedIn) {
                 return <RedirectToLoginError message="Please login to save dungeons." />;
             }
-
+    
             try {
                 const { data } = await addDungeon({
-                    variables: {
-                        title,
-                        description,
-                        encounterIds: dungeonEncounters.map(encounter => encounter.id),
-                        questIds: dungeonQuests.map(quest => quest.id)
-                    },
+                    variables: { title, description },
                     refetchQueries: [{ query: GET_DUNGEONS }]
                 });
-
-                if (data) {
-                    setTitle('');
-                    setDescription('');
-                    setDungeonEncounters([]);
-                    setDungeonQuests([]);
+    
+                const newDungeonId = data.addDungeon._id;
+    
+                for (const encounter of dungeonEncounters) {
+                    await addEncounterToDungeon({
+                        variables: { dungeonId: newDungeonId, encounterId: encounter.id },
+                    });
                 }
+    
+                for (const quest of dungeonQuests) {
+                    await addQuestToDungeon({
+                        variables: { dungeonId: newDungeonId, questId: quest.id },
+                    });
+                }
+    
+                // Clear the form and state after successful save
+                setTitle('');
+                setDescription('');
+                setDungeonEncounters([]);
+                setDungeonQuests([]);
+                localStorage.removeItem('unsavedDungeon');
+    
             } catch (err) {
                 console.error("Dungeon saving failed", err);
             }
@@ -134,26 +164,50 @@ const Dungeons = () => {
     };
 
     const handleEdit = (index) => {
-        setEditingIndex(index);
-        setTitle(dungeons[index].title);
-        setDescription(dungeons[index].description);
-    };
+        console.log("Editing index:", index);  
+        const selectedDungeon = dungeons[index];  
+      
+        setEditingIndex(index);  
+      
+        // Populate the title and description fields
+        setTitle(selectedDungeon.title);
+        setDescription(selectedDungeon.description);
+      
+        // Populate the encounters and quests fields
+        setDungeonEncounters(selectedDungeon.encounters);  
+        setDungeonQuests(selectedDungeon.quests);  
+      };
 
-    const handleUpdate = async () => {
-        try {
-            const { data } = await updateDungeon({
-                variables: { dungeonId: dungeons[editingIndex].id, title, description },
-            });
-
-            const updatedDungeons = [...dungeons];
-            updatedDungeons[editingIndex] = data.updateDungeon;
-            setDungeons(updatedDungeons);
-            setTitle('');
-            setDescription('');
-            setEditingIndex(null);
-        } catch (error) {
-            if (error.message.includes('not authenticate')) {
-                return <RedirectToLoginError message="Please login to update dungeons." />;
+      const handleUpdate = async () => {
+        if (editingIndex !== null) {
+            try {
+                const { data } = await updateDungeon({
+                    variables: { dungeonId: dungeons[editingIndex]._id, title, description },
+                });
+    
+                const updatedDungeonId = data.updateDungeon._id;
+    
+                for (const encounter of dungeonEncounters) {
+                    await addEncounterToDungeon({
+                        variables: { dungeonId: updatedDungeonId, encounterId: encounter.id },
+                    });
+                }
+    
+                for (const quest of dungeonQuests) {
+                    await addQuestToDungeon({
+                        variables: { dungeonId: updatedDungeonId, questId: quest.id },
+                    });
+                }
+    
+                // Clear form and state after update
+                setTitle('');
+                setDescription('');
+                setDungeonEncounters([]);
+                setDungeonQuests([]);
+                setEditingIndex(null);
+    
+            } catch (error) {
+                console.error('Error updating dungeon:', error);
             }
         }
     };
@@ -163,10 +217,13 @@ const Dungeons = () => {
             <div className="sidebar-container">
                 <div className="sidebar scrollable">
                     <p>Drag & Drop your creations!</p>
-                    
+
                     {/* Encounters Dropdown */}
                     <div onClick={() => setEncounterDropdownOpen(!encounterDropdownOpen)} className="sidebar-dropdown">
-                        <h3>Created Encounters</h3>
+                        <h3>
+                            Created Encounters
+                            <span className={`dropdown-icon ${encounterDropdownOpen ? 'open' : ''}`}>&#9660;</span>
+                        </h3>
                     </div>
                     {encounterDropdownOpen && (
                         <ul className="encounter-list">
@@ -180,10 +237,13 @@ const Dungeons = () => {
                             ))}
                         </ul>
                     )}
-    
+
                     {/* Quests Dropdown */}
                     <div onClick={() => setQuestDropdownOpen(!questDropdownOpen)} className="sidebar-dropdown">
-                        <h3>Created Quests</h3>
+                        <h3>
+                            Created Quests
+                            <span className={`dropdown-icon ${questDropdownOpen ? 'open' : ''}`}>&#9660;</span>
+                        </h3>
                     </div>
                     {questDropdownOpen && (
                         <ul className="quest-list">
@@ -199,7 +259,7 @@ const Dungeons = () => {
                     )}
                 </div>
             </div>
-    
+
             <div className="dungeon-container">
                 <h1 className="dungeon-title">Create a Dungeon</h1>
                 <div className="input-section">
@@ -211,7 +271,7 @@ const Dungeons = () => {
                         className="dungeon-title-input"
                     />
                     {titleError && <p className="dungeon-error-message">{titleError}</p>}
-    
+
                     <textarea
                         placeholder="Dungeon Description..."
                         value={description}
@@ -219,7 +279,7 @@ const Dungeons = () => {
                         className="dungeon-input"
                     />
                     {descriptionError && <p className="dungeon-error-message">{descriptionError}</p>}
-    
+
                     <div className="dungeon-subcontainer">
                         <div className="encounter-dropzone" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'encounter')}>
                             <h3>Encounters:</h3>
@@ -229,12 +289,15 @@ const Dungeons = () => {
                                 dungeonEncounters.map((encounter, idx) => (
                                     <div key={idx} className="encounter-item">
                                         <p>{encounter.title}</p>
-                                        <button onClick={() => setDungeonEncounters(dungeonEncounters.filter((_, i) => i !== idx))}>Remove</button>
+                                        <div className="dungeon-button-row">
+                                            <button onClick={() => navigate(`/encounter/${encounter.id}`)} className="dungeon-button-view">View</button>
+                                            <button onClick={() => setDungeonEncounters(dungeonEncounters.filter((_, i) => i !== idx))} className="dungeon-button-remove">Remove</button>
+                                        </div>
                                     </div>
                                 ))
                             )}
                         </div>
-    
+
                         <div className="quest-dropzone" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'quest')}>
                             <h3>Quests:</h3>
                             {dungeonQuests.length === 0 ? (
@@ -243,13 +306,16 @@ const Dungeons = () => {
                                 dungeonQuests.map((quest, idx) => (
                                     <div key={idx} className="quest-item">
                                         <p>{quest.title}</p>
-                                        <button onClick={() => setDungeonQuests(dungeonQuests.filter((_, i) => i !== idx))}>Remove</button>
+                                        <div className="dungeon-button-row">
+                                            <button onClick={() => navigate(`/quest/${quest.id}`)} className="dungeon-button-view">View</button>
+                                            <button onClick={() => setDungeonQuests(dungeonQuests.filter((_, i) => i !== idx))} className="dungeon-button-remove">Remove</button>
+                                        </div>
                                     </div>
                                 ))
                             )}
                         </div>
                     </div>
-    
+
                     {editingIndex === null ? (
                         <button className="save-dungeon-button" onClick={handleSave}>
                             Save Dungeon
@@ -260,7 +326,7 @@ const Dungeons = () => {
                         </button>
                     )}
                 </div>
-    
+
                 <div className="existing-dungeons-container">
                     <h2 className="created-title">Existing Dungeons:</h2>
                     <div className="dungeon-grid">
@@ -271,7 +337,7 @@ const Dungeons = () => {
                                 <div className="dungeon-card" key={index}>
                                     <h3>{dungeon.title}</h3>
                                     <p>{dungeon.description}</p>
-    
+
                                     <div className="dungeon-encounters">
                                         <h4>Encounters:</h4>
                                         {dungeon.encounters.length === 0 ? (
@@ -284,7 +350,7 @@ const Dungeons = () => {
                                             ))
                                         )}
                                     </div>
-    
+
                                     <div className="dungeon-quests">
                                         <h4>Quests:</h4>
                                         {dungeon.quests.length === 0 ? (
@@ -297,9 +363,9 @@ const Dungeons = () => {
                                             ))
                                         )}
                                     </div>
-    
+
                                     <div className="dungeon-button-row">
-                                        <button className="dungeon-button-view" onClick={() => navigate(`/dungeon/${dungeon.id}`)}>View</button>
+                                        <button className="dungeon-button-view" onClick={() => navigate(`/dungeon/${dungeon._id}`)}>View</button>
                                         <button className="dungeon-button-edit" onClick={() => handleEdit(index)}>Edit</button>
                                         <button className="dungeon-button-delete" onClick={() => openDeleteModal(index)}>Delete</button>
                                     </div>
@@ -308,7 +374,7 @@ const Dungeons = () => {
                         )}
                     </div>
                 </div>
-    
+
                 {/* Modal for delete confirmation */}
                 <Modal isOpen={isModalOpen} toggle={closeDeleteModal} className="parchment-modal">
                     <ModalHeader>Confirm Delete</ModalHeader>
@@ -320,7 +386,7 @@ const Dungeons = () => {
                         <Button color="secondary" onClick={closeDeleteModal}>No, Cancel</Button>
                     </ModalFooter>
                 </Modal>
-    
+
                 {/* Modal for login requirement */}
                 <Modal isOpen={loginModalOpen} toggle={() => setLoginModalOpen(false)} className="parchment-modal">
                     <ModalHeader>Error</ModalHeader>

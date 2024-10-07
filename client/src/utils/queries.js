@@ -52,7 +52,7 @@ export const GET_QUEST = gql`
 export const GET_DUNGEONS = gql`
   query getAllDungeons {
     dungeons {
-      id
+      _id
       title
       description
       encounters {
@@ -70,7 +70,7 @@ export const GET_DUNGEONS = gql`
 export const GET_DUNGEON = gql`
   query getDungeonById($dungeonId: ID!) {
     dungeon(dungeonId: $dungeonId) {
-      id
+      _id
       title
       description
       encounters {

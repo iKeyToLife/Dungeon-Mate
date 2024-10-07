@@ -888,6 +888,18 @@ tbody tr:nth-child(odd) {
   text-align: center;
 }
 
+/* Dropdown Icon Styling */
+.dropdown-icon {
+  font-size: 1.2rem;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg); 
+}
+
 /* Dungeon Grid */
 .dungeon-grid {
   display: grid;
@@ -921,20 +933,24 @@ tbody tr:nth-child(odd) {
 
 .dungeon-button-row {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
 }
 
-.dungeon-button-view {
-  padding: 5px 15px;
+.dungeon-button-view,
+.dungeon-button-remove {
+  padding: 5px 10px;
   background-color: #800000;
   color: #FFD700;
   border: 2px solid gold;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .dungeon-button-view:hover,
-.dungeon-button-edit:hover,
-.dungeon-button-delete:hover {
+.dungeon-button-remove:hover {
   background-color: #A50000;
 }
 
@@ -951,6 +967,14 @@ tbody tr:nth-child(odd) {
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
+  font-size: 26px;
+  text-shadow: 2px 2px 2px black;
+}
+
+.sidebar h3 {
+  font-size: 18px;
+  color: white;
+  text-shadow: 2px 2px 2px black;
 }
 
 .existing-dungeons-container {
@@ -965,6 +989,9 @@ tbody tr:nth-child(odd) {
   border-radius: 10px;
   border: 2px solid gold; 
   margin-top: 30px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* Title for Existing Dungeons */
@@ -974,6 +1001,78 @@ tbody tr:nth-child(odd) {
   font-weight: bold;
   text-align: center;
   margin-bottom: 20px;
+}
+
+/*Unique classes for SingleDungeon styling*/
+.dungeon-details-container {
+  width: 50%;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.836);
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px outset gold;
+  color: #fff;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  margin-top: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.dungeon-details-container h1 {
+  font-size: 3rem;
+  color: #FFD700; 
+  margin-bottom: 10px;
+}
+
+.dungeon-details-container p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #FFD700;
+}
+
+.dungeon-encounters, .dungeon-quests {
+  margin: 20px 0;
+}
+
+.dungeon-encounters h2, .dungeon-quests h2 {
+  font-size: 2rem;
+  color: #FFD700; 
+}
+
+.encounter-item, .quest-item {
+  border: 2px solid #FFD700; 
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.encounter-item p, .quest-item p {
+  margin: 0;
+  color: #FFD700; 
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.standard-button-dungeon {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #8B0000; 
+  color: #FFD700; 
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  max-width: 300px;
+}
+
+.standard-button-dungeon:hover {
+  background-color: #FFD700; 
+  color: #8B0000; 
 }
 
 /* Mobile styles (screens smaller than 768px) */

@@ -27,7 +27,7 @@ const App = () => {
             <Route path="/characters" element={<Characters />} />
             <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/dungeons" element={<Dungeons />} />
-            <Route path="/dungeon/:id" element={<SingleDungeon />} />
+            <Route path="/dungeon/:dungeonId" element={<SingleDungeon />} />
             <Route path="/encounters" element={<Encounters />} />
             <Route path="/encounter/:id" element={<SingleEncounter />} />
             <Route path="/quests" element={<Quests />} />

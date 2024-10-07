@@ -99,7 +99,7 @@ export const UPDATE_QUEST = gql`
 export const ADD_DUNGEON = gql`
   mutation addDungeon($title: String!, $description: String!) {
     addDungeon(title: $title, description: $description) {
-      id
+      _id
       title
       description
     }
@@ -109,7 +109,7 @@ export const ADD_DUNGEON = gql`
 export const DELETE_DUNGEON = gql`
   mutation deleteDungeon($dungeonId: ID!) {
     deleteDungeon(dungeonId: $dungeonId) {
-      id
+      _id
       title
     }
   }
@@ -118,7 +118,7 @@ export const DELETE_DUNGEON = gql`
 export const UPDATE_DUNGEON = gql`
   mutation updateDungeon($dungeonId: ID!, $title: String!, $description: String!) {
     updateDungeon(dungeonId: $dungeonId, title: $title, description: $description) {
-      id
+      _id
       title
       description
     }
@@ -128,7 +128,7 @@ export const UPDATE_DUNGEON = gql`
 export const ADD_ENCOUNTER_TO_DUNGEON = gql`
   mutation addEncounterToDungeon($dungeonId: ID!, $encounterId: ID!) {
     addEncounterToDungeon(dungeonId: $dungeonId, encounterId: $encounterId) {
-      id
+      _id
       title
       encounters {
         id
@@ -141,7 +141,7 @@ export const ADD_ENCOUNTER_TO_DUNGEON = gql`
 export const ADD_QUEST_TO_DUNGEON = gql`
   mutation addQuestToDungeon($dungeonId: ID!, $questId: ID!) {
     addQuestToDungeon(dungeonId: $dungeonId, questId: $questId) {
-      id
+      _id
       title
       quests {
         id
