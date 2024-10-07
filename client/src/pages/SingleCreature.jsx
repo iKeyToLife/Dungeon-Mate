@@ -62,13 +62,13 @@ const SingleCreature = () => {
     return (
       <div className="creature-details">
         <h2>{safeRender(creature.name)}</h2>
-        <p><strong>Challenge Rating:</strong> {safeRender(creature.challenge_rating)}</p>
-        <p><strong>Type:</strong> {safeRender(creature.type)}</p>
-        <p><strong>Size:</strong> {safeRender(creature.size)}</p>
-        <p><strong>Alignment:</strong> {safeRender(creature.alignment)}</p>
-        <p><strong>Armor Class:</strong> {safeRender(creature.armor_class)}</p>
-        <p><strong>Hit Points:</strong> {safeRender(creature.hit_points)}</p>
-        <p><strong>Actions:</strong></p>
+        <p className="creature-detail"><strong>Challenge Rating:</strong> {safeRender(creature.challenge_rating)}</p>
+        <p className="creature-detail"><strong>Type:</strong> {safeRender(creature.type)}</p>
+        <p className="creature-detail"><strong>Size:</strong> {safeRender(creature.size)}</p>
+        <p className="creature-detail"><strong>Alignment:</strong> {safeRender(creature.alignment)}</p>
+        <p className="creature-detail"><strong>Armor Class:</strong> {safeRender(creature.armor_class)}</p>
+        <p className="creature-detail"><strong>Hit Points:</strong> {safeRender(creature.hit_points)}</p>
+        <p className="creature-detail"><strong>Actions:</strong></p>
         <ul>
           {creature.actions && creature.actions.length > 0 ? (
             creature.actions.map((action, index) => (
