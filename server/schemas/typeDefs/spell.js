@@ -5,6 +5,11 @@ const spellTypeDefs = gql`
     index: String!
     name: String!
   }
+
+  input SpellInput {
+  index: String!
+  name: String!
+}
 `;
 
 module.exports = spellTypeDefs;

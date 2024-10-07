@@ -69,7 +69,13 @@ const Header = () => {
             <RouterNavLink to="/campaigns" className="nav-link" activeclassname="active">Campaigns</RouterNavLink>
           </NavItem>
           <NavItem>
+            <RouterNavLink to="/dungeons" className="nav-link" activeclassname="active">Dungeons</RouterNavLink>
+          </NavItem>
+          <NavItem>
             <RouterNavLink to="/encounters" className="nav-link" activeclassname="active">Encounters</RouterNavLink>
+          </NavItem>
+          <NavItem>
+            <RouterNavLink to="/quests" className="nav-link" activeclassname="active">Quests</RouterNavLink>
           </NavItem>
           <NavItem>
             <RouterNavLink to="/bestiary" className="nav-link" activeclassname="active">Bestiary</RouterNavLink>

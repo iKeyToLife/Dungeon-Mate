@@ -85,6 +85,62 @@ const characterMutations = {
             throw AuthenticationError;
         }
     },
+    addSpellToCharacter: async (_, { characterId, spell }, context) => {
+        if (context.user) {
+            const character = await Character.findOne({ _id: characterId, userId: context.user._id });
+            if (!character) {
+                throw new Error("Character not found or you are not authorized to update this character.");
+            }
+            character.spells.push(spell);
+            await character.save();
+            return character;
+        }
+        throw AuthenticationError;
+    },
+    removeSpellFromCharacter: async (_, { characterId, spellIndex }, context) => {
+        if (context.user) {
+            const character = await Character.findOne({ _id: characterId, userId: context.user._id });
+            if (!character) {
+                throw new Error("Character not found or you are not authorized to update this character.");
+            }
+            character.spells = character.spells.filter(spell => spell.index !== spellIndex);
+            await character.save();
+            return character;
+        }
+        throw AuthenticationError;
+    },
+    addItemToInventory: async (_, { characterId, item }, context) => {
+        if (context.user) {
+            const character = await Character.findOne({ _id: characterId, userId: context.user._id });
+            if (!character) {
+                throw new Error("Character not found or you are not authorized to update this character.");
+            }
+            character.inventory.push(item);
+            await character.save();
+            return character;
+        }
+        throw AuthenticationError;
+    },
+    removeItemFromInventory: async (_, { characterId, itemName }, context) => {
+        if (context.user) {
+            const character = await Character.findOne({ _id: characterId, userId: context.user._id });
+            if (!character) {
+                throw new Error("Character not found or you are not authorized to update this character.");
+            }
+
+            // find first itemIndex
+            const itemIndex = character.inventory.findIndex(item => item.name === itemName);
+
+            // if found then delete
+            if (itemIndex > -1) {
+                character.inventory.splice(itemIndex, 1); // Delete only 1 item
+                await character.save();
+            }
+
+            return character;
+        }
+        throw AuthenticationError;
+    },
 }
 
 module.exports = {

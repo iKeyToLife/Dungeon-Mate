@@ -50,4 +50,67 @@ export const GET_CHARACTERS_BY_USER_ID = gql`
             alignment
         }
     }
+
+export const GET_QUESTS = gql`
+  query getAllQuests {
+    quests {
+      id
+      title
+      details
+      rewards
+    }
+  }
+`;
+
+export const GET_QUEST = gql`
+  query getQuestById($questId: ID!) {
+    quest(questId: $questId) {
+      id
+      title
+      details
+      rewards
+    }
+  }
+`;
+
+export const GET_DUNGEONS = gql`
+  query getAllDungeons {
+    dungeons {
+      _id
+      title
+      description
+      encounters {
+        id
+        title
+        details
+      }
+      quests {
+        id
+        title
+        details
+        rewards
+      }
+    }
+  }
+`;
+
+export const GET_DUNGEON = gql`
+  query getDungeonById($dungeonId: ID!) {
+    dungeon(dungeonId: $dungeonId) {
+      _id
+      title
+      description
+      encounters {
+        id
+        title
+        details
+      }
+      quests {
+        id
+        title
+        details
+        rewards
+      }
+    }
+  }
 `;
