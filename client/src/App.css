@@ -213,6 +213,10 @@ tbody tr:nth-child(odd) {
   color: #FFD700;
 }
 
+.creature-detail {
+  color: white !important;
+}
+
 .creature-details {
   max-width: 800px;
   margin: 0 auto;
@@ -233,12 +237,13 @@ tbody tr:nth-child(odd) {
 
 .creature-details strong {
   color: #FFD700;
+  text-shadow: 2px 2px 2px black;
 }
 
-.creature-details p,
+
 .creature-details ul {
   font-size: 1.2rem;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .creature-details ul {
@@ -248,6 +253,13 @@ tbody tr:nth-child(odd) {
 
 .creature-details li {
   margin-bottom: 10px;
+}
+
+.creature-details p {
+  font-size: 1.2rem;
+  color: white !important;
+  font-weight: bold;
+  text-shadow: none;
 }
 
 .back-button {
@@ -675,6 +687,7 @@ tbody tr:nth-child(odd) {
   font-size: 2rem;
   margin-bottom: 20px;
   color: #FFD700;
+  text-shadow: 2px 2px 2px black;
 }
 
 .quest-details strong,
@@ -684,8 +697,7 @@ tbody tr:nth-child(odd) {
   text-shadow: 2px 2px 2px black;
 }
 
-.quest-details p,
-.creature-details p {
+.quest-details {
   font-size: 1.2rem;
   color: black !important;
   font-weight: bold;
