@@ -64,7 +64,7 @@ input:focus {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
 .filter-form {
@@ -84,7 +84,7 @@ input:focus {
 .filter-form label {
   font-weight: bold;
   margin-bottom: 5px;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
 .filter-form input,
@@ -123,17 +123,18 @@ button:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #FFD700;
   padding: 10px;
   text-align: left;
 }
 
 th {
-  background-color: #800000; 
+  background-color: #800000;
   font-weight: bold;
 }
 
@@ -176,22 +177,23 @@ tbody tr:nth-child(odd) {
 .monster-list table {
   width: 100%;
   border-collapse: collapse;
-  background-color: rgba(0, 0, 0, 0.7); 
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-.monster-list th, .monster-list td {
+.monster-list th,
+.monster-list td {
   padding: 10px;
   text-align: left;
   border: 1px solid #FFD700;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
 .monster-list thead {
-  background-color: rgba(128, 0, 0, 0.9); 
+  background-color: rgba(128, 0, 0, 0.9);
 }
 
 .monster-list tbody tr:hover {
-  background-color: rgba(128, 0, 0, 0.8); 
+  background-color: rgba(128, 0, 0, 0.8);
 }
 
 .clickable-row {
@@ -200,7 +202,7 @@ tbody tr:nth-child(odd) {
 }
 
 .clickable-row:hover {
-  background-color: rgba(128, 0, 0, 0.8); 
+  background-color: rgba(128, 0, 0, 0.8);
 }
 
 .monster-details {
@@ -217,9 +219,9 @@ tbody tr:nth-child(odd) {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 30px;
-  background-color: rgba(0, 0, 0, 0.9); 
+  background-color: rgba(0, 0, 0, 0.9);
   border-radius: 8px;
-  border: 2px solid #FFD700; 
+  border: 2px solid #FFD700;
   color: #FFD700;
 }
 
@@ -233,7 +235,7 @@ tbody tr:nth-child(odd) {
   color: #FFD700;
 }
 
-.creature-details p, 
+.creature-details p,
 .creature-details ul {
   font-size: 1.2rem;
   color: #ffffff;
@@ -264,57 +266,58 @@ tbody tr:nth-child(odd) {
 }
 
 .search-input {
-  width: 275px !important; 
-  padding: 10px; 
-  border-radius: 5px; 
+  width: 275px !important;
+  padding: 10px;
+  border-radius: 5px;
   border: 1px solid #ccc;
 }
 
 .search-container {
-  background-color: rgba(0, 0, 0, 0.7); 
-  border: 2px solid gold; 
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid gold;
   padding: 20px;
-  border-radius: 10px; 
-  width: 1000px; 
+  border-radius: 10px;
+  width: 1000px;
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .search-container div {
   margin-bottom: 10px;
-  flex: 1; 
-  min-width: 200px; 
-  margin-right: 10px; 
+  flex: 1;
+  min-width: 200px;
+  margin-right: 10px;
 }
 
 .filter-form {
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   width: 100%;
-  gap: 20px; 
+  gap: 20px;
 }
 
-.filter-form input, .filter-form select {
-  width: 100%; 
+.filter-form input,
+.filter-form select {
+  width: 100%;
   padding: 10px;
   border: 1px solid #ffcc00;
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 5px;
   color: #8d8d8d;
 }
 
 .filter-form button {
   padding: 10px 20px;
-  background-color: #C5160D; 
+  background-color: #C5160D;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
 }
 
 .search-container label {
@@ -325,25 +328,25 @@ tbody tr:nth-child(odd) {
 }
 
 .bestiary-select {
-  background-color: rgba(0, 0, 0, 0.8); 
-  color: #ffcc00; 
-  border: 1px solid #ffcc00; 
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffcc00;
+  border: 1px solid #ffcc00;
   padding: 10px;
   border-radius: 5px;
-  appearance: none; 
+  appearance: none;
 }
 
 .bestiary-select option {
   background-color: #000;
-  color: #ffcc00; 
+  color: #ffcc00;
 }
 
 .encounter-container {
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border: 2px solid gold;
   border-radius: 10px;
-  max-width: 900px; 
+  max-width: 900px;
   margin: 20px auto;
 }
 
@@ -352,7 +355,7 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-title-input {
-  width: 300px; 
+  width: 300px;
   height: 30px;
   margin-bottom: 10px;
   padding: 5px;
@@ -362,19 +365,19 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-input {
-  width: 100%; 
+  width: 100%;
   height: 100px;
   margin-bottom: 10px;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.6); 
+  background: rgba(0, 0, 0, 0.6);
   color: white;
   border: 1px solid gold;
 }
 
 .save-encounter-button {
-  width: 200px !important; 
+  width: 200px !important;
   padding: 10px;
-  background-color: #8b0000; 
+  background-color: #8b0000;
   color: gold;
   border: 2px solid gold;
   cursor: pointer;
@@ -382,7 +385,7 @@ tbody tr:nth-child(odd) {
 }
 
 .save-encounter-button:hover {
-  background-color: #a30000; 
+  background-color: #a30000;
 }
 
 .created-title {
@@ -404,11 +407,21 @@ tbody tr:nth-child(odd) {
   border-radius: 5px;
   color: white;
   display: flex;
-  flex-direction: column; 
-  justify-content: space-between; 
-  min-height: 200px; 
-  word-wrap: break-word; 
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  word-wrap: break-word;
   overflow-wrap: break-word;
+}
+
+.encounter-card h3 {
+  color: gold;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px black;
+}
+
+.encounter-details p {
+  color: white;
 }
 
 .encounter-button-row {
@@ -417,11 +430,12 @@ tbody tr:nth-child(odd) {
   gap: 10px;
 }
 
-.encounter-button-edit, .encounter-button-delete {
-  width: 100px !important; 
+.encounter-button-edit,
+.encounter-button-delete {
+  width: 100px !important;
   padding: 5px 10px;
   font-size: 0.9rem;
-  background-color: #b22222; 
+  background-color: #b22222;
   border: 2px outset gold;
   color: white;
   cursor: pointer;
@@ -431,14 +445,15 @@ tbody tr:nth-child(odd) {
   color: white;
 }
 
-.encounter-button-edit:hover, .encounter-button-delete:hover {
-  background-color: darkred; 
+.encounter-button-edit:hover,
+.encounter-button-delete:hover {
+  background-color: darkred;
 }
 
 .input-section {
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
 }
 
 .encounter-error-message {
@@ -452,64 +467,65 @@ tbody tr:nth-child(odd) {
 }
 
 .parchment-modal {
-  background-image: url('../scroll.png'); 
-  background-size: 130% 130%; 
+  background-image: url('../scroll.png');
+  background-size: 130% 130%;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 15px; 
+  border-radius: 15px;
   padding: 65px;
   width: 600px;
   height: 350px;
   font-weight: bold;
   max-width: 100%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   font-family: 'MedievalSharp', serif;
   font-size: 20px;
 }
 
 .parchment-modal .modal-content {
-  background-color: transparent; 
-  border: none; 
+  background-color: transparent;
+  border: none;
 }
 
 .parchment-modal .modal-footer {
   display: flex;
-  justify-content: center; 
-  gap: 20px; 
+  justify-content: center;
+  gap: 20px;
 }
 
-.parchment-modal h5, .parchment-modal p {
-  font-family: 'MedievalSharp', serif; 
-  color: #4b3e32; 
+.parchment-modal h5,
+.parchment-modal p {
+  font-family: 'MedievalSharp', serif;
+  color: #4b3e32;
   font-weight: bold;
   font-size: 34px;
 }
 
 .parchment-modal .btn {
-  background-color: rgba(255, 0, 0, 0) !important; 
+  background-color: rgba(255, 0, 0, 0) !important;
   border: none !important;
   color: rgb(0, 0, 0) !important;
   width: 140px !important;
 }
 
 .parchment-modal .btn:hover {
-  background-color: gold !important; 
+  background-color: gold !important;
   border: 4px outset darkred !important;
 }
 
-.parchment-modal .modal-header, 
-.parchment-modal .modal-footer, 
+.parchment-modal .modal-header,
+.parchment-modal .modal-footer,
 .parchment-modal .modal-body {
-  border: none; 
-  outline: none; 
+  border: none;
+  outline: none;
 }
 
 .quest-container {
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border: 2px solid gold;
   border-radius: 10px;
-  max-width: 900px; 
+  max-width: 900px;
   margin: 20px auto;
 }
 
@@ -517,8 +533,9 @@ tbody tr:nth-child(odd) {
   text-align: center;
 }
 
-.quest-title-input, .quest-input {
-  width: 300px; 
+.quest-title-input,
+.quest-input {
+  width: 300px;
   height: 30px;
   margin-bottom: 10px;
   padding: 5px;
@@ -528,19 +545,19 @@ tbody tr:nth-child(odd) {
 }
 
 .quest-input {
-  width: 100%; 
+  width: 100%;
   height: 100px;
 }
 
 .quest-input-rewards {
-  width: 100%; 
-  height: 50px; 
+  width: 100%;
+  height: 50px;
 }
 
 .save-quest-button {
-  width: 200px; 
+  width: 200px;
   padding: 10px;
-  background-color: #8b0000; 
+  background-color: #8b0000;
   color: gold;
   border: 2px solid gold;
   cursor: pointer;
@@ -548,7 +565,7 @@ tbody tr:nth-child(odd) {
 }
 
 .save-quest-button:hover {
-  background-color: #a30000; 
+  background-color: #a30000;
 }
 
 .created-title {
@@ -568,13 +585,26 @@ tbody tr:nth-child(odd) {
   border: 1px solid gold;
   padding: 12px;
   border-radius: 5px;
-  color: white;
+  color: gold;
   display: flex;
-  flex-direction: column; 
-  justify-content: space-between; 
-  min-height: 200px; 
-  word-wrap: break-word; 
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  word-wrap: break-word;
   overflow-wrap: break-word;
+  background-image: url('../scroll-background.png');
+  background-position: center;
+  background-size: 110%;
+}
+
+.quest-card p {
+  color: black;
+  font-weight: bold;
+}
+
+.quest-card h3 {
+  text-shadow: 2px 2px 2px black;
+  font-weight: bold;
 }
 
 .quest-button-row {
@@ -583,18 +613,20 @@ tbody tr:nth-child(odd) {
   gap: 10px;
 }
 
-.quest-button-edit, .quest-button-delete {
-  width: 100px; 
+.quest-button-edit,
+.quest-button-delete {
+  width: 100px;
   padding: 5px 10px;
   font-size: 0.9rem;
-  background-color: #b22222; 
+  background-color: #b22222;
   border: 2px outset gold;
   color: white;
   cursor: pointer;
 }
 
-.quest-button-edit:hover, .quest-button-delete:hover {
-  background-color: darkred; 
+.quest-button-edit:hover,
+.quest-button-delete:hover {
+  background-color: darkred;
 }
 
 .quest-rewards {
@@ -603,20 +635,29 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-button-view {
-  width: 100px !important; 
-  padding: 5px 10px; 
-  font-size: 0.9rem; 
-  background-color: #b22222; 
-  border: 2px outset gold; 
+  width: 100px !important;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  background-color: #b22222;
+  border: 2px outset gold;
   color: white;
   cursor: pointer;
 }
 
 .encounter-button-view:hover {
-  background-color: darkred; 
+  background-color: darkred;
 }
 
-.quest-details, .encounter-details, .creature-details {
+.quest-details {
+  background-image: url('../scroll-background.png');
+  background-position: center;
+  background-size:cover;
+  text-shadow: 2px 2px 1px black;
+}
+
+.quest-details,
+.encounter-details,
+.creature-details {
   max-width: 800px;
   margin: 0 auto;
   margin-top: 10px;
@@ -628,19 +669,27 @@ tbody tr:nth-child(odd) {
   color: #FFD700;
 }
 
-.quest-details h2, .encounter-details h2, .creature-details h2 {
+.quest-details h2,
+.encounter-details h2,
+.creature-details h2 {
   font-size: 2rem;
   margin-bottom: 20px;
   color: #FFD700;
 }
 
-.quest-details strong, .encounter-details strong, .creature-details strong {
+.quest-details strong,
+.encounter-details strong,
+.creature-details strong {
   color: #FFD700;
+  text-shadow: 2px 2px 2px black;
 }
 
-.quest-details p, .encounter-details p, .creature-details p {
+.quest-details p,
+.creature-details p {
   font-size: 1.2rem;
-  color: #ffffff;
+  color: black !important;
+  font-weight: bold;
+  text-shadow: none;
 }
 
 .back-button {
@@ -656,4 +705,835 @@ tbody tr:nth-child(odd) {
 
 .back-button:hover {
   background-color: #a50000;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.standard-button {
+  background-color: #800000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 200px !important;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+}
+
+.standard-button:hover {
+  background-color: #a50000;
+  transform: scale(1.05);
+}
+
+.standard-button-encounter {
+  width: 220px !important;
+  height: 50px;
+}
+
+.encounter-details,
+.quest-details {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* Dungeon Page Styling */
+.dungeon-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.dungeon-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin-left: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  border: 2px solid gold;
+}
+
+.dungeon-title {
+  color: #FFD700;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Input Section */
+.input-section {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid gold;
+  margin-bottom: 20px;
+}
+
+/* Title & Description Inputs */
+.dungeon-title-input,
+.dungeon-input {
+  width: 80%;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #FFD700;
+  border: 2px solid #FFD700;
+  border-radius: 5px;
+}
+
+.dungeon-title-input {
+  font-size: 1.2rem;
+}
+
+.dungeon-input {
+  height: 100px;
+  font-size: 1rem;
+}
+
+/* Error Message Styling */
+.dungeon-error-message {
+  color: #ff0000;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Sub Containers for Drag-and-Drop */
+.dungeon-subcontainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.encounter-dropzone,
+.quest-dropzone {
+  width: 45%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid gold;
+  border-radius: 10px;
+  min-height: 150px;
+  color: #FFD700;
+}
+
+.encounter-dropzone h3,
+.quest-dropzone h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.encounter-item,
+.quest-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.897);
+  border: 2px solid gold;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Dungeon Save Button */
+.save-dungeon-button {
+  width: 50% !important;
+  padding: 15px;
+  background-color: #8B0000;
+  color: #FFD700;
+  border: 2px solid gold;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.save-dungeon-button:hover {
+  background-color: #A30000;
+}
+
+/* Sidebar Styling */
+.sidebar-container {
+  width: 275px;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 100%;
+  max-height: 100%;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid gold;
+  border-radius: 10px;
+  position: sticky;
+  top: 20px;
+  /* Ensure it stays aligned with the dungeon container */
+  overflow-y: auto;
+}
+
+.sidebar h3 {
+  color: #FFD700;
+  margin-bottom: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 5px;
+}
+
+.sidebar-card {
+  background-color: rgba(0, 0, 0, 0.801);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 2px solid gold;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-card span {
+  color: #FFD700;
+}
+
+.sidebar-card:hover {
+  cursor: grab;
+}
+
+.sidebar-card button {
+  background-color: #000000;
+  color: #FFD700;
+  border: 2px solid gold;
+  padding: 5px;
+  cursor: pointer;
+  max-width: 70px;
+}
+
+.sidebar-card button:hover {
+  background-color: #A50000;
+}
+
+/* Sidebar Dropdowns */
+.sidebar-dropdown {
+  cursor: pointer;
+  color: #FFD700;
+  font-weight: bold;
+  padding: 10px 0;
+  border-bottom: 1px solid gold;
+  text-align: center;
+}
+
+/* Dropdown Icon Styling */
+.dropdown-icon {
+  font-size: 1.2rem;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Dungeon Grid */
+.dungeon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.dungeon-card {
+  background-color: rgba(24, 24, 24, 0.678);
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  color: gold;
+  min-height: 250px;
+  background-image: url('../scroll-background.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.dungeon-card h3 {
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 2px black;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.dungeon-card h4 {
+  color: black;
+  font-weight: bold;
+}
+
+.dungeon-card p {
+  margin-bottom: 20px;
+  text-shadow: 3px 2px 2px black;
+  color: white !important;
+}
+
+.dungeon-card strong {
+  color: gold;
+}
+
+.dungeon-encounters,
+.dungeon-quests {
+  margin-bottom: 10px;
+}
+
+.dungeon-button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.dungeon-button-view,
+.dungeon-button-remove {
+  padding: 5px 10px;
+  background-color: #800000;
+  color: #FFD700;
+  border: 2px solid gold;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dungeon-button-view:hover,
+.dungeon-button-remove:hover {
+  background-color: #A50000;
+}
+
+.dungeon-grid p {
+  color: #FFD700;
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Drag & Drop Your Creations Text */
+.sidebar p {
+  color: #FFD700;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-size: 26px;
+  text-shadow: 2px 2px 2px black;
+}
+
+.sidebar h3 {
+  font-size: 18px;
+  color: white;
+  text-shadow: 2px 2px 2px black;
+}
+
+.existing-dungeons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 2px solid gold;
+  margin-top: 30px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* Title for Existing Dungeons */
+.existing-dungeons-title {
+  color: #FFD700;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/*Unique classes for SingleDungeon styling*/
+.dungeon-details-container {
+  width: 50%;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.836);
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px outset gold;
+  color: #fff;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  margin-top: 10px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  background-image: url('../scroll-background.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.dungeon-details-container h1 {
+  font-size: 3rem;
+  color: #FFD700;
+  margin-bottom: 10px;
+  text-shadow: 3px 2px 2px black;
+  text-decoration: underline;
+}
+
+.dungeon-details-container p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #000000;
+  text-shadow: 1px 1px 2px gold;
+  font-weight: bold;
+}
+
+.dungeon-details-container p {
+  color: white !important;
+  text-shadow: 2px 2px 2px black;
+}
+
+.dungeon-details-container strong {
+  color: gold;
+}
+
+.dungeon-encounters,
+.dungeon-quests {
+  margin: 20px 0;
+}
+
+.dungeon-encounters h2,
+.dungeon-quests h2 {
+  font-size: 2rem;
+  color: #FFD700;
+  text-shadow: 3px 2px 2px black;
+}
+
+.encounter-item,
+.quest-item {
+  border: 2px solid #FFD700;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.encounter-item p,
+.quest-item p {
+  margin: 0;
+  color: #FFD700;
+  text-shadow: 3px 2px 2px black;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+.standard-button-dungeon {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: #8B0000;
+  color: #FFD700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  max-width: 300px;
+}
+
+.standard-button-dungeon:hover {
+  background-color: #FFD700;
+  color: #8B0000;
+}
+
+/* Mobile styles (screens smaller than 768px) */
+@media only screen and (max-width: 768px) {
+
+  /* Adjusting the search-container for mobile */
+  .search-container {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Adjust each filter/search input on mobile */
+  .search-container div {
+    width: 100%;
+    min-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Adjust filter-form elements for mobile */
+  .filter-form {
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Monster list table adjustments */
+  .monster-list {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    display: block;
+  }
+
+  thead {
+    display: none; /* Hide table headers */
+  }
+
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  tbody tr {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid gold;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+  }
+
+  tbody tr td {
+    display: block;
+    text-align: left;
+    padding: 5px 0;
+    border: none;
+  }
+
+  tbody tr td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #FFD700;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .monster-list td:first-child {
+    background-color: darkred; 
+    color: #fff; 
+  }
+
+  /* Table cells adjustment on mobile */
+  table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: 14px;
+    border-spacing: 0;
+    white-space: nowrap;
+    overflow-x: auto;
+    display: block;
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
+    white-space: nowrap;
+    border-bottom: 1px solid #FFD700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  th {
+    font-weight: bold;
+    background-color: #800000;
+    color: #FFD700;
+  }
+
+  td {
+    border-bottom: 1px solid #FFD700;
+  }
+
+  .monster-list table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
+  }
+
+  /* Adjust pagination controls for mobile */
+  .pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap; 
+    width: 100%;
+  }
+
+  .pagination button {
+    padding: 8px 10px;
+    margin: 0;
+    font-size: 14px;
+    width: 40px; 
+    box-sizing: border-box;
+    background-color: #800000;
+    color: #FFD700;
+    border: 2px solid gold;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: none; 
+  }
+
+  .pagination button:hover {
+    background-color: #a50000;
+  }
+
+  .pagination button.active {
+    background-color: #FFD700;
+    color: #800000;
+    font-weight: bold;
+  }
+
+  .dungeon-subcontainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .encounter-dropzone,
+  .quest-dropzone {
+    width: 90%;
+    margin-bottom: 20px;
+  }
+
+  .save-dungeon-button {
+    width: 90%;
+  }
+
+  /* Move sidebar above the dungeon container */
+  .dungeon-page {
+    flex-direction: column;
+  }
+
+  /* Sidebar should take full width on mobile */
+  .sidebar-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    border: 2px solid gold;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  .sidebar ul {
+    display: block;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Dropdown items should also expand properly */
+  .sidebar-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid gold;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .sidebar-card button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    color: gold;
+    background-color: #800000;
+    border: 2px solid gold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .sidebar-card button:hover {
+    background-color: #a50000;
+  }
+
+  .sidebar-card span {
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 10px;
+  }
+
+  .dungeon-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .dungeon-title-input,
+  .dungeon-input {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 1.1rem;
+  }
+
+  /* Dropzones for Encounters and Quests */
+  .dungeon-subcontainer {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .encounter-dropzone,
+  .quest-dropzone {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Adjust Save Dungeon Button */
+  .save-dungeon-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  /* Existing Dungeons Container */
+  .existing-dungeons-container {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  /* Dungeon Cards in Existing Dungeons */
+  .dungeon-grid {
+    display: block;
+    width: 100%;
+  }
+
+  .dungeon-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .standard-button-encounter {
+    width: 48% !important;
+    padding: 10px !important;
+    background-color: #800000 !important;
+    color: #FFD700 !important;
+    border: 2px solid #FFD700 !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    height: auto !important;
+    min-height: 40px;
+  }
+
+  .standard-button-encounter:hover {
+    background-color: #a50000 !important;
+  }
+
+  .button-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .dungeon-details-container {
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background-size: cover;
+  }
+
+  .dungeon-encounters,
+  .dungeon-quests {
+    width: 100%;
+    text-align: center;
+  }
+
+  .encounter-item,
+  .quest-item {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .standard-button-dungeon {
+    width: 200px !important;
+    font-size: 1rem;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* Adjust modal size for mobile screens */
+  .parchment-modal {
+    width: 90% !important;
+    height: auto;
+    padding: 20px;
+    max-height: 90vh;
+  }
+
+  /* Modal content adjustments */
+  .parchment-modal .modal-content {
+    padding: 20px;
+    background-color: transparent;
+  }
+
+  /* Adjust header and footer for proper display on mobile */
+  .parchment-modal .modal-header,
+  .parchment-modal .modal-footer {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  .parchment-modal h5,
+  .parchment-modal p {
+    font-size: 28px !important;
+  }
+
+  .parchment-modal .btn {
+    width: 120px !important;
+    padding: 8px 20px;
+    font-size: 1rem !important;
+  }
+
+  .modal {
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
 }

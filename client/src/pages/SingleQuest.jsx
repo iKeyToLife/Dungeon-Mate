@@ -1,8 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_QUEST } from '../utils/queries';
+import { useNavigate } from 'react-router-dom';
 
 const SingleQuest = () => {
+    const navigate = useNavigate();
     const { questId } = useParams(); 
     const { loading, error, data } = useQuery(GET_QUEST, {
       variables: { questId },
@@ -27,7 +29,10 @@ const SingleQuest = () => {
         <h2>{quest.title}</h2>
         <p><strong>Details:</strong> {quest.details}</p>
         <p><strong>Rewards:</strong> {quest.rewards}</p>
-        <button className="back-button" onClick={() => window.history.back()}>Back to Quests</button>
+        <div className="button-container">
+        <button className="standard-button" onClick={() => navigate(`/dungeons`)}>To Dungeons Page</button>
+        <button className="standard-button" onClick={() => navigate('/quests')}>To Quests Page</button>
+        </div>
       </div>
     );
   };
