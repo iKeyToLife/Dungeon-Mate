@@ -4,6 +4,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
 import { ADD_ENCOUNTER, DELETE_ENCOUNTER, UPDATE_ENCOUNTER } from '../utils/mutations';
 import { GET_ENCOUNTERS } from '../utils/queries';
+import { RedirectToLoginError } from '../components/Error';
 
 const Encounters = () => {
   const [encounters, setEncounters] = useState([]);
@@ -65,8 +66,7 @@ const Encounters = () => {
     } catch (error) {
       // Error
       if (error.message.includes('not authenticate')) {
-        setModalMessage('Please login to delete encounters.');
-        setLoginModalOpen(true);  // Show modal with error message
+        return <RedirectToLoginError message="Please login to delete encounters." />;
       }
     }
   };
@@ -90,9 +90,7 @@ const Encounters = () => {
       // Check if user is logged in
       const loggedIn = AuthService.loggedIn();
       if (!loggedIn) {
-        setModalMessage('Please login to save encounters.');
-        setLoginModalOpen(true); // Open the login modal with custom message
-        return;
+        return <RedirectToLoginError message="Please login to save encounters." />;
       }
 
       // Proceed with saving encounter if logged in and mutation is successful
@@ -131,8 +129,7 @@ const Encounters = () => {
       setEditingIndex(null);
     } catch (error) {
       if (error.message.includes('not authenticate')) {
-        setModalMessage('Please login to update encounters.');
-        setLoginModalOpen(true);  // Show modal with error message
+        return <RedirectToLoginError message="Please login to update encounters." />;
       }
     }
   };
