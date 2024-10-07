@@ -6,6 +6,7 @@ const classTypeDefs = require('./typeDefs/class');
 const itemTypeDefs = require('./typeDefs/item');
 const spellTypeDefs = require('./typeDefs/spell');
 const questTypeDefs = require('./typeDefs/quest');
+const dungeonTypeDefs = require('./typeDefs/dungeon');
 
 const typeDefs = gql`
   ${userTypeDefs}
@@ -15,6 +16,7 @@ const typeDefs = gql`
   ${itemTypeDefs}
   ${spellTypeDefs}
   ${questTypeDefs}
+  ${dungeonTypeDefs}
 
   type Query {
     users: [User]
@@ -25,6 +27,8 @@ const typeDefs = gql`
     encounter(encounterId: ID!): Encounter
     quests: [Quest]
     quest(questId: ID!): Quest
+    dungeons: [Dungeon]
+    dungeon(dungeonId: ID!): Dungeon
   }
 
   type Mutation {
@@ -70,6 +74,10 @@ const typeDefs = gql`
       inventory: [InventoryInput],
       alignment: String
       ): Character
+    addSpellToCharacter(characterId: ID!, spell: SpellInput!): Character
+    removeSpellFromCharacter(characterId: ID!, spellIndex: String!): Character
+    addItemToInventory(characterId: ID!, item: InventoryItemInput!): Character
+    removeItemFromInventory(characterId: ID!, itemName: String!): Character
     addEncounter(
       title: String!,
       details: String!
@@ -89,6 +97,13 @@ const typeDefs = gql`
       title: String!, 
       details: String!, 
       rewards: String!): Quest
+    addDungeon(title: String!, description: String): Dungeon
+    updateDungeon(dungeonId: ID!, title: String, description: String): Dungeon
+    deleteDungeon(dungeonId: ID!): Dungeon
+    addEncounterToDungeon(dungeonId: ID!, encounterId: ID!): Dungeon  # Add 1 encounter
+    removeEncounterFromDungeon(dungeonId: ID!, encounterId: ID!): Dungeon # Delete 1 encounter
+    addQuestToDungeon(dungeonId: ID!, questId: ID!): Dungeon
+    removeQuestFromDungeon(dungeonId: ID!, questId: ID!): Dungeon
   }
 `;
 
