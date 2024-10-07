@@ -1247,8 +1247,34 @@ tbody tr:nth-child(odd) {
 
   /* Dropdown items should also expand properly */
   .sidebar-card {
-    width: 100%;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 10px;
     margin-bottom: 10px;
+    border: 2px solid gold;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .sidebar-card button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    color: gold;
+    background-color: #800000;
+    border: 2px solid gold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .sidebar-card button:hover {
+    background-color: #a50000;
+  }
+
+  .sidebar-card span {
+    flex-grow: 1; /* Allow the text to grow and take up available space */
+    text-align: left; /* Ensure text alignment is to the left */
+    margin-right: 10px; /* Add spacing between text and buttons */
   }
 
   .dungeon-container {
@@ -1357,5 +1383,43 @@ tbody tr:nth-child(odd) {
     font-size: 1rem; 
     margin: 0 auto;
     display: block;
+  }
+  
+   /* Adjust modal size for mobile screens */
+   .parchment-modal {
+    width: 90% !important; 
+    height: auto; 
+    padding: 20px; 
+    max-height: 90vh; 
+  }
+
+  /* Modal content adjustments */
+  .parchment-modal .modal-content {
+    padding: 20px; 
+    background-color: transparent; 
+  }
+
+  /* Adjust header and footer for proper display on mobile */
+  .parchment-modal .modal-header, 
+  .parchment-modal .modal-footer {
+    padding: 10px 20px;
+    text-align: center; 
+    font-size: 1.2rem; 
+  }
+
+  .parchment-modal h5, 
+  .parchment-modal p {
+    font-size: 28px !important; 
+  }
+
+  .parchment-modal .btn {
+    width: 120px !important; 
+    padding: 8px 20px; 
+    font-size: 1rem !important; 
+  }
+
+  .modal {
+    max-width: 100% !important; 
+    margin: 0 auto;
   }
 }

@@ -30,6 +30,15 @@ const Dungeons = () => {
     const [addEncounterToDungeon] = useMutation(ADD_ENCOUNTER_TO_DUNGEON);
     const [addQuestToDungeon] = useMutation(ADD_QUEST_TO_DUNGEON);
     const navigate = useNavigate();
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Detect mobile screen width
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
      // Load dungeon data from localStorage when the component mounts
      useEffect(() => {
@@ -63,6 +72,14 @@ const Dungeons = () => {
             }
         }
     });
+
+    const handleAddEncounter = (encounter) => {
+        setDungeonEncounters([...dungeonEncounters, encounter]);
+    };
+
+    const handleAddQuest = (quest) => {
+        setDungeonQuests([...dungeonQuests, quest]);
+    };
 
     // Drag-and-Drop Handlers
     const onDragStart = (e, item, type) => {
@@ -216,7 +233,7 @@ const Dungeons = () => {
         <div className="dungeon-page">
             <div className="sidebar-container">
                 <div className="sidebar scrollable">
-                    <p>Drag & Drop your creations!</p>
+                    <p>{isMobile ? "Select your creations to add!" : "Drag & Drop your creations!"}</p> {/* Conditional message based on isMobile */}
 
                     {/* Encounters Dropdown */}
                     <div onClick={() => setEncounterDropdownOpen(!encounterDropdownOpen)} className="sidebar-dropdown">
@@ -228,10 +245,14 @@ const Dungeons = () => {
                     {encounterDropdownOpen && (
                         <ul className="encounter-list">
                             {encountersResult.data?.encounters.map((encounter) => (
-                                <li key={encounter.id} className="draggable" draggable onDragStart={(e) => onDragStart(e, encounter, 'encounter')}>
+                                <li key={encounter.id} className="draggable" draggable={!isMobile} onDragStart={(e) => onDragStart(e, encounter, 'encounter')}>
                                     <div className="sidebar-card">
                                         <span>{encounter.title}</span>
                                         <button onClick={() => navigate(`/encounter/${encounter.id}`)}>View</button>
+                                        {/* "Add" button for mobile */}
+                                        {isMobile && (
+                                            <button onClick={() => handleAddEncounter(encounter)}>Add</button>
+                                        )}
                                     </div>
                                 </li>
                             ))}
@@ -248,10 +269,14 @@ const Dungeons = () => {
                     {questDropdownOpen && (
                         <ul className="quest-list">
                             {questsResult.data?.quests.map((quest) => (
-                                <li key={quest.id} className="draggable" draggable onDragStart={(e) => onDragStart(e, quest, 'quest')}>
+                                <li key={quest.id} className="draggable" draggable={!isMobile} onDragStart={(e) => onDragStart(e, quest, 'quest')}>
                                     <div className="sidebar-card">
                                         <span>{quest.title}</span>
                                         <button onClick={() => navigate(`/quest/${quest.id}`)}>View</button>
+                                        {/* Add" button for mobile */}
+                                        {isMobile && (
+                                            <button onClick={() => handleAddQuest(quest)}>Add</button>
+                                        )}
                                     </div>
                                 </li>
                             ))}
