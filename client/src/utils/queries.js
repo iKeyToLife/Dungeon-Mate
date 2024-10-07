@@ -48,3 +48,39 @@ export const GET_QUEST = gql`
     }
   }
 `;
+
+export const GET_DUNGEONS = gql`
+  query getAllDungeons {
+    dungeons {
+      id
+      title
+      description
+      encounters {
+        id
+        title
+      }
+      quests {
+        id
+        title
+      }
+    }
+  }
+`;
+
+export const GET_DUNGEON = gql`
+  query getDungeonById($dungeonId: ID!) {
+    dungeon(dungeonId: $dungeonId) {
+      id
+      title
+      description
+      encounters {
+        id
+        title
+      }
+      quests {
+        id
+        title
+      }
+    }
+  }
+`;

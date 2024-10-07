@@ -56,18 +56,16 @@ const Encounters = () => {
   // Confirm and delete the encounter
   const handleDelete = async () => {
     try {
-      // try delete
+      // Try deleting the encounter
       await deleteEncounter({
         variables: { encounterId: encounters[encounterToDelete].id },
+        refetchQueries: [{ query: GET_ENCOUNTERS }] // Refetch encounters after deletion
       });
-
-      // if deleted, update encounters
-      setEncounters(encounters.filter((_, index) => index !== encounterToDelete));
+  
       closeDeleteModal(); // Close the modal after deletion
-
     } catch (error) {
       // Error
-      if (error.message.includes('not authenticate')) {
+      if (error.message.includes("not authenticated")) {
         return <RedirectToLoginError message="Please login to delete encounters." />;
       }
     }
@@ -97,11 +95,12 @@ const Encounters = () => {
 
       // Proceed with saving encounter if logged in and mutation is successful
       try {
-        const { data } = await addEncounter({ variables: { title, details } }); // Call the mutation
+        const { data } = await addEncounter({
+          variables: { title, details },
+          refetchQueries: [{ query: GET_ENCOUNTERS }] // Refetch encounters after adding
+        });
 
         if (data) {
-          const newEncounter = { id: data.addEncounter.id, title: data.addEncounter.title, details: data.addEncounter.details }; // Use returned data from mutation
-          setEncounters([...encounters, newEncounter]); // Only update the state when mutation succeeds
           setTitle('');
           setDetails('');
         }

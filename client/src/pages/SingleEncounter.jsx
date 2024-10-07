@@ -2,8 +2,10 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ENCOUNTER } from '../utils/queries';
+import { useNavigate } from 'react-router-dom';
 
 const SingleEncounter = () => {
+    const navigate = useNavigate();
     const { id } = useParams(); // Capture encounterId from the URL
     const { loading, error, data } = useQuery(GET_ENCOUNTER, { variables: { encounterId: id } });
     const [encounter, setEncounter] = useState(null);
@@ -27,10 +29,13 @@ const SingleEncounter = () => {
     }
 
     return (
-      <div className="creature-details"> {/*Using same styling as SingleCreature */}
+      <div className="encounter-details"> 
         <h2>{encounter.title}</h2>
         <p><strong>Details:</strong> {encounter.details}</p>
-        <button onClick={() => window.history.back()}>Back to Encounters</button>
+        <div className="button-container">
+        <button className="standard-button-encounter" onClick={() => navigate(`/dungeons`)}>To Dungeons Page</button>
+        <button className="standard-button-encounter" onClick={() => navigate('/encounters')}>To Encounters Page</button>
+        </div>
       </div>
     );
 };

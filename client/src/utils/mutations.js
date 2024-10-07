@@ -95,3 +95,58 @@ export const UPDATE_QUEST = gql`
     }
   }
 `;
+
+export const ADD_DUNGEON = gql`
+  mutation addDungeon($title: String!, $description: String!) {
+    addDungeon(title: $title, description: $description) {
+      id
+      title
+      description
+    }
+  }
+`;
+
+export const DELETE_DUNGEON = gql`
+  mutation deleteDungeon($dungeonId: ID!) {
+    deleteDungeon(dungeonId: $dungeonId) {
+      id
+      title
+    }
+  }
+`;
+
+export const UPDATE_DUNGEON = gql`
+  mutation updateDungeon($dungeonId: ID!, $title: String!, $description: String!) {
+    updateDungeon(dungeonId: $dungeonId, title: $title, description: $description) {
+      id
+      title
+      description
+    }
+  }
+`;
+
+export const ADD_ENCOUNTER_TO_DUNGEON = gql`
+  mutation addEncounterToDungeon($dungeonId: ID!, $encounterId: ID!) {
+    addEncounterToDungeon(dungeonId: $dungeonId, encounterId: $encounterId) {
+      id
+      title
+      encounters {
+        id
+        title
+      }
+    }
+  }
+`;
+
+export const ADD_QUEST_TO_DUNGEON = gql`
+  mutation addQuestToDungeon($dungeonId: ID!, $questId: ID!) {
+    addQuestToDungeon(dungeonId: $dungeonId, questId: $questId) {
+      id
+      title
+      quests {
+        id
+        title
+      }
+    }
+  }
+`;
