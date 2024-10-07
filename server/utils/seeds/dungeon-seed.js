@@ -1,6 +1,7 @@
 const Dungeon = require('../../models/Dungeon');
 const User = require('../../models/User');
 const Encounter = require('../../models/Encounter');
+const { Quest } = require('../../models');
 
 // seed function to create dungeons
 const seedDungeons = async () => {
@@ -11,6 +12,7 @@ const seedDungeons = async () => {
         for (let user of users) {
             // get all encounters for the current user
             const userEncounters = await Encounter.find({ userId: user._id });
+            const userQuests = await Quest.find({ userId: user._id });
 
             // make sure there are encounters for this user
             if (userEncounters.length > 0) {
@@ -18,6 +20,9 @@ const seedDungeons = async () => {
                 const randomEncounters = userEncounters
                     .sort(() => 0.5 - Math.random()) // Shuffle encounters
                     .slice(0, 2); // Select 2 random encounters (adjust as needed)
+                const randomQuests = userQuests
+                    .sort(() => 0.5 - Math.random()) // Shuffle quests
+                    .slice(0, 2); // Select 2 random quests (adjust as needed)
 
                 // create two dungeons for each user
                 const dungeon1 = new Dungeon({
@@ -25,6 +30,7 @@ const seedDungeons = async () => {
                     title: `${user.username}'s First Dungeon`,
                     description: 'This is the first generated dungeon for the user.',
                     encounters: randomEncounters.map(encounter => encounter._id), // Add random encounters
+                    quests: randomQuests.map(quest => quest._id), // Add random encounters
                 });
 
                 const dungeon2 = new Dungeon({
@@ -32,6 +38,7 @@ const seedDungeons = async () => {
                     title: `${user.username}'s Second Dungeon`,
                     description: 'This is the second generated dungeon for the user.',
                     encounters: randomEncounters.map(encounter => encounter._id), // Same or different encounters
+                    quests: randomQuests.map(quest => quest._id), // Add random encounters
                 });
 
                 // save dungeons

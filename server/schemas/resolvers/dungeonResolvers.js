@@ -1,6 +1,5 @@
 const { Dungeon } = require("../../models");
 const { AuthenticationError } = require("../../utils/auth");
-const mongoose = require('mongoose');
 
 
 const dungeonQueries = {
@@ -8,7 +7,9 @@ const dungeonQueries = {
         if (context.user) {
             try {
                 const userId = context.user._id;
-                const dungeons = await Dungeon.find({ userId }).populate('encounters');
+                const dungeons = await Dungeon.find({ userId })
+                    .populate("encounters")
+                    .populate("quests");
                 if (!dungeons) {
                     throw new Error("Dungeon not found");
                 }
@@ -25,7 +26,10 @@ const dungeonQueries = {
         if (context.user) {
             try {
                 const userId = context.user._id;
-                const dungeon = await Dungeon.findOne({ _id: dungeonId, userId: userId }).populate('encounters');
+                const dungeon = await Dungeon.findOne({ _id: dungeonId, userId: userId })
+                    .populate("encounters")
+                    .populate("quests");
+
                 if (!dungeon) {
                     throw new Error("Dungeon not found or you do not have access rights to this dungeon");
                 }
@@ -58,7 +62,9 @@ const dungeonMutations = {
     updateDungeon: async (_, args, context) => {
         if (context.user) {
             try {
-                const dungeon = await Dungeon.findOne({ _id: args.dungeonId, userId: context.user._id });
+                const dungeon = await Dungeon.findOne({ _id: args.dungeonId, userId: context.user._id })
+                    .populate("encounters")
+                    .populate("quests");
 
                 if (!dungeon) {
                     throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
@@ -155,7 +161,69 @@ const dungeonMutations = {
                 throw new Error(`Failed to remove encounter: ${error.message}`);
             }
         } else {
-            throw new AuthenticationError("Not authenticated");
+            throw AuthenticationError;
+        }
+    }, addQuestToDungeon: async (_, { dungeonId, questId }, context) => {
+        if (context.user) {
+            try {
+                const dungeon = await Dungeon.findOne({ _id: dungeonId, userId: context.user._id })
+                    .populate("encounters")
+                    .populate("quests");
+
+                if (!dungeon) {
+                    throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
+                }
+
+                // check unique quest
+                const questIndex = dungeon.quests.findIndex(quest => quest._id.toString() === questId);
+                if (questIndex > -1) {
+                    throw new Error("Quest is already added to this dungeon.");
+                }
+
+                // add new quest
+                dungeon.quests.push(questId);
+
+                await dungeon.save();
+                const updateDungeon = await Dungeon.findOne({ _id: dungeonId, userId: context.user._id })
+                    .populate("encounters")
+                    .populate("quests");
+
+
+                return updateDungeon;
+            } catch (error) {
+                throw new Error(`Failed to add quest: ${error.message}`);
+            }
+        } else {
+            throw AuthenticationError;
+        }
+    },
+    removeQuestFromDungeon: async (_, { dungeonId, questId }, context) => {
+        if (context.user) {
+            try {
+                const dungeon = await Dungeon.findOne({ _id: dungeonId, userId: context.user._id })
+                    .populate("encounters")
+                    .populate("quests");
+
+                if (!dungeon) {
+                    throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
+                }
+
+                // check have we this quest in array
+                const questIndex = dungeon.quests.findIndex(quest => quest._id.toString() === questId);
+                if (questIndex === -1) {
+                    throw new Error("Quest not found in this dungeon.");
+                }
+
+                // delete quest from array
+                dungeon.quests.splice(questIndex, 1);
+
+                await dungeon.save();
+                return dungeon;
+            } catch (error) {
+                throw new Error(`Failed to remove quest: ${error.message}`);
+            }
+        } else {
+            throw AuthenticationError;
         }
     },
 }
