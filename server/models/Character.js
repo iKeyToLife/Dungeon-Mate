@@ -66,7 +66,8 @@ const CharacterSchema = new Schema(
             // for fetch data dnd
             index: {
                 type: String,
-                required: true
+                required: true,
+                unique: true
             },
             name: {
                 type: String,
