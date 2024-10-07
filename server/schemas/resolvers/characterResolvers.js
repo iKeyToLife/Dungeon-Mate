@@ -95,7 +95,7 @@ const characterMutations = {
             await character.save();
             return character;
         }
-        throw new AuthenticationError
+        throw AuthenticationError;
     },
     removeSpellFromCharacter: async (_, { characterId, spellIndex }, context) => {
         if (context.user) {
@@ -107,7 +107,7 @@ const characterMutations = {
             await character.save();
             return character;
         }
-        throw new AuthenticationError
+        throw AuthenticationError;
     },
     addItemToInventory: async (_, { characterId, item }, context) => {
         if (context.user) {
@@ -119,7 +119,7 @@ const characterMutations = {
             await character.save();
             return character;
         }
-        throw new AuthenticationError
+        throw AuthenticationError;
     },
     removeItemFromInventory: async (_, { characterId, itemName }, context) => {
         if (context.user) {
@@ -139,7 +139,7 @@ const characterMutations = {
 
             return character;
         }
-        throw new AuthenticationError;
+        throw AuthenticationError;
     },
 }
 
