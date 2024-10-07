@@ -38,7 +38,7 @@ export const SIGNUP_USER = gql`
 export const ADD_ENCOUNTER = gql`
   mutation addEncounter($title: String!, $details: String!) {
    addEncounter(title: $title, details: $details) {
-      id
+      _id
       title
      details
   }
@@ -47,7 +47,7 @@ export const ADD_ENCOUNTER = gql`
 export const DELETE_ENCOUNTER = gql`
 mutation DeleteEncounter($encounterId: ID!) {
    deleteEncounter(encounterId: $encounterId) {
-     id
+     _id
       title
       details
   }
@@ -56,7 +56,7 @@ mutation DeleteEncounter($encounterId: ID!) {
 export const UPDATE_ENCOUNTER = gql`
   mutation updateEncounter($encounterId: ID!, $title: String!, $details: String!) {
   updateEncounter(encounterId: $encounterId, title: $title, details: $details) {
-    id
+    _id
     title
     details
   }
@@ -66,7 +66,7 @@ export const UPDATE_ENCOUNTER = gql`
 export const ADD_QUEST = gql`
   mutation addQuest($title: String!, $details: String!, $rewards: String!) {
     addQuest(title: $title, details: $details, rewards: $rewards) {
-      id
+      _id
       title
       details
       rewards
@@ -77,7 +77,7 @@ export const ADD_QUEST = gql`
 export const DELETE_QUEST = gql`
   mutation DeleteQuest($questId: ID!) {
     deleteQuest(questId: $questId) {
-      id
+      _id
       title
       details
       rewards
@@ -88,7 +88,7 @@ export const DELETE_QUEST = gql`
 export const UPDATE_QUEST = gql`
   mutation updateQuest($questId: ID!, $title: String!, $details: String!, $rewards: String!) {
     updateQuest(questId: $questId, title: $title, details: $details, rewards: $rewards) {
-      id
+      _id
       title
       details
       rewards
@@ -131,7 +131,7 @@ export const ADD_ENCOUNTER_TO_DUNGEON = gql`
       _id
       title
       encounters {
-        id
+        _id
         title
       }
     }
@@ -144,7 +144,7 @@ export const ADD_QUEST_TO_DUNGEON = gql`
       _id
       title
       quests {
-        id
+        _id
         title
       }
     }
@@ -158,11 +158,11 @@ export const REMOVE_ENCOUNTER_FROM_DUNGEON = gql`
       title
       description
       encounters {
-        id
+        _id
         title
       }
       quests {
-        id
+        _id
         title
       }
     }
@@ -176,11 +176,11 @@ export const REMOVE_QUEST_FROM_DUNGEON = gql`
       title
       description
       encounters {
-        id
+        _id
         title
       }
       quests {
-        id
+        _id
         title
       }
     }

@@ -42,8 +42,8 @@ const Dungeons = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-     // Load dungeon data from localStorage when the component mounts
-     useEffect(() => {
+    // Load dungeon data from localStorage when the component mounts
+    useEffect(() => {
         const savedDungeon = localStorage.getItem('unsavedDungeon');
         if (savedDungeon) {
             const { title, description, encounters, quests } = JSON.parse(savedDungeon);
@@ -133,7 +133,7 @@ const Dungeons = () => {
         let valid = true;
         setTitleError('');
         setDescriptionError('');
-    
+
         if (title.trim() === '') {
             setTitleError('Please enter a title for your dungeon');
             valid = false;
@@ -142,40 +142,40 @@ const Dungeons = () => {
             setDescriptionError('Please enter some details for your dungeon');
             valid = false;
         }
-    
+
         if (valid) {
             const loggedIn = AuthService.loggedIn();
             if (!loggedIn) {
                 return <RedirectToLoginError message="Please login to save dungeons." />;
             }
-    
+
             try {
                 const { data } = await addDungeon({
                     variables: { title, description },
                     refetchQueries: [{ query: GET_DUNGEONS }]
                 });
-    
+
                 const newDungeonId = data.addDungeon._id;
-    
+
                 for (const encounter of dungeonEncounters) {
                     await addEncounterToDungeon({
-                        variables: { dungeonId: newDungeonId, encounterId: encounter.id },
+                        variables: { dungeonId: newDungeonId, encounterId: encounter._id },
                     });
                 }
-    
+
                 for (const quest of dungeonQuests) {
                     await addQuestToDungeon({
-                        variables: { dungeonId: newDungeonId, questId: quest.id },
+                        variables: { dungeonId: newDungeonId, questId: quest._id },
                     });
                 }
-    
+
                 // Clear the form and state after successful save
                 setTitle('');
                 setDescription('');
                 setDungeonEncounters([]);
                 setDungeonQuests([]);
                 localStorage.removeItem('unsavedDungeon');
-    
+
             } catch (err) {
                 console.error("Dungeon saving failed", err);
             }
@@ -183,85 +183,85 @@ const Dungeons = () => {
     };
 
     const handleEdit = (index) => {
-        console.log("Editing index:", index);  
-        const selectedDungeon = dungeons[index];  
-      
-        setEditingIndex(index);  
-      
+        console.log("Editing index:", index);
+        const selectedDungeon = dungeons[index];
+
+        setEditingIndex(index);
+
         // Populate the title and description fields
         setTitle(selectedDungeon.title);
         setDescription(selectedDungeon.description);
-      
-        // Populate the encounters and quests fields
-        setDungeonEncounters(selectedDungeon.encounters);  
-        setDungeonQuests(selectedDungeon.quests);  
-      };
 
-      const handleUpdate = async () => {
+        // Populate the encounters and quests fields
+        setDungeonEncounters(selectedDungeon.encounters);
+        setDungeonQuests(selectedDungeon.quests);
+    };
+
+    const handleUpdate = async () => {
         if (editingIndex !== null) {
-           try {
-              const { data } = await updateDungeon({
-                 variables: { dungeonId: dungeons[editingIndex]._id, title, description },
-              });
-     
-              const updatedDungeonId = data.updateDungeon._id;
-     
-              // Get the original encounters and quests for comparison
-              const originalEncounters = dungeons[editingIndex].encounters;
-              const originalQuests = dungeons[editingIndex].quests;
-     
-              // Ensure encounters aren't added multiple times
-              const existingEncounterIds = originalEncounters.map(encounter => encounter.id);
-              const encountersToAdd = dungeonEncounters.filter(encounter => !existingEncounterIds.includes(encounter.id));
-     
-              for (const encounter of encountersToAdd) {
-                 await addEncounterToDungeon({
-                    variables: { dungeonId: updatedDungeonId, encounterId: encounter.id },
-                 });
-              }
-     
-              // Remove encounters that were deleted
-              const encountersToRemove = originalEncounters.filter(encounter => 
-                 !dungeonEncounters.some(e => e.id === encounter.id));
-     
-              for (const encounter of encountersToRemove) {
-                 await removeEncounterFromDungeon({
-                    variables: { dungeonId: updatedDungeonId, encounterId: encounter.id },
-                 });
-              }
-     
-              // Ensure quests aren't added multiple times
-              const existingQuestIds = originalQuests.map(quest => quest.id);
-              const questsToAdd = dungeonQuests.filter(quest => !existingQuestIds.includes(quest.id));
-     
-              for (const quest of questsToAdd) {
-                 await addQuestToDungeon({
-                    variables: { dungeonId: updatedDungeonId, questId: quest.id },
-                 });
-              }
-     
-              // Remove quests that were deleted
-              const questsToRemove = originalQuests.filter(quest => 
-                 !dungeonQuests.some(q => q.id === quest.id));
-     
-              for (const quest of questsToRemove) {
-                 await removeQuestFromDungeon({
-                    variables: { dungeonId: updatedDungeonId, questId: quest.id },
-                 });
-              }
-     
-              // Clear form and state after update
-              setTitle('');
-              setDescription('');
-              setDungeonEncounters([]);
-              setDungeonQuests([]);
-              setEditingIndex(null);
-     
-           } catch (error) {
-              console.error('Error updating dungeon:', error);
-           }
+            try {
+                const { data } = await updateDungeon({
+                    variables: { dungeonId: dungeons[editingIndex]._id, title, description },
+                });
+
+                const updatedDungeonId = data.updateDungeon._id;
+
+                // Get the original encounters and quests for comparison
+                const originalEncounters = dungeons[editingIndex].encounters;
+                const originalQuests = dungeons[editingIndex].quests;
+
+                // Ensure encounters aren't added multiple times
+                const existingEncounterIds = originalEncounters.map(encounter => encounter._id);
+                const encountersToAdd = dungeonEncounters.filter(encounter => !existingEncounterIds.includes(encounter._id));
+
+                for (const encounter of encountersToAdd) {
+                    await addEncounterToDungeon({
+                        variables: { dungeonId: updatedDungeonId, encounterId: encounter._id },
+                    });
+                }
+
+                // Remove encounters that were deleted
+                const encountersToRemove = originalEncounters.filter(encounter =>
+                    !dungeonEncounters.some(e => e._id === encounter._id));
+
+                for (const encounter of encountersToRemove) {
+                    await removeEncounterFromDungeon({
+                        variables: { dungeonId: updatedDungeonId, encounterId: encounter._id },
+                    });
+                }
+
+                // Ensure quests aren't added multiple times
+                const existingQuestIds = originalQuests.map(quest => quest._id);
+                const questsToAdd = dungeonQuests.filter(quest => !existingQuestIds.includes(quest._id));
+
+                for (const quest of questsToAdd) {
+                    await addQuestToDungeon({
+                        variables: { dungeonId: updatedDungeonId, questId: quest._id },
+                    });
+                }
+
+                // Remove quests that were deleted
+                const questsToRemove = originalQuests.filter(quest =>
+                    !dungeonQuests.some(q => q._id === quest._id));
+
+                for (const quest of questsToRemove) {
+                    await removeQuestFromDungeon({
+                        variables: { dungeonId: updatedDungeonId, questId: quest._id },
+                    });
+                }
+
+                // Clear form and state after update
+                setTitle('');
+                setDescription('');
+                setDungeonEncounters([]);
+                setDungeonQuests([]);
+                setEditingIndex(null);
+
+            } catch (error) {
+                console.error('Error updating dungeon:', error);
+            }
         }
-     };
+    };
 
     return (
         <div className="dungeon-page">
@@ -279,10 +279,10 @@ const Dungeons = () => {
                     {encounterDropdownOpen && (
                         <ul className="encounter-list">
                             {encountersResult.data?.encounters.map((encounter) => (
-                                <li key={encounter.id} className="draggable" draggable={!isMobile} onDragStart={(e) => onDragStart(e, encounter, 'encounter')}>
+                                <li key={encounter._id} className="draggable" draggable={!isMobile} onDragStart={(e) => onDragStart(e, encounter, 'encounter')}>
                                     <div className="sidebar-card">
                                         <span>{encounter.title}</span>
-                                        <button onClick={() => navigate(`/encounter/${encounter.id}`)}>View</button>
+                                        <button onClick={() => navigate(`/encounter/${encounter._id}`)}>View</button>
                                         {/* "Add" button for mobile */}
                                         {isMobile && (
                                             <button onClick={() => handleAddEncounter(encounter)}>Add</button>
@@ -303,10 +303,10 @@ const Dungeons = () => {
                     {questDropdownOpen && (
                         <ul className="quest-list">
                             {questsResult.data?.quests.map((quest) => (
-                                <li key={quest.id} className="draggable" draggable={!isMobile} onDragStart={(e) => onDragStart(e, quest, 'quest')}>
+                                <li key={quest._id} className="draggable" draggable={!isMobile} onDragStart={(e) => onDragStart(e, quest, 'quest')}>
                                     <div className="sidebar-card">
                                         <span>{quest.title}</span>
-                                        <button onClick={() => navigate(`/quest/${quest.id}`)}>View</button>
+                                        <button onClick={() => navigate(`/quest/${quest._id}`)}>View</button>
                                         {/* Add" button for mobile */}
                                         {isMobile && (
                                             <button onClick={() => handleAddQuest(quest)}>Add</button>
@@ -349,7 +349,7 @@ const Dungeons = () => {
                                     <div key={idx} className="encounter-item">
                                         <p>{encounter.title}</p>
                                         <div className="dungeon-button-row">
-                                            <button onClick={() => navigate(`/encounter/${encounter.id}`)} className="dungeon-button-view">View</button>
+                                            <button onClick={() => navigate(`/encounter/${encounter._id}`)} className="dungeon-button-view">View</button>
                                             <button onClick={() => setDungeonEncounters(dungeonEncounters.filter((_, i) => i !== idx))} className="dungeon-button-remove">Remove</button>
                                         </div>
                                     </div>
@@ -366,7 +366,7 @@ const Dungeons = () => {
                                     <div key={idx} className="quest-item">
                                         <p>{quest.title}</p>
                                         <div className="dungeon-button-row">
-                                            <button onClick={() => navigate(`/quest/${quest.id}`)} className="dungeon-button-view">View</button>
+                                            <button onClick={() => navigate(`/quest/${quest._id}`)} className="dungeon-button-view">View</button>
                                             <button onClick={() => setDungeonQuests(dungeonQuests.filter((_, i) => i !== idx))} className="dungeon-button-remove">Remove</button>
                                         </div>
                                     </div>

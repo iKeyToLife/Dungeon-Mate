@@ -58,10 +58,10 @@ const Encounters = () => {
     try {
       // Try deleting the encounter
       await deleteEncounter({
-        variables: { encounterId: encounters[encounterToDelete].id },
+        variables: { encounterId: encounters[encounterToDelete]._id },
         refetchQueries: [{ query: GET_ENCOUNTERS }] // Refetch encounters after deletion
       });
-  
+
       closeDeleteModal(); // Close the modal after deletion
     } catch (error) {
       // Error
@@ -119,7 +119,7 @@ const Encounters = () => {
   const handleUpdate = async () => {
     try {
       const { data } = await updateEncounter({
-        variables: { encounterId: encounters[editingIndex].id, title, details },
+        variables: { encounterId: encounters[editingIndex]._id, title, details },
       });
 
       const updatedEncounters = [...encounters];
@@ -177,7 +177,7 @@ const Encounters = () => {
               <h3>{encounter.title}</h3>
               <p>{encounter.details}</p>
               <div className="encounter-button-row">
-                <button className="encounter-button-view" onClick={() => navigate(`/encounter/${encounter.id}`)}>View</button>
+                <button className="encounter-button-view" onClick={() => navigate(`/encounter/${encounter._id}`)}>View</button>
                 <button className="encounter-button-edit" onClick={() => handleEdit(index)}>Edit</button>
                 <button className="encounter-button-delete" onClick={() => openDeleteModal(index)}>Delete</button>
               </div>
