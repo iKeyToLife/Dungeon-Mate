@@ -596,3 +596,8 @@ tbody tr:nth-child(odd) {
 .quest-button-edit:hover, .quest-button-delete:hover {
   background-color: darkred; 
 }
+
+.quest-rewards {
+  color: gold;
+  text-shadow: 2px 2px 2px black;
+}

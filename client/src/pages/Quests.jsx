@@ -193,7 +193,7 @@ const Quests = () => {
               <div className="quest-card" key={index}>
                 <h3>{quest.title}</h3>
                 <p>{quest.details}</p>
-                <p><strong>Rewards:</strong> {quest.rewards}</p>
+                <p><strong className="quest-rewards">Rewards:</strong> {quest.rewards}</p>
                 <div className="quest-button-row">
                   <button className="quest-button-edit" onClick={() => handleEdit(index)}>Edit</button>
                   <button className="quest-button-delete" onClick={() => openDeleteModal(index)}>Delete</button>
