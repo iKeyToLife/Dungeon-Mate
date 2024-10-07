@@ -64,7 +64,7 @@ input:focus {
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
 .filter-form {
@@ -84,7 +84,7 @@ input:focus {
 .filter-form label {
   font-weight: bold;
   margin-bottom: 5px;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
 .filter-form input,
@@ -123,17 +123,18 @@ button:hover {
 table {
   width: 100%;
   border-collapse: collapse;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #FFD700;
   padding: 10px;
   text-align: left;
 }
 
 th {
-  background-color: #800000; 
+  background-color: #800000;
   font-weight: bold;
 }
 
@@ -176,22 +177,23 @@ tbody tr:nth-child(odd) {
 .monster-list table {
   width: 100%;
   border-collapse: collapse;
-  background-color: rgba(0, 0, 0, 0.7); 
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
-.monster-list th, .monster-list td {
+.monster-list th,
+.monster-list td {
   padding: 10px;
   text-align: left;
   border: 1px solid #FFD700;
-  color: #FFD700; 
+  color: #FFD700;
 }
 
 .monster-list thead {
-  background-color: rgba(128, 0, 0, 0.9); 
+  background-color: rgba(128, 0, 0, 0.9);
 }
 
 .monster-list tbody tr:hover {
-  background-color: rgba(128, 0, 0, 0.8); 
+  background-color: rgba(128, 0, 0, 0.8);
 }
 
 .clickable-row {
@@ -200,7 +202,7 @@ tbody tr:nth-child(odd) {
 }
 
 .clickable-row:hover {
-  background-color: rgba(128, 0, 0, 0.8); 
+  background-color: rgba(128, 0, 0, 0.8);
 }
 
 .monster-details {
@@ -217,9 +219,9 @@ tbody tr:nth-child(odd) {
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 30px;
-  background-color: rgba(0, 0, 0, 0.9); 
+  background-color: rgba(0, 0, 0, 0.9);
   border-radius: 8px;
-  border: 2px solid #FFD700; 
+  border: 2px solid #FFD700;
   color: #FFD700;
 }
 
@@ -233,7 +235,7 @@ tbody tr:nth-child(odd) {
   color: #FFD700;
 }
 
-.creature-details p, 
+.creature-details p,
 .creature-details ul {
   font-size: 1.2rem;
   color: #ffffff;
@@ -264,57 +266,58 @@ tbody tr:nth-child(odd) {
 }
 
 .search-input {
-  width: 275px !important; 
-  padding: 10px; 
-  border-radius: 5px; 
+  width: 275px !important;
+  padding: 10px;
+  border-radius: 5px;
   border: 1px solid #ccc;
 }
 
 .search-container {
-  background-color: rgba(0, 0, 0, 0.7); 
-  border: 2px solid gold; 
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid gold;
   padding: 20px;
-  border-radius: 10px; 
-  width: 1000px; 
+  border-radius: 10px;
+  width: 1000px;
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .search-container div {
   margin-bottom: 10px;
-  flex: 1; 
-  min-width: 200px; 
-  margin-right: 10px; 
+  flex: 1;
+  min-width: 200px;
+  margin-right: 10px;
 }
 
 .filter-form {
   display: flex;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   width: 100%;
-  gap: 20px; 
+  gap: 20px;
 }
 
-.filter-form input, .filter-form select {
-  width: 100%; 
+.filter-form input,
+.filter-form select {
+  width: 100%;
   padding: 10px;
   border: 1px solid #ffcc00;
-  background-color: rgba(0, 0, 0, 0.6); 
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 5px;
   color: #8d8d8d;
 }
 
 .filter-form button {
   padding: 10px 20px;
-  background-color: #C5160D; 
+  background-color: #C5160D;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  flex: 0 0 auto; 
+  flex: 0 0 auto;
 }
 
 .search-container label {
@@ -325,25 +328,25 @@ tbody tr:nth-child(odd) {
 }
 
 .bestiary-select {
-  background-color: rgba(0, 0, 0, 0.8); 
-  color: #ffcc00; 
-  border: 1px solid #ffcc00; 
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffcc00;
+  border: 1px solid #ffcc00;
   padding: 10px;
   border-radius: 5px;
-  appearance: none; 
+  appearance: none;
 }
 
 .bestiary-select option {
   background-color: #000;
-  color: #ffcc00; 
+  color: #ffcc00;
 }
 
 .encounter-container {
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border: 2px solid gold;
   border-radius: 10px;
-  max-width: 900px; 
+  max-width: 900px;
   margin: 20px auto;
 }
 
@@ -352,7 +355,7 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-title-input {
-  width: 300px; 
+  width: 300px;
   height: 30px;
   margin-bottom: 10px;
   padding: 5px;
@@ -362,19 +365,19 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-input {
-  width: 100%; 
+  width: 100%;
   height: 100px;
   margin-bottom: 10px;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.6); 
+  background: rgba(0, 0, 0, 0.6);
   color: white;
   border: 1px solid gold;
 }
 
 .save-encounter-button {
-  width: 200px !important; 
+  width: 200px !important;
   padding: 10px;
-  background-color: #8b0000; 
+  background-color: #8b0000;
   color: gold;
   border: 2px solid gold;
   cursor: pointer;
@@ -382,7 +385,7 @@ tbody tr:nth-child(odd) {
 }
 
 .save-encounter-button:hover {
-  background-color: #a30000; 
+  background-color: #a30000;
 }
 
 .created-title {
@@ -404,10 +407,10 @@ tbody tr:nth-child(odd) {
   border-radius: 5px;
   color: white;
   display: flex;
-  flex-direction: column; 
-  justify-content: space-between; 
-  min-height: 200px; 
-  word-wrap: break-word; 
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
@@ -417,11 +420,12 @@ tbody tr:nth-child(odd) {
   gap: 10px;
 }
 
-.encounter-button-edit, .encounter-button-delete {
-  width: 100px !important; 
+.encounter-button-edit,
+.encounter-button-delete {
+  width: 100px !important;
   padding: 5px 10px;
   font-size: 0.9rem;
-  background-color: #b22222; 
+  background-color: #b22222;
   border: 2px outset gold;
   color: white;
   cursor: pointer;
@@ -431,14 +435,15 @@ tbody tr:nth-child(odd) {
   color: white;
 }
 
-.encounter-button-edit:hover, .encounter-button-delete:hover {
-  background-color: darkred; 
+.encounter-button-edit:hover,
+.encounter-button-delete:hover {
+  background-color: darkred;
 }
 
 .input-section {
   display: flex;
-  flex-direction: column; 
-  align-items: center; 
+  flex-direction: column;
+  align-items: center;
 }
 
 .encounter-error-message {
@@ -452,64 +457,65 @@ tbody tr:nth-child(odd) {
 }
 
 .parchment-modal {
-  background-image: url('../scroll.png'); 
-  background-size: 130% 130%; 
+  background-image: url('../scroll.png');
+  background-size: 130% 130%;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 15px; 
+  border-radius: 15px;
   padding: 65px;
   width: 600px;
   height: 350px;
   font-weight: bold;
   max-width: 100%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5); 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
   font-family: 'MedievalSharp', serif;
   font-size: 20px;
 }
 
 .parchment-modal .modal-content {
-  background-color: transparent; 
-  border: none; 
+  background-color: transparent;
+  border: none;
 }
 
 .parchment-modal .modal-footer {
   display: flex;
-  justify-content: center; 
-  gap: 20px; 
+  justify-content: center;
+  gap: 20px;
 }
 
-.parchment-modal h5, .parchment-modal p {
-  font-family: 'MedievalSharp', serif; 
-  color: #4b3e32; 
+.parchment-modal h5,
+.parchment-modal p {
+  font-family: 'MedievalSharp', serif;
+  color: #4b3e32;
   font-weight: bold;
   font-size: 34px;
 }
 
 .parchment-modal .btn {
-  background-color: rgba(255, 0, 0, 0) !important; 
+  background-color: rgba(255, 0, 0, 0) !important;
   border: none !important;
   color: rgb(0, 0, 0) !important;
   width: 140px !important;
 }
 
 .parchment-modal .btn:hover {
-  background-color: gold !important; 
+  background-color: gold !important;
   border: 4px outset darkred !important;
 }
 
-.parchment-modal .modal-header, 
-.parchment-modal .modal-footer, 
+.parchment-modal .modal-header,
+.parchment-modal .modal-footer,
 .parchment-modal .modal-body {
-  border: none; 
-  outline: none; 
+  border: none;
+  outline: none;
 }
 
 .quest-container {
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   padding: 20px;
   border: 2px solid gold;
   border-radius: 10px;
-  max-width: 900px; 
+  max-width: 900px;
   margin: 20px auto;
 }
 
@@ -517,8 +523,9 @@ tbody tr:nth-child(odd) {
   text-align: center;
 }
 
-.quest-title-input, .quest-input {
-  width: 300px; 
+.quest-title-input,
+.quest-input {
+  width: 300px;
   height: 30px;
   margin-bottom: 10px;
   padding: 5px;
@@ -528,19 +535,19 @@ tbody tr:nth-child(odd) {
 }
 
 .quest-input {
-  width: 100%; 
+  width: 100%;
   height: 100px;
 }
 
 .quest-input-rewards {
-  width: 100%; 
-  height: 50px; 
+  width: 100%;
+  height: 50px;
 }
 
 .save-quest-button {
-  width: 200px; 
+  width: 200px;
   padding: 10px;
-  background-color: #8b0000; 
+  background-color: #8b0000;
   color: gold;
   border: 2px solid gold;
   cursor: pointer;
@@ -548,7 +555,7 @@ tbody tr:nth-child(odd) {
 }
 
 .save-quest-button:hover {
-  background-color: #a30000; 
+  background-color: #a30000;
 }
 
 .created-title {
@@ -570,10 +577,10 @@ tbody tr:nth-child(odd) {
   border-radius: 5px;
   color: white;
   display: flex;
-  flex-direction: column; 
-  justify-content: space-between; 
-  min-height: 200px; 
-  word-wrap: break-word; 
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
@@ -583,18 +590,20 @@ tbody tr:nth-child(odd) {
   gap: 10px;
 }
 
-.quest-button-edit, .quest-button-delete {
-  width: 100px; 
+.quest-button-edit,
+.quest-button-delete {
+  width: 100px;
   padding: 5px 10px;
   font-size: 0.9rem;
-  background-color: #b22222; 
+  background-color: #b22222;
   border: 2px outset gold;
   color: white;
   cursor: pointer;
 }
 
-.quest-button-edit:hover, .quest-button-delete:hover {
-  background-color: darkred; 
+.quest-button-edit:hover,
+.quest-button-delete:hover {
+  background-color: darkred;
 }
 
 .quest-rewards {
@@ -603,20 +612,22 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-button-view {
-  width: 100px !important; 
-  padding: 5px 10px; 
-  font-size: 0.9rem; 
-  background-color: #b22222; 
-  border: 2px outset gold; 
+  width: 100px !important;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  background-color: #b22222;
+  border: 2px outset gold;
   color: white;
   cursor: pointer;
 }
 
 .encounter-button-view:hover {
-  background-color: darkred; 
+  background-color: darkred;
 }
 
-.quest-details, .encounter-details, .creature-details {
+.quest-details,
+.encounter-details,
+.creature-details {
   max-width: 800px;
   margin: 0 auto;
   margin-top: 10px;
@@ -628,17 +639,23 @@ tbody tr:nth-child(odd) {
   color: #FFD700;
 }
 
-.quest-details h2, .encounter-details h2, .creature-details h2 {
+.quest-details h2,
+.encounter-details h2,
+.creature-details h2 {
   font-size: 2rem;
   margin-bottom: 20px;
   color: #FFD700;
 }
 
-.quest-details strong, .encounter-details strong, .creature-details strong {
+.quest-details strong,
+.encounter-details strong,
+.creature-details strong {
   color: #FFD700;
 }
 
-.quest-details p, .encounter-details p, .creature-details p {
+.quest-details p,
+.encounter-details p,
+.creature-details p {
   font-size: 1.2rem;
   color: #ffffff;
 }
@@ -661,8 +678,8 @@ tbody tr:nth-child(odd) {
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 10px; 
-  margin-top: 10px; 
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .standard-button {
@@ -688,10 +705,11 @@ tbody tr:nth-child(odd) {
   height: 50px;
 }
 
-.encounter-details, .quest-details {
+.encounter-details,
+.quest-details {
   word-wrap: break-word;
-  overflow-wrap: break-word; 
-  white-space: normal; 
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* Dungeon Page Styling */
@@ -832,7 +850,8 @@ tbody tr:nth-child(odd) {
   border: 2px solid gold;
   border-radius: 10px;
   position: sticky;
-  top: 20px; /* Ensure it stays aligned with the dungeon container */
+  top: 20px;
+  /* Ensure it stays aligned with the dungeon container */
   overflow-y: auto;
 }
 
@@ -897,7 +916,7 @@ tbody tr:nth-child(odd) {
 }
 
 .dropdown-icon.open {
-  transform: rotate(180deg); 
+  transform: rotate(180deg);
 }
 
 /* Dungeon Grid */
@@ -910,20 +929,32 @@ tbody tr:nth-child(odd) {
 }
 
 .dungeon-card {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(24, 24, 24, 0.678);
   padding: 20px;
   border: 2px solid gold;
   border-radius: 10px;
-  color: #FFD700;
+  color: gold;
   min-height: 250px;
+  background-image: url('../scroll-background.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .dungeon-card h3 {
   margin-bottom: 10px;
+  text-shadow: 2px 2px 2px black;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.dungeon-card h4 {
+  color: black;
+  font-weight: bold;
 }
 
 .dungeon-card p {
   margin-bottom: 20px;
+  text-shadow: 3px 2px 2px black;
 }
 
 .dungeon-encounters,
@@ -955,7 +986,7 @@ tbody tr:nth-child(odd) {
 }
 
 .dungeon-grid p {
-  color: #FFD700; 
+  color: #FFD700;
   font-size: 1.2rem;
   text-align: center;
   font-weight: bold;
@@ -963,7 +994,7 @@ tbody tr:nth-child(odd) {
 
 /* Drag & Drop Your Creations Text */
 .sidebar p {
-  color: #FFD700; 
+  color: #FFD700;
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
@@ -987,7 +1018,7 @@ tbody tr:nth-child(odd) {
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
-  border: 2px solid gold; 
+  border: 2px solid gold;
   margin-top: 30px;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -1018,41 +1049,54 @@ tbody tr:nth-child(odd) {
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
+  background-image: url('../scroll-background.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .dungeon-details-container h1 {
   font-size: 3rem;
-  color: #FFD700; 
+  color: #FFD700;
   margin-bottom: 10px;
+  text-shadow: 3px 2px 2px black;
+  text-decoration: underline;
 }
 
 .dungeon-details-container p {
   font-size: 1.2rem;
   line-height: 1.6;
-  color: #FFD700;
+  color: #000000;
+  text-shadow: 1px 1px 2px gold;
+  font-weight: bold;
 }
 
-.dungeon-encounters, .dungeon-quests {
+.dungeon-encounters,
+.dungeon-quests {
   margin: 20px 0;
 }
 
-.dungeon-encounters h2, .dungeon-quests h2 {
+.dungeon-encounters h2,
+.dungeon-quests h2 {
   font-size: 2rem;
-  color: #FFD700; 
+  color: #FFD700;
+  text-shadow: 3px 2px 2px black;
 }
 
-.encounter-item, .quest-item {
-  border: 2px solid #FFD700; 
+.encounter-item,
+.quest-item {
+  border: 2px solid #FFD700;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
   font-size: 1.2rem;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.encounter-item p, .quest-item p {
+.encounter-item p,
+.quest-item p {
   margin: 0;
-  color: #FFD700; 
+  color: #FFD700;
+  text-shadow: 3px 2px 2px black;
 }
 
 .button-container {
@@ -1062,8 +1106,8 @@ tbody tr:nth-child(odd) {
 .standard-button-dungeon {
   padding: 10px 20px;
   font-size: 1.2rem;
-  background-color: #8B0000; 
-  color: #FFD700; 
+  background-color: #8B0000;
+  color: #FFD700;
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -1071,83 +1115,84 @@ tbody tr:nth-child(odd) {
 }
 
 .standard-button-dungeon:hover {
-  background-color: #FFD700; 
-  color: #8B0000; 
+  background-color: #FFD700;
+  color: #8B0000;
 }
 
 /* Mobile styles (screens smaller than 768px) */
 @media only screen and (max-width: 768px) {
-  
+
   /* Adjusting the search-container for mobile */
   .search-container {
-    width: 100%; 
-    max-width: 100%; 
-    flex-direction: column; 
-    align-items: stretch; 
+    width: 100%;
+    max-width: 100%;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   /* Adjust each filter/search input on mobile */
   .search-container div {
-    width: 100%; 
-    min-width: 100%; 
-    margin-bottom: 10px; 
+    width: 100%;
+    min-width: 100%;
+    margin-bottom: 10px;
   }
 
   /* Adjust filter-form elements for mobile */
   .filter-form {
-    gap: 10px; 
-    flex-direction: column; 
-    align-items: stretch; 
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
   }
 
   /* Monster list table adjustments */
   .monster-list {
-    width: 100%; 
-    max-width: 100%; 
-    padding: 10px; 
-    overflow-x: auto; 
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    overflow-x: auto;
   }
 
   /* Table cells adjustment on mobile */
   table {
-    table-layout: auto; 
-    font-size: 14px; 
-    border-spacing: 0 5px; 
-    white-space: nowrap; 
-    overflow-x: auto; 
+    table-layout: auto;
+    font-size: 14px;
+    border-spacing: 0 5px;
+    white-space: nowrap;
+    overflow-x: auto;
     width: 100%;
-    display: block; 
+    display: block;
   }
 
-  th, td {
-    padding: 10px; 
-    text-align: center; 
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
   }
 
   th {
-    white-space: nowrap; 
+    white-space: nowrap;
     font-weight: bold;
     background-color: #800000;
     color: #FFD700;
   }
 
   td {
-    white-space: nowrap; 
-    border-bottom: 1px solid #FFD700; 
+    white-space: nowrap;
+    border-bottom: 1px solid #FFD700;
   }
 
   /* Adjust pagination controls for mobile */
   .pagination-controls {
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 10px; 
+    margin-top: 10px;
   }
 
   .pagination-controls button {
     padding: 8px 12px;
-    margin: 2px; 
-    font-size: 12px; 
+    margin: 2px;
+    font-size: 12px;
   }
 
   /* Increase button size for better mobile usability */
@@ -1167,13 +1212,150 @@ tbody tr:nth-child(odd) {
     margin-bottom: 20px;
   }
 
-  .sidebar {
+  .save-dungeon-button {
+    width: 90%;
+  }
+
+  /* Move sidebar above the dungeon container */
+  .dungeon-page {
+    flex-direction: column;
+  }
+
+  /* Sidebar should take full width on mobile */
+  .sidebar-container {
     width: 100%;
-    position: static;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
   }
 
+  .sidebar {
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    border: 2px solid gold;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+
+  .sidebar ul {
+    display: block;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Dropdown items should also expand properly */
+  .sidebar-card {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .dungeon-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .dungeon-title-input,
+  .dungeon-input {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 1.1rem;
+  }
+
+  /* Dropzones for Encounters and Quests */
+  .dungeon-subcontainer {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .encounter-dropzone,
+  .quest-dropzone {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Adjust Save Dungeon Button */
   .save-dungeon-button {
-    width: 90%;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  /* Existing Dungeons Container */
+  .existing-dungeons-container {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+  }
+
+  /* Dungeon Cards in Existing Dungeons */
+  .dungeon-grid {
+    display: block;
+    width: 100%;
+  }
+
+  .dungeon-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .standard-button-encounter {
+    width: 48% !important;
+    padding: 10px !important;
+    background-color: #800000 !important;
+    color: #FFD700 !important;
+    border: 2px solid #FFD700 !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    white-space: normal !important; 
+    word-wrap: break-word !important;
+    height: auto !important; 
+    min-height: 40px; 
+  }
+
+  .standard-button-encounter:hover {
+    background-color: #a50000 !important;
+  }
+
+  .button-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+ 
+  .dungeon-details-container {
+    width: 100%; 
+    padding: 15px; 
+    box-sizing: border-box; 
+    margin: 0 auto; 
+    background-size: cover; 
+  }
+
+  .dungeon-encounters,
+  .dungeon-quests {
+    width: 100%; 
+    text-align: center; 
+  }
+
+  .encounter-item,
+  .quest-item {
+    width: 100%; 
+    padding: 10px;
+    box-sizing: border-box; 
+  }
+
+  .standard-button-dungeon {
+    width: 200px !important; 
+    font-size: 1rem; 
+    margin: 0 auto;
+    display: block;
   }
 }
