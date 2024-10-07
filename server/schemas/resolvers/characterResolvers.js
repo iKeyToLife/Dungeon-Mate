@@ -34,18 +34,17 @@ const characterMutations = {
     addCharacter: async (parent, args, context) => {
         if (context.user) {
             try {
-                args.userId = context.user._id
+                console.log('Received args:', args); // Added this line for debugging
+                args.userId = context.user._id;
                 const newCharacter = new Character(args);
-
-                await newCharacter.save(); // Save the character to the database
-
-                return newCharacter; // Return the newly created character
+                await newCharacter.save();
+                return newCharacter;
             } catch (error) {
+                console.error('Error in addCharacter resolver:', error); // Added this line too
                 throw new Error("Failed to create character: " + error.message);
             }
         }
-
-        throw AuthenticationError;
+        throw new AuthenticationError('You must be logged in to create a character');
     },
     deleteCharacter: async (_, { characterId }, context) => {
         if (context.user) {

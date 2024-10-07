@@ -36,12 +36,12 @@ const characterTypeDefs = gql`
   }
 
   input AttributesInput {
-    strength: Int
-    dexterity: Int
-    constitution: Int
-    intelligence: Int
-    wisdom: Int
-    charisma: Int
+    strength: Int!
+    dexterity: Int!
+    constitution: Int!
+    intelligence: Int!
+    wisdom: Int!
+    charisma: Int!
   }
 
   input SpellsInput {
