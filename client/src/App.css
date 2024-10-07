@@ -503,3 +503,96 @@ tbody tr:nth-child(odd) {
   border: none; 
   outline: none; 
 }
+
+.quest-container {
+  background: rgba(0, 0, 0, 0.5); 
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  max-width: 900px; 
+  margin: 20px auto;
+}
+
+.quest-title {
+  text-align: center;
+}
+
+.quest-title-input, .quest-input {
+  width: 300px; 
+  height: 30px;
+  margin-bottom: 10px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 1px solid gold;
+}
+
+.quest-input {
+  width: 100%; 
+  height: 100px;
+}
+
+.quest-input-rewards {
+  width: 100%; 
+  height: 50px; 
+}
+
+.save-quest-button {
+  width: 200px; 
+  padding: 10px;
+  background-color: #8b0000; 
+  color: gold;
+  border: 2px solid gold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-quest-button:hover {
+  background-color: #a30000; 
+}
+
+.created-title {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.quest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+  margin-top: 20px;
+}
+
+.quest-card {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid gold;
+  padding: 12px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between; 
+  min-height: 200px; 
+  word-wrap: break-word; 
+  overflow-wrap: break-word;
+}
+
+.quest-button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.quest-button-edit, .quest-button-delete {
+  width: 100px; 
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  background-color: #b22222; 
+  border: 2px outset gold;
+  color: white;
+  cursor: pointer;
+}
+
+.quest-button-edit:hover, .quest-button-delete:hover {
+  background-color: darkred; 
+}

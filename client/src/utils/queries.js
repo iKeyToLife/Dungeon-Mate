@@ -26,3 +26,25 @@ export const GET_ENCOUNTER = gql`
   }
 }
 `
+
+export const GET_QUESTS = gql`
+  query getAllQuests {
+    quests {
+      id
+      title
+      details
+      rewards
+    }
+  }
+`;
+
+export const GET_QUEST = gql`
+  query getQuestById($questId: ID!) {
+    quest(questId: $questId) {
+      id
+      title
+      details
+      rewards
+    }
+  }
+`;
