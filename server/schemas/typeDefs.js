@@ -70,6 +70,10 @@ const typeDefs = gql`
       inventory: [InventoryInput],
       alignment: String
       ): Character
+    addSpellToCharacter(characterId: ID!, spell: SpellInput!): Character
+    removeSpellFromCharacter(characterId: ID!, spellIndex: String!): Character
+    addItemToInventory(characterId: ID!, item: InventoryItemInput!): Character
+    removeItemFromInventory(characterId: ID!, itemName: String!): Character
     addEncounter(
       title: String!,
       details: String!
