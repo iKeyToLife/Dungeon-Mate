@@ -5,10 +5,12 @@ import AuthService from '../utils/auth';
 import { ADD_QUEST, DELETE_QUEST, UPDATE_QUEST } from '../utils/mutations';
 import { GET_QUESTS } from '../utils/queries';
 import { RedirectToLoginError } from '../components/Error';
+import { useNavigate } from 'react-router-dom';
 
 const Quests = () => {
     const [quests, setQuests] = useState([]);
     const questsResult = useQuery(GET_QUESTS);
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
     const [rewards, setRewards] = useState(''); 
@@ -195,6 +197,7 @@ const Quests = () => {
                 <p>{quest.details}</p>
                 <p><strong className="quest-rewards">Rewards:</strong> {quest.rewards}</p>
                 <div className="quest-button-row">
+                  <button className="quest-button-view" onClick={() => navigate(`/quest/${quest.id}`)}>View</button>
                   <button className="quest-button-edit" onClick={() => handleEdit(index)}>Edit</button>
                   <button className="quest-button-delete" onClick={() => openDeleteModal(index)}>Delete</button>
                 </div>

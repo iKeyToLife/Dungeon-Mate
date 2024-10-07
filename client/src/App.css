@@ -601,3 +601,59 @@ tbody tr:nth-child(odd) {
   color: gold;
   text-shadow: 2px 2px 2px black;
 }
+
+.encounter-button-view {
+  width: 100px !important; 
+  padding: 5px 10px; 
+  font-size: 0.9rem; 
+  background-color: #b22222; 
+  border: 2px outset gold; 
+  color: white;
+  cursor: pointer;
+}
+
+.encounter-button-view:hover {
+  background-color: darkred; 
+}
+
+.quest-details, .encounter-details, .creature-details {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  border: 2px solid #FFD700;
+  color: #FFD700;
+}
+
+.quest-details h2, .encounter-details h2, .creature-details h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #FFD700;
+}
+
+.quest-details strong, .encounter-details strong, .creature-details strong {
+  color: #FFD700;
+}
+
+.quest-details p, .encounter-details p, .creature-details p {
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.back-button {
+  background-color: #800000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.back-button:hover {
+  background-color: #a50000;
+}

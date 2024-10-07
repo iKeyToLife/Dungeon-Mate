@@ -10,6 +10,8 @@ import Encounters from './pages/Encounters';
 import Quests from './pages/Quests';
 import Bestiary from './pages/Bestiary';
 import SingleCreature from './pages/SingleCreature';
+import SingleEncounter from './pages/SingleEncounter';
+import SingleQuest from './pages/SingleQuest';
 
 const App = () => {
   return (
@@ -23,7 +25,9 @@ const App = () => {
             <Route path="/characters" element={<Characters />} />
             <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/encounters" element={<Encounters />} />
+            <Route path="/encounter/:id" element={<SingleEncounter />} />
             <Route path="/quests" element={<Quests />} />
+            <Route path="/quest/:questId" element={<SingleQuest />} />
             <Route path="/bestiary" element={<Bestiary />} />
             <Route path="/creature/:id" element={<SingleCreature />} />
           </Routes>

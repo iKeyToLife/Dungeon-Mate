@@ -5,10 +5,12 @@ import AuthService from '../utils/auth';
 import { ADD_ENCOUNTER, DELETE_ENCOUNTER, UPDATE_ENCOUNTER } from '../utils/mutations';
 import { GET_ENCOUNTERS } from '../utils/queries';
 import { RedirectToLoginError } from '../components/Error';
+import { useNavigate } from 'react-router-dom';
 
 const Encounters = () => {
   const [encounters, setEncounters] = useState([]);
   const encountersResult = useQuery(GET_ENCOUNTERS);
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [details, setDetails] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
@@ -176,6 +178,7 @@ const Encounters = () => {
               <h3>{encounter.title}</h3>
               <p>{encounter.details}</p>
               <div className="encounter-button-row">
+                <button className="encounter-button-view" onClick={() => navigate(`/encounter/${encounter.id}`)}>View</button>
                 <button className="encounter-button-edit" onClick={() => handleEdit(index)}>Edit</button>
                 <button className="encounter-button-delete" onClick={() => openDeleteModal(index)}>Delete</button>
               </div>
