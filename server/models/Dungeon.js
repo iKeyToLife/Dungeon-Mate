@@ -22,6 +22,11 @@ const DungeonSchema = new Schema(
             ref: 'encounter',
             required: true
         }],
+        quests: [{
+            type: Schema.Types.ObjectId,
+            ref: 'quest',
+            required: true
+        }],
     },
     {
         timestamps: true, // createdAt, updatedAt
