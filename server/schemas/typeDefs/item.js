@@ -6,6 +6,12 @@ const itemTypeDefs = gql`
     type: String!
     description: String!
   }
+
+  input InventoryItemInput {
+  name: String!
+  type: String!
+  description: String!
+}
 `;
 
 module.exports = itemTypeDefs;
