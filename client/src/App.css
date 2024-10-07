@@ -1147,19 +1147,20 @@ tbody tr:nth-child(odd) {
   /* Monster list table adjustments */
   .monster-list {
     width: 100%;
-    max-width: 100%;
     padding: 10px;
+    box-sizing: border-box;
     overflow-x: auto;
+    display: block;
   }
 
   /* Table cells adjustment on mobile */
   table {
-    table-layout: auto;
+    width: 100%;
+    table-layout: fixed;
     font-size: 14px;
-    border-spacing: 0 5px;
+    border-spacing: 0;
     white-space: nowrap;
     overflow-x: auto;
-    width: 100%;
     display: block;
   }
 
@@ -1167,38 +1168,66 @@ tbody tr:nth-child(odd) {
   td {
     padding: 10px;
     text-align: center;
+    white-space: nowrap;
+    border-bottom: 1px solid #FFD700;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   th {
-    white-space: nowrap;
     font-weight: bold;
     background-color: #800000;
     color: #FFD700;
   }
 
   td {
-    white-space: nowrap;
     border-bottom: 1px solid #FFD700;
+  }
+
+  .monster-list table {
+    width: 100%;
+    overflow-x: auto;
+    display: block;
   }
 
   /* Adjust pagination controls for mobile */
   .pagination-controls {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
 
-  .pagination-controls button {
-    padding: 8px 12px;
-    margin: 2px;
-    font-size: 12px;
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap; 
+    width: 100%;
   }
 
-  /* Increase button size for better mobile usability */
-  .pagination-controls button {
-    min-width: 40px;
-    margin: 5px;
+  .pagination button {
+    padding: 8px 10px;
+    margin: 0;
+    font-size: 14px;
+    width: 40px; 
+    box-sizing: border-box;
+    background-color: #800000;
+    color: #FFD700;
+    border: 2px solid gold;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: none; 
+  }
+
+  .pagination button:hover {
+    background-color: #a50000;
+  }
+
+  .pagination button.active {
+    background-color: #FFD700;
+    color: #800000;
+    font-weight: bold;
   }
 
   .dungeon-subcontainer {
@@ -1248,7 +1277,7 @@ tbody tr:nth-child(odd) {
   /* Dropdown items should also expand properly */
   .sidebar-card {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     padding: 10px;
     margin-bottom: 10px;
@@ -1272,9 +1301,9 @@ tbody tr:nth-child(odd) {
   }
 
   .sidebar-card span {
-    flex-grow: 1; /* Allow the text to grow and take up available space */
-    text-align: left; /* Ensure text alignment is to the left */
-    margin-right: 10px; /* Add spacing between text and buttons */
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 10px;
   }
 
   .dungeon-container {
@@ -1339,10 +1368,10 @@ tbody tr:nth-child(odd) {
     font-size: 14px !important;
     text-align: center !important;
     box-sizing: border-box !important;
-    white-space: normal !important; 
+    white-space: normal !important;
     word-wrap: break-word !important;
-    height: auto !important; 
-    min-height: 40px; 
+    height: auto !important;
+    min-height: 40px;
   }
 
   .standard-button-encounter:hover {
@@ -1356,70 +1385,70 @@ tbody tr:nth-child(odd) {
     width: 100% !important;
     padding: 0 !important;
   }
- 
+
   .dungeon-details-container {
-    width: 100%; 
-    padding: 15px; 
-    box-sizing: border-box; 
-    margin: 0 auto; 
-    background-size: cover; 
+    width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background-size: cover;
   }
 
   .dungeon-encounters,
   .dungeon-quests {
-    width: 100%; 
-    text-align: center; 
+    width: 100%;
+    text-align: center;
   }
 
   .encounter-item,
   .quest-item {
-    width: 100%; 
+    width: 100%;
     padding: 10px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
   }
 
   .standard-button-dungeon {
-    width: 200px !important; 
-    font-size: 1rem; 
+    width: 200px !important;
+    font-size: 1rem;
     margin: 0 auto;
     display: block;
   }
-  
-   /* Adjust modal size for mobile screens */
-   .parchment-modal {
-    width: 90% !important; 
-    height: auto; 
-    padding: 20px; 
-    max-height: 90vh; 
+
+  /* Adjust modal size for mobile screens */
+  .parchment-modal {
+    width: 90% !important;
+    height: auto;
+    padding: 20px;
+    max-height: 90vh;
   }
 
   /* Modal content adjustments */
   .parchment-modal .modal-content {
-    padding: 20px; 
-    background-color: transparent; 
+    padding: 20px;
+    background-color: transparent;
   }
 
   /* Adjust header and footer for proper display on mobile */
-  .parchment-modal .modal-header, 
+  .parchment-modal .modal-header,
   .parchment-modal .modal-footer {
     padding: 10px 20px;
-    text-align: center; 
-    font-size: 1.2rem; 
+    text-align: center;
+    font-size: 1.2rem;
   }
 
-  .parchment-modal h5, 
+  .parchment-modal h5,
   .parchment-modal p {
-    font-size: 28px !important; 
+    font-size: 28px !important;
   }
 
   .parchment-modal .btn {
-    width: 120px !important; 
-    padding: 8px 20px; 
-    font-size: 1rem !important; 
+    width: 120px !important;
+    padding: 8px 20px;
+    font-size: 1rem !important;
   }
 
   .modal {
-    max-width: 100% !important; 
+    max-width: 100% !important;
     margin: 0 auto;
   }
 }

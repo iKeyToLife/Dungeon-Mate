@@ -13,6 +13,7 @@ const Bestiary = () => {
   const [monstersPerPage] = useState(15);
   const [loading, setLoading] = useState(true);
   const [tooltipOpen, setTooltipOpen] = useState(null);
+  const [visiblePages, setVisiblePages] = useState([]);
   const navigate = useNavigate();
 
   // Fetch monsters on page load
@@ -41,6 +42,13 @@ const Bestiary = () => {
     };
     fetchMonsters();
   }, []);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(filteredMonsters.length / monstersPerPage);
+    const pageGroupSize = 3; 
+    const startIndex = Math.floor((currentPage - 1) / pageGroupSize) * pageGroupSize;
+    setVisiblePages([...Array(pageGroupSize)].map((_, i) => startIndex + i + 1).filter(page => page <= totalPages));
+  }, [currentPage, filteredMonsters, monstersPerPage]);
 
   // Handle filter form submission
   const handleFilter = (e) => {
@@ -78,7 +86,7 @@ const Bestiary = () => {
   // Calculate monsters to display based on current page
   const indexOfLastMonster = currentPage * monstersPerPage;
   const indexOfFirstMonster = indexOfLastMonster - monstersPerPage;
-  const currentMonsters = filteredMonsters.slice(indexOfFirstMonster, indexOfLastMonster);
+  const currentMonsters = filteredMonsters.slice(indexOfFirstMonster, indexOfLastMonster)
 
   // Handle monster selection (on row click or search result click)
   const handleRowClick = (monster) => {
@@ -88,6 +96,31 @@ const Bestiary = () => {
   // Handle pagination click
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
+  
+    const pageGroupSize = 3;
+    const startIndex = Math.floor((pageNumber - 1) / pageGroupSize) * pageGroupSize;
+    const totalPages = Math.ceil(filteredMonsters.length / monstersPerPage);
+    setVisiblePages([...Array(pageGroupSize)].map((_, i) => startIndex + i + 1).filter(page => page <= totalPages));
+  };
+
+  // Handle Next and Previous buttons
+  const handleNextClick = () => {
+    const pageGroupSize = 3; 
+    const totalPages = Math.ceil(filteredMonsters.length / monstersPerPage);
+    const newVisiblePages = visiblePages.map(page => page + pageGroupSize);
+    if (newVisiblePages[0] <= totalPages) {
+      setVisiblePages(newVisiblePages);
+      setCurrentPage(newVisiblePages[0]);
+    }
+  };
+
+  const handlePrevClick = () => {
+    const pageGroupSize = 3; 
+    const newVisiblePages = visiblePages.map(page => page - pageGroupSize);
+    if (newVisiblePages[0] > 0) {
+      setVisiblePages(newVisiblePages);
+      setCurrentPage(newVisiblePages[0]);
+    }
   };
 
   // Toggle the tooltip
@@ -193,18 +226,22 @@ const Bestiary = () => {
         )}
       </div>
   
-      {/* Pagination */}
+      {/* Updated Pagination */}
       {totalPages > 1 && (
-        <div className="pagination">
-          {[...Array(totalPages)].map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handlePageClick(index + 1)}
-              className={currentPage === index + 1 ? 'active' : ''}
-            >
-              {index + 1}
-            </button>
+        <div className="pagination-controls">
+          {visiblePages[0] > 1 && (
+            <button onClick={handlePrevClick}>Previous</button>
+          )}
+          {visiblePages.map((pageNumber) => (
+            pageNumber <= totalPages && (
+              <button key={pageNumber} onClick={() => handlePageClick(pageNumber)} className={currentPage === pageNumber ? 'active' : ''}>
+                {pageNumber}
+              </button>
+            )
           ))}
+          {visiblePages[visiblePages.length - 1] < totalPages && (
+            <button onClick={handleNextClick}>Next</button>
+          )}
         </div>
       )}
     </div>
