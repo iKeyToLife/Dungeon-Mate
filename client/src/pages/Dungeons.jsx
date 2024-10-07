@@ -2,7 +2,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
-import { ADD_DUNGEON, DELETE_DUNGEON, UPDATE_DUNGEON, ADD_ENCOUNTER_TO_DUNGEON, ADD_QUEST_TO_DUNGEON } from '../utils/mutations';
+import { ADD_DUNGEON, DELETE_DUNGEON, UPDATE_DUNGEON, ADD_ENCOUNTER_TO_DUNGEON, ADD_QUEST_TO_DUNGEON, REMOVE_ENCOUNTER_FROM_DUNGEON, REMOVE_QUEST_FROM_DUNGEON } from '../utils/mutations';
 import { GET_DUNGEONS, GET_ENCOUNTERS, GET_QUESTS } from '../utils/queries';
 import { RedirectToLoginError } from '../components/Error';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +29,8 @@ const Dungeons = () => {
     const questsResult = useQuery(GET_QUESTS);
     const [addEncounterToDungeon] = useMutation(ADD_ENCOUNTER_TO_DUNGEON);
     const [addQuestToDungeon] = useMutation(ADD_QUEST_TO_DUNGEON);
+    const [removeEncounterFromDungeon] = useMutation(REMOVE_ENCOUNTER_FROM_DUNGEON);
+    const [removeQuestFromDungeon] = useMutation(REMOVE_QUEST_FROM_DUNGEON);
     const navigate = useNavigate();
     const [isMobile, setIsMobile] = useState(false);
 
@@ -197,37 +199,69 @@ const Dungeons = () => {
 
       const handleUpdate = async () => {
         if (editingIndex !== null) {
-            try {
-                const { data } = await updateDungeon({
-                    variables: { dungeonId: dungeons[editingIndex]._id, title, description },
-                });
-    
-                const updatedDungeonId = data.updateDungeon._id;
-    
-                for (const encounter of dungeonEncounters) {
-                    await addEncounterToDungeon({
-                        variables: { dungeonId: updatedDungeonId, encounterId: encounter.id },
-                    });
-                }
-    
-                for (const quest of dungeonQuests) {
-                    await addQuestToDungeon({
-                        variables: { dungeonId: updatedDungeonId, questId: quest.id },
-                    });
-                }
-    
-                // Clear form and state after update
-                setTitle('');
-                setDescription('');
-                setDungeonEncounters([]);
-                setDungeonQuests([]);
-                setEditingIndex(null);
-    
-            } catch (error) {
-                console.error('Error updating dungeon:', error);
-            }
+           try {
+              const { data } = await updateDungeon({
+                 variables: { dungeonId: dungeons[editingIndex]._id, title, description },
+              });
+     
+              const updatedDungeonId = data.updateDungeon._id;
+     
+              // Get the original encounters and quests for comparison
+              const originalEncounters = dungeons[editingIndex].encounters;
+              const originalQuests = dungeons[editingIndex].quests;
+     
+              // Ensure encounters aren't added multiple times
+              const existingEncounterIds = originalEncounters.map(encounter => encounter.id);
+              const encountersToAdd = dungeonEncounters.filter(encounter => !existingEncounterIds.includes(encounter.id));
+     
+              for (const encounter of encountersToAdd) {
+                 await addEncounterToDungeon({
+                    variables: { dungeonId: updatedDungeonId, encounterId: encounter.id },
+                 });
+              }
+     
+              // Remove encounters that were deleted
+              const encountersToRemove = originalEncounters.filter(encounter => 
+                 !dungeonEncounters.some(e => e.id === encounter.id));
+     
+              for (const encounter of encountersToRemove) {
+                 await removeEncounterFromDungeon({
+                    variables: { dungeonId: updatedDungeonId, encounterId: encounter.id },
+                 });
+              }
+     
+              // Ensure quests aren't added multiple times
+              const existingQuestIds = originalQuests.map(quest => quest.id);
+              const questsToAdd = dungeonQuests.filter(quest => !existingQuestIds.includes(quest.id));
+     
+              for (const quest of questsToAdd) {
+                 await addQuestToDungeon({
+                    variables: { dungeonId: updatedDungeonId, questId: quest.id },
+                 });
+              }
+     
+              // Remove quests that were deleted
+              const questsToRemove = originalQuests.filter(quest => 
+                 !dungeonQuests.some(q => q.id === quest.id));
+     
+              for (const quest of questsToRemove) {
+                 await removeQuestFromDungeon({
+                    variables: { dungeonId: updatedDungeonId, questId: quest.id },
+                 });
+              }
+     
+              // Clear form and state after update
+              setTitle('');
+              setDescription('');
+              setDungeonEncounters([]);
+              setDungeonQuests([]);
+              setEditingIndex(null);
+     
+           } catch (error) {
+              console.error('Error updating dungeon:', error);
+           }
         }
-    };
+     };
 
     return (
         <div className="dungeon-page">
@@ -370,7 +404,7 @@ const Dungeons = () => {
                                         ) : (
                                             dungeon.encounters.map((encounter, idx) => (
                                                 <div key={idx} className="encounter-item">
-                                                    <p>{encounter.title}</p>
+                                                    <p><strong>Encounter: </strong>{encounter.title}</p>
                                                 </div>
                                             ))
                                         )}
@@ -383,7 +417,8 @@ const Dungeons = () => {
                                         ) : (
                                             dungeon.quests.map((quest, idx) => (
                                                 <div key={idx} className="quest-item">
-                                                    <p>{quest.title}</p>
+                                                    <p><strong>Quest: </strong>{quest.title}</p>
+                                                    <p><strong>Reward: </strong>{quest.rewards}</p>
                                                 </div>
                                             ))
                                         )}

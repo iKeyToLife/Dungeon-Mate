@@ -414,6 +414,16 @@ tbody tr:nth-child(odd) {
   overflow-wrap: break-word;
 }
 
+.encounter-card h3 {
+  color: gold;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px black;
+}
+
+.encounter-details p {
+  color: white;
+}
+
 .encounter-button-row {
   display: flex;
   justify-content: center;
@@ -575,13 +585,26 @@ tbody tr:nth-child(odd) {
   border: 1px solid gold;
   padding: 12px;
   border-radius: 5px;
-  color: white;
+  color: gold;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 200px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  background-image: url('../scroll-background.png');
+  background-position: center;
+  background-size: 110%;
+}
+
+.quest-card p {
+  color: black;
+  font-weight: bold;
+}
+
+.quest-card h3 {
+  text-shadow: 2px 2px 2px black;
+  font-weight: bold;
 }
 
 .quest-button-row {
@@ -625,6 +648,13 @@ tbody tr:nth-child(odd) {
   background-color: darkred;
 }
 
+.quest-details {
+  background-image: url('../scroll-background.png');
+  background-position: center;
+  background-size:cover;
+  text-shadow: 2px 2px 1px black;
+}
+
 .quest-details,
 .encounter-details,
 .creature-details {
@@ -651,13 +681,15 @@ tbody tr:nth-child(odd) {
 .encounter-details strong,
 .creature-details strong {
   color: #FFD700;
+  text-shadow: 2px 2px 2px black;
 }
 
 .quest-details p,
-.encounter-details p,
 .creature-details p {
   font-size: 1.2rem;
-  color: #ffffff;
+  color: black !important;
+  font-weight: bold;
+  text-shadow: none;
 }
 
 .back-button {
@@ -955,6 +987,11 @@ tbody tr:nth-child(odd) {
 .dungeon-card p {
   margin-bottom: 20px;
   text-shadow: 3px 2px 2px black;
+  color: white !important;
+}
+
+.dungeon-card strong {
+  color: gold;
 }
 
 .dungeon-encounters,
@@ -1070,6 +1107,15 @@ tbody tr:nth-child(odd) {
   font-weight: bold;
 }
 
+.dungeon-details-container p {
+  color: white !important;
+  text-shadow: 2px 2px 2px black;
+}
+
+.dungeon-details-container strong {
+  color: gold;
+}
+
 .dungeon-encounters,
 .dungeon-quests {
   margin: 20px 0;
@@ -1151,6 +1197,45 @@ tbody tr:nth-child(odd) {
     box-sizing: border-box;
     overflow-x: auto;
     display: block;
+  }
+
+  thead {
+    display: none; /* Hide table headers */
+  }
+
+  tbody {
+    display: block;
+    width: 100%;
+  }
+
+  tbody tr {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid gold;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+  }
+
+  tbody tr td {
+    display: block;
+    text-align: left;
+    padding: 5px 0;
+    border: none;
+  }
+
+  tbody tr td:before {
+    content: attr(data-label);
+    font-weight: bold;
+    color: #FFD700;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .monster-list td:first-child {
+    background-color: darkred; 
+    color: #fff; 
   }
 
   /* Table cells adjustment on mobile */

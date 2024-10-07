@@ -30,7 +30,7 @@ const SingleDungeon = () => {
       return <div>No dungeon data found.</div>;
     }
   
-    return (
+    return ( 
       <div className="dungeon-details-container">
         <h1>{dungeon.title}</h1>
         <p><strong>Description:</strong> {dungeon.description}</p>
@@ -41,8 +41,9 @@ const SingleDungeon = () => {
             <p>No encounters added</p>
           ) : (
             dungeon.encounters.map((encounter) => (
-              <div key={encounter._id} className="encounter-item">
-                <p>{encounter.title}</p>
+              <div key={encounter.id} className="encounter-item">
+                <p><strong>Title: </strong>{encounter.title}</p>
+                <p><strong>Details: </strong>{encounter.details}</p>
               </div>
             ))
           )}
@@ -54,8 +55,10 @@ const SingleDungeon = () => {
             <p>No quests added</p>
           ) : (
             dungeon.quests.map((quest) => (
-              <div key={quest._id} className="quest-item">
-                <p>{quest.title}</p>
+              <div key={quest.id} className="quest-item">
+                <p><strong>Title: </strong>{quest.title}</p>
+                <p><strong>Details: </strong>{quest.details}</p>
+                <p><strong>Rewards: </strong>{quest.rewards}</p>
               </div>
             ))
           )}
@@ -69,5 +72,6 @@ const SingleDungeon = () => {
       </div>
     );
   };
+
   
   export default SingleDungeon;

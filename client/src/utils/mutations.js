@@ -54,7 +54,7 @@ mutation DeleteEncounter($encounterId: ID!) {
 }`
 
 export const UPDATE_ENCOUNTER = gql`
-  mutation updateEncounter($encounterId: ID!, $title: String, $details: String) {
+  mutation updateEncounter($encounterId: ID!, $title: String!, $details: String!) {
   updateEncounter(encounterId: $encounterId, title: $title, details: $details) {
     id
     title
@@ -143,6 +143,42 @@ export const ADD_QUEST_TO_DUNGEON = gql`
     addQuestToDungeon(dungeonId: $dungeonId, questId: $questId) {
       _id
       title
+      quests {
+        id
+        title
+      }
+    }
+  }
+`;
+
+export const REMOVE_ENCOUNTER_FROM_DUNGEON = gql`
+  mutation RemoveEncounterFromDungeon($dungeonId: ID!, $encounterId: ID!) {
+    removeEncounterFromDungeon(dungeonId: $dungeonId, encounterId: $encounterId) {
+      _id
+      title
+      description
+      encounters {
+        id
+        title
+      }
+      quests {
+        id
+        title
+      }
+    }
+  }
+`;
+
+export const REMOVE_QUEST_FROM_DUNGEON = gql`
+  mutation RemoveQuestFromDungeon($dungeonId: ID!, $questId: ID!) {
+    removeQuestFromDungeon(dungeonId: $dungeonId, questId: $questId) {
+      _id
+      title
+      description
+      encounters {
+        id
+        title
+      }
       quests {
         id
         title

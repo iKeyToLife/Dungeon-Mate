@@ -19,7 +19,7 @@ const Bestiary = () => {
   // Fetch monsters on page load
   useEffect(() => {
     const fetchMonsters = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
         const response = await fetch('https://www.dnd5eapi.co/api/monsters');
         const data = await response.json();
@@ -33,11 +33,11 @@ const Bestiary = () => {
         );
 
         setMonsters(detailedMonsters);
-        setFilteredMonsters(detailedMonsters); 
+        setFilteredMonsters(detailedMonsters);
       } catch (error) {
         console.error('Error fetching monsters:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
     fetchMonsters();
@@ -45,7 +45,7 @@ const Bestiary = () => {
 
   useEffect(() => {
     const totalPages = Math.ceil(filteredMonsters.length / monstersPerPage);
-    const pageGroupSize = 3; 
+    const pageGroupSize = 3;
     const startIndex = Math.floor((currentPage - 1) / pageGroupSize) * pageGroupSize;
     setVisiblePages([...Array(pageGroupSize)].map((_, i) => startIndex + i + 1).filter(page => page <= totalPages));
   }, [currentPage, filteredMonsters, monstersPerPage]);
@@ -53,7 +53,7 @@ const Bestiary = () => {
   // Handle filter form submission
   const handleFilter = (e) => {
     e.preventDefault();
-    setLoading(true); 
+    setLoading(true);
     let filtered = monsters;
 
     // Filter by name
@@ -79,7 +79,7 @@ const Bestiary = () => {
     }
 
     setFilteredMonsters(filtered);
-    setCurrentPage(1); 
+    setCurrentPage(1);
     setLoading(false);
   };
 
@@ -96,7 +96,7 @@ const Bestiary = () => {
   // Handle pagination click
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
-  
+
     const pageGroupSize = 3;
     const startIndex = Math.floor((pageNumber - 1) / pageGroupSize) * pageGroupSize;
     const totalPages = Math.ceil(filteredMonsters.length / monstersPerPage);
@@ -105,7 +105,7 @@ const Bestiary = () => {
 
   // Handle Next and Previous buttons
   const handleNextClick = () => {
-    const pageGroupSize = 3; 
+    const pageGroupSize = 3;
     const totalPages = Math.ceil(filteredMonsters.length / monstersPerPage);
     const newVisiblePages = visiblePages.map(page => page + pageGroupSize);
     if (newVisiblePages[0] <= totalPages) {
@@ -115,7 +115,7 @@ const Bestiary = () => {
   };
 
   const handlePrevClick = () => {
-    const pageGroupSize = 3; 
+    const pageGroupSize = 3;
     const newVisiblePages = visiblePages.map(page => page - pageGroupSize);
     if (newVisiblePages[0] > 0) {
       setVisiblePages(newVisiblePages);
@@ -145,7 +145,7 @@ const Bestiary = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-  
+
           <div>
             <label>Challenge Rating</label>
             <input
@@ -161,7 +161,7 @@ const Bestiary = () => {
               onChange={(e) => setChallengeHigh(e.target.value)}
             />
           </div>
-  
+
           <div>
             <label>Size</label>
             <select className="bestiary-select" value={size} onChange={(e) => setSize(e.target.value)}>
@@ -174,13 +174,13 @@ const Bestiary = () => {
               <option value="gargantuan">Gargantuan</option>
             </select>
           </div>
-  
+
           <button type="submit">Filter Creatures</button>
         </form>
       </div>
-  
+
       <div className="monster-list">
-        {loading ? ( 
+        {loading ? (
           <p>Loading Creatures...</p>
         ) : currentMonsters.length > 0 ? (
           <table>
@@ -199,21 +199,23 @@ const Bestiary = () => {
                   key={monster.index}
                   onClick={() => handleRowClick(monster)}
                   className="clickable-row"
-                  id={`tooltip-${index}`} 
-                  onMouseEnter={() => toggleTooltip(index)}  
-                  onMouseLeave={() => toggleTooltip(index)} 
+                  id={`tooltip-${index}`}
+                  onMouseEnter={() => toggleTooltip(index)}
+                  onMouseLeave={() => toggleTooltip(index)}
                 >
-                  <td>{monster.name}</td>
-                  <td>{monster.challenge_rating}</td>
-                  <td>{monster.type}</td>
-                  <td>{monster.size}</td>
-                  <td>{monster.alignment}</td>
+                  <td data-label="Name">{monster.name}</td>
+                  <td data-label="CR">{monster.challenge_rating}</td>
+                  <td data-label="Type">{monster.type}</td>
+                  <td data-label="Size">{monster.size}</td>
+                  <td data-label="Alignment">{monster.alignment}</td>
                   {/* Tooltip for each row */}
                   <Tooltip
+                    fade={false}
                     placement="left"
                     isOpen={tooltipOpen === index}
                     target={`tooltip-${index}`}
                     toggle={() => toggleTooltip(index)}
+                    transition={{ timeout: 0 }}
                   >
                     Click to learn more
                   </Tooltip>
@@ -225,7 +227,7 @@ const Bestiary = () => {
           <p>No creatures found.</p>
         )}
       </div>
-  
+
       {/* Updated Pagination */}
       {totalPages > 1 && (
         <div className="pagination-controls">

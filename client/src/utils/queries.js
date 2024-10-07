@@ -58,10 +58,13 @@ export const GET_DUNGEONS = gql`
       encounters {
         id
         title
+        details
       }
       quests {
         id
         title
+        details
+        rewards
       }
     }
   }
@@ -76,10 +79,13 @@ export const GET_DUNGEON = gql`
       encounters {
         id
         title
+        details
       }
       quests {
         id
         title
+        details
+        rewards
       }
     }
   }
