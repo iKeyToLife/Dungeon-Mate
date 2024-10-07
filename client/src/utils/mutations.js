@@ -62,3 +62,36 @@ export const UPDATE_ENCOUNTER = gql`
   }
 }
 `
+
+export const ADD_QUEST = gql`
+  mutation addQuest($title: String!, $details: String!, $rewards: String!) {
+    addQuest(title: $title, details: $details, rewards: $rewards) {
+      id
+      title
+      details
+      rewards
+    }
+  }
+`;
+
+export const DELETE_QUEST = gql`
+  mutation DeleteQuest($questId: ID!) {
+    deleteQuest(questId: $questId) {
+      id
+      title
+      details
+      rewards
+    }
+  }
+`;
+
+export const UPDATE_QUEST = gql`
+  mutation updateQuest($questId: ID!, $title: String!, $details: String!, $rewards: String!) {
+    updateQuest(questId: $questId, title: $title, details: $details, rewards: $rewards) {
+      id
+      title
+      details
+      rewards
+    }
+  }
+`;
