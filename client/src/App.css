@@ -1559,3 +1559,59 @@ tbody tr:nth-child(odd) {
     margin: 0 auto;
   }
 }
+
+.character-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.character-card {
+  flex: 1 1 calc(33.33% - 2rem);
+  max-width: calc(33.33% - 2rem);
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.character-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.character-card img {
+  border-radius: 5px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.character-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.character-card p {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+  color: #666;
+}
+
+.character-card ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.character-card li {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0.2rem 0;
+}
