@@ -134,6 +134,8 @@ const typeDefs = gql`
     removeEncounterFromCampaign(campaignId: ID!, encounterId: ID!): Campaign # Delete 1 encounter
     addQuestToCampaign(campaignId: ID!, questId: ID!): Campaign
     removeQuestFromCampaign(campaignId: ID!, questId: ID!): Campaign
+    addDungeonToCampaign(campaignId: ID!, dungeonId: ID!): Campaign
+    removeDungeonFromCampaign(campaignId: ID!, dungeonId: ID!): Campaign
   }
 `;
 

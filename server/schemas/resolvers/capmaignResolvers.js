@@ -277,6 +277,13 @@ const campaignMutations = {
         if (context.user) {
             try {
                 const campaign = await Campaign.findOne({ _id: campaignId, userId: context.user._id })
+                    .populate({
+                        path: "dungeons",
+                        populate: [
+                            { path: "encounters" },
+                            { path: "quests" }
+                        ]
+                    })
                     .populate("encounters")
                     .populate("quests");
 
@@ -297,6 +304,92 @@ const campaignMutations = {
                 return campaign;
             } catch (error) {
                 throw new Error(`Failed to remove quest: ${error.message}`);
+            }
+        } else {
+            throw AuthenticationError;
+        }
+    },
+    addDungeonToCampaign: async (_, { campaignId, dungeonId }, context) => {
+        if (context.user) {
+            try {
+                const campaign = await Campaign.findOne({ _id: campaignId, userId: context.user._id })
+                    .populate({
+                        path: "dungeons",
+                        populate: [
+                            { path: "encounters" },
+                            { path: "quests" }
+                        ]
+                    })
+                    .populate("encounters")
+                    .populate("quests");
+
+                if (!campaign) {
+                    throw new Error("Campaign not found or you are not authorized to update this campaign.");
+                }
+
+                await validateIds([dungeonId], Dungeon, 'dungeon'); // check have we dungeon at db
+
+                // check unique dungeon
+                const dungeonIndex = campaign.dungeons.findIndex(dungeon => dungeon._id.toString() === dungeonId);
+                if (dungeonIndex > -1) {
+                    throw new Error("Dungeon is already added to this campaign.");
+                }
+
+                // add new dungeon
+                campaign.dungeons.push(dungeonId);
+
+                await campaign.save();
+                const updateCampaign = await Campaign.findOne({ _id: campaignId, userId: context.user._id })
+                    .populate({
+                        path: "dungeons",
+                        populate: [
+                            { path: "encounters" },
+                            { path: "quests" }
+                        ]
+                    })
+                    .populate("encounters")
+                    .populate("quests");
+
+
+                return updateCampaign;
+            } catch (error) {
+                throw new Error(`Failed to add dungeon: ${error.message}`);
+            }
+        } else {
+            throw AuthenticationError;
+        }
+    },
+    removeDungeonFromCampaign: async (_, { campaignId, dungeonId }, context) => {
+        if (context.user) {
+            try {
+                const campaign = await Campaign.findOne({ _id: campaignId, userId: context.user._id })
+                    .populate({
+                        path: "dungeons",
+                        populate: [
+                            { path: "encounters" },
+                            { path: "quests" }
+                        ]
+                    })
+                    .populate("encounters")
+                    .populate("quests");
+
+                if (!campaign) {
+                    throw new Error("Campaign not found or you are not authorized to update this campaign.");
+                }
+
+                // check have we this dungeon in array
+                const dungeonIndex = campaign.dungeons.findIndex(dungeon => dungeon._id.toString() === dungeonId);
+                if (dungeonIndex === -1) {
+                    throw new Error("Dungeon not found in this campaign.");
+                }
+
+                // delete dungeon from array
+                campaign.dungeons.splice(dungeonIndex, 1);
+
+                await campaign.save();
+                return campaign;
+            } catch (error) {
+                throw new Error(`Failed to remove dungeon: ${error.message}`);
             }
         } else {
             throw AuthenticationError;
