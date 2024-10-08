@@ -67,7 +67,6 @@ const CharacterSchema = new Schema(
             index: {
                 type: String,
                 required: true,
-                unique: true
             },
             name: {
                 type: String,
@@ -117,6 +116,14 @@ CharacterSchema.pre('save', function (next) {
     if (totalClassLevel > this.level) {
         return next(new Error("The overall class level must match or be less than the character's level."));
     }
+
+    const spellIndexes = this.spells.map(spell => spell.index);
+    const hasDuplicateSpells = spellIndexes.length !== new Set(spellIndexes).size;
+
+    if (hasDuplicateSpells) {
+        return next(new Error('Spell indexes must be unique in the spells array.'));
+    }
+
 
     next();
 });
