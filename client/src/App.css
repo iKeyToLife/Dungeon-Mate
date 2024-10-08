@@ -1,7 +1,10 @@
 .welcome-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 100px;
+  align-items: center;
+  padding: 50px;
+  margin-bottom: -30px;
 }
 
 .home-styling {
@@ -47,6 +50,17 @@
 
 .home-styling h5 {
   font-size: 36px;
+}
+
+.nat20-image {
+  background-image: url('../nat20.png');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  width: 250px; 
+  height: 350px; 
+  margin-top: 10px;
+  margin-bottom: -70px;
 }
 
 img:hover {
@@ -1617,6 +1631,35 @@ tbody tr:nth-child(odd) {
   .modal {
     max-width: 100% !important;
     margin: 0 auto;
+  }
+
+  .welcome-container {
+    padding: 20px;
+    margin-bottom: 0; 
+  }
+
+  .home-styling {
+    width: 95%; 
+    max-width: 100%;
+    height: auto;
+    font-size: 20px; 
+    padding: 20px; 
+    border-radius: 20px; 
+  }
+
+  .home-styling h1 {
+    font-size: 45px; 
+  }
+
+  .home-styling h5 {
+    font-size: 22px; 
+  }
+
+  .nat20-image {
+    width: 150px; 
+    height: 200px; 
+    margin-top: 20px;
+    margin-bottom: 0; 
   }
 }
 
