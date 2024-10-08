@@ -57,23 +57,23 @@ const Quests = () => {
     // Confirm and delete the quest
     const handleDelete = async () => {
         try {
-          // Try deleting the quest
-          await deleteQuest({
-            variables: { questId: quests[questToDelete].id },
-            refetchQueries: [{ query: GET_QUESTS }] // Refetch quests after deletion
-          });
-      
-          // Close the modal after deletion
-          closeDeleteModal();
+            // Try deleting the quest
+            await deleteQuest({
+                variables: { questId: quests[questToDelete]._id },
+                refetchQueries: [{ query: GET_QUESTS }] // Refetch quests after deletion
+            });
+
+            // Close the modal after deletion
+            closeDeleteModal();
         } catch (error) {
-          // Handle authentication or other errors
-          if (error.message.includes('not authenticate')) {
-            return <RedirectToLoginError message="Please login to delete quests." />;
-          } else {
-            console.error("Error deleting quest:", error);
-          }
+            // Handle authentication or other errors
+            if (error.message.includes('not authenticate')) {
+                return <RedirectToLoginError message="Please login to delete quests." />;
+            } else {
+                console.error("Error deleting quest:", error);
+            }
         }
-      };
+    };
 
     // Check if user is logged in before saving
     const handleSave = async () => {
@@ -81,42 +81,42 @@ const Quests = () => {
         setTitleError('');
         setDetailsError('');
         setRewardsError(''); // Reset rewards error
-      
+
         if (title.trim() === '') {
-          setTitleError('Please enter a title for your quest');
-          valid = false;
+            setTitleError('Please enter a title for your quest');
+            valid = false;
         }
         if (details.trim() === '') {
-          setDetailsError('Please enter some details for your quest');
-          valid = false;
+            setDetailsError('Please enter some details for your quest');
+            valid = false;
         }
         if (rewards.trim() === '') {
-          setRewardsError('Please enter the rewards for your quest');
-          valid = false;
+            setRewardsError('Please enter the rewards for your quest');
+            valid = false;
         }
-      
+
         if (valid) {
-          const loggedIn = AuthService.loggedIn();
-          if (!loggedIn) {
-            return <RedirectToLoginError message="Please login to save quests." />;
-          }
-      
-          try {
-            // Proceed with saving quest
-            await addQuest({
-              variables: { title, details, rewards },
-              refetchQueries: [{ query: GET_QUESTS }] // Refetch quests after saving
-            });
-      
-            // Reset fields after successful save
-            setTitle('');
-            setDetails('');
-            setRewards('');
-          } catch (err) {
-            console.error("Quest saving failed", err);
-          }
+            const loggedIn = AuthService.loggedIn();
+            if (!loggedIn) {
+                return <RedirectToLoginError message="Please login to save quests." />;
+            }
+
+            try {
+                // Proceed with saving quest
+                await addQuest({
+                    variables: { title, details, rewards },
+                    refetchQueries: [{ query: GET_QUESTS }] // Refetch quests after saving
+                });
+
+                // Reset fields after successful save
+                setTitle('');
+                setDetails('');
+                setRewards('');
+            } catch (err) {
+                console.error("Quest saving failed", err);
+            }
         }
-      };
+    };
 
     const handleEdit = (index) => {
         setEditingIndex(index);
@@ -128,7 +128,7 @@ const Quests = () => {
     const handleUpdate = async () => {
         try {
             const { data } = await updateQuest({
-                variables: { questId: quests[editingIndex].id, title, details, rewards },
+                variables: { questId: quests[editingIndex]._id, title, details, rewards },
             });
 
             const updatedQuests = [...quests];
@@ -197,7 +197,7 @@ const Quests = () => {
                             <p>{quest.details}</p>
                             <p><strong className="quest-rewards">Rewards:</strong> {quest.rewards}</p>
                             <div className="quest-button-row">
-                                <button className="quest-button-view" onClick={() => navigate(`/quest/${quest.id}`)}>View</button>
+                                <button className="quest-button-view" onClick={() => navigate(`/quest/${quest._id}`)}>View</button>
                                 <button className="quest-button-edit" onClick={() => handleEdit(index)}>Edit</button>
                                 <button className="quest-button-delete" onClick={() => openDeleteModal(index)}>Delete</button>
                             </div>
