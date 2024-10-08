@@ -18,10 +18,18 @@ const seedCampaigns = async () => {
 
             // make sure the user has at least one quest, encounter, and dungeon
             if (userQuests.length > 0 && userEncounters.length > 0 && userDungeons.length > 0) {
-                // Define NPCs for the campaign
+                // Define creatures for the campaign
+                const creatures = [
+                    { index: 'creature1', name: 'Gandalf the Grey' },
+                    { index: 'creature2', name: 'Legolas Greenleaf' }
+                ];
                 const npcs = [
-                    { index: 'npc1', name: 'Gandalf the Grey' },
-                    { index: 'npc2', name: 'Legolas Greenleaf' }
+                    { description: 'npc1' },
+                    { description: 'npc2' }
+                ];
+                const notes = [
+                    { description: 'note1' },
+                    { description: 'note2' }
                 ];
 
                 // Randomly select some quests, encounters, and dungeons
@@ -34,7 +42,9 @@ const seedCampaigns = async () => {
                     userId: user._id,
                     title: `${user.username}'s First Campaign`,
                     description: 'This is the first generated campaign for the user.',
-                    npc: npcs, // Add predefined NPCs
+                    npcs: npcs,
+                    notes: notes,
+                    creatures: creatures, // Add predefined creatures
                     quests: randomQuests.map(quest => quest._id), // Add random quests
                     encounters: randomEncounters.map(encounter => encounter._id), // Add random encounters
                     dungeons: randomDungeons.map(dungeon => dungeon._id), // Add random dungeon
@@ -44,7 +54,9 @@ const seedCampaigns = async () => {
                     userId: user._id,
                     title: `${user.username}'s Second Campaign`,
                     description: 'This is the second generated campaign for the user.',
-                    npc: npcs, // Add predefined NPCs (or you can change them)
+                    npcs: npcs,
+                    notes: notes,
+                    creatures: creatures, // Add predefined creatures (or you can change them)
                     quests: randomQuests.map(quest => quest._id), // Add same or different quests
                     encounters: randomEncounters.map(encounter => encounter._id), // Add same or different encounters
                     dungeons: randomDungeons.map(dungeon => dungeon._id), // Add same or different dungeon
