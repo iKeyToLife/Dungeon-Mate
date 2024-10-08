@@ -76,7 +76,6 @@ const Campaigns = () => {
   };
 
   const handleViewItem = async (item, type) => {
-    console.log('Item passed to handleViewItem:', item);
     try {
       let query;
       let variableName;
@@ -96,8 +95,6 @@ const Campaigns = () => {
         const creatureData = await response.json();
         if (!response.ok) throw new Error('Failed to fetch creature data');
 
-        console.log('Creature data fetched:', creatureData);
-
         setSelectedCreatures((prevCreatures) =>
           prevCreatures.map((creature) =>
             creature.index === item.index
@@ -108,16 +105,11 @@ const Campaigns = () => {
         return;
       }
 
-      console.log(`Fetching details for ${type} with ID: ${item._id}`);
-
-
       // Fetch encounters, quests, and dungeons from GraphQL API
       const { data } = await client.query({
         query,
         variables: { [variableName]: item._id ? item._id : item.id }
       });
-
-      console.log(`Fetched data:`, data);
 
       let expandedItemDetails;
       if (type === 'encounter') expandedItemDetails = data.encounter;
@@ -293,6 +285,16 @@ const Campaigns = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const safeRender = (value) => {
+    if (Array.isArray(value)) {
+      return value.join(', '); 
+    }
+    if (typeof value === 'object' && value !== null) {
+      return JSON.stringify(value); 
+    }
+    return value;
   };
 
   return (
@@ -524,10 +526,37 @@ const Campaigns = () => {
                     <h3>{creature.name}</h3>
                     {creature.expanded && creature.details && (
                       <div className="expanded-details">
-                        <p><strong>Type:</strong> {creature.details.type}</p>
-                        <p><strong>Hit Points:</strong> {creature.details.hit_points}</p>
-                        <p><strong>Armor Class:</strong> {creature.details.armor_class}</p>
-                        <p><strong>Actions:</strong> {creature.details.actions.map(action => action.name).join(', ')}</p>
+                        <p><strong>Type:</strong> {safeRender(creature.details.type)}</p>
+                        <p><strong>Hit Points:</strong> {safeRender(creature.details.hit_points)}</p>
+                        <p><strong>Armor Class:</strong> {typeof creature.details.armor_class === 'object' ? safeRender(creature.details.armor_class.value) : safeRender(creature.details.armor_class)}</p>
+                        <p><strong>Actions:</strong></p>
+                        {Array.isArray(creature.details.actions) && creature.details.actions.length > 0 ? (
+                          creature.details.actions.map((action, index) => (
+                            <p key={index}>{safeRender(action.name)}</p>
+                          ))
+                        ) : (
+                          <p>No actions available</p>
+                        )}
+
+                        {/* render special abilities if they exist */}
+                        {Array.isArray(creature.details.special_abilities) && creature.details.special_abilities.length > 0 && (
+                          <>
+                            <p><strong>Special Abilities:</strong></p>
+                            {creature.details.special_abilities.map((ability, index) => (
+                              <p key={index}>{safeRender(ability.name)}</p>
+                            ))}
+                          </>
+                        )}
+
+                        {/* render legendary actions if they exist */}
+                        {Array.isArray(creature.details.legendary_actions) && creature.details.legendary_actions.length > 0 && (
+                          <>
+                            <p><strong>Legendary Actions:</strong></p>
+                            {creature.details.legendary_actions.map((action, index) => (
+                              <p key={index}>{safeRender(action.name)}</p>
+                            ))}
+                          </>
+                        )}
                       </div>
                     )}
                     <div className="campaign-button-row">
