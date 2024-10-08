@@ -17,7 +17,19 @@ const CampaignSchema = new Schema(
         description: {
             type: String,
         },
-        npc: [{
+        npcs: [{
+            description: {
+                type: String,
+                required: true
+            }
+        }],
+        notes: [{
+            description: {
+                type: String,
+                required: true
+            }
+        }],
+        creatures: [{
             index: {
                 type: String,
                 required: true

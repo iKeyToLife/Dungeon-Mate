@@ -3,6 +3,7 @@ const { characterMutations, characterQueries } = require("./resolvers/characterR
 const { encounterQueries, encounterMutations } = require("./resolvers/encounterResolvers");
 const { questQueries, questMutations } = require("./resolvers/questResolvers");
 const { dungeonQueries, dungeonMutations } = require("./resolvers/dungeonResolvers");
+const { campaignQueries, campaignMutations } = require("./resolvers/capmaignResolvers");
 
 const resolvers = {
   Query: {
@@ -10,14 +11,16 @@ const resolvers = {
     ...characterQueries,
     ...encounterQueries,
     ...questQueries,
-    ...dungeonQueries
+    ...dungeonQueries,
+    ...campaignQueries
   },
   Mutation: {
     ...userMutations,
     ...characterMutations,
     ...encounterMutations,
     ...questMutations,
-    ...dungeonMutations
+    ...dungeonMutations,
+    ...campaignMutations
   },
 };
 
