@@ -16,9 +16,11 @@ const Characters = ({ user = { _id: null } }) => {
   return (
       <div>
           <h1>Your Characters</h1>
-          <Button color="primary" onClick={toggleModal}>
+          <div className="characters-container">
+          <Button className="create-character-button" color="primary" onClick={toggleModal}>
               Create New Character
           </Button>
+          </div>
           <CharacterModal isOpen={modalOpen} toggle={toggleModal} />
 
           {loading && <p>Loading characters...</p>}
