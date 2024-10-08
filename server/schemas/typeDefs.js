@@ -118,6 +118,22 @@ const typeDefs = gql`
       encounters: [ID!],
       dungeons: [ID!],
     ): Campaign
+    updateCampaign(
+      campaignId: ID!,
+      title: String!,
+      description: String,
+      npcs: [NpcInput],
+      notes: [NoteInput],
+      creatures: [CreatureInput],
+      quests: [ID!],
+      encounters: [ID!],
+      dungeons: [ID!],
+    ): Campaign
+    deleteCampaign(campaignId: ID!): Campaign
+    addEncounterToCampaign(campaignId: ID!, encounterId: ID!): Campaign # Add 1 encounter
+    removeEncounterFromCampaign(campaignId: ID!, encounterId: ID!): Campaign # Delete 1 encounter
+    addQuestToCampaign(campaignId: ID!, questId: ID!): Campaign
+    removeQuestFromCampaign(campaignId: ID!, questId: ID!): Campaign
   }
 `;
 
