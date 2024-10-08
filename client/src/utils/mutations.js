@@ -215,3 +215,136 @@ export const REMOVE_QUEST_FROM_DUNGEON = gql`
     }
   }
 `;
+
+export const ADD_CAMPAIGN = gql`
+  mutation addCampaign($title: String!, $description: String!) {
+    addCampaign(title: $title, description: $description) {
+      _id
+      title
+      description
+    }
+  }
+`;
+
+export const DELETE_CAMPAIGN = gql`
+  mutation deleteCampaign($campaignId: ID!) {
+    deleteCampaign(campaignId: $campaignId) {
+      _id
+      title
+    }
+  }
+`;
+
+export const UPDATE_CAMPAIGN = gql`
+  mutation updateCampaign($campaignId: ID!, $title: String!, $description: String!) {
+    updateCampaign(campaignId: $campaignId, title: $title, description: $description) {
+      _id
+      title
+      description
+    }
+  }
+`;
+
+export const ADD_ENCOUNTER_TO_CAMPAIGN = gql`
+  mutation addEncounterToCampaign($campaignId: ID!, $encounterId: ID!) {
+    addEncounterToCampaign(campaignId: $campaignId, encounterId: $encounterId) {
+      _id
+      title
+      encounters {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const ADD_QUEST_TO_CAMPAIGN = gql`
+  mutation addQuestToCampaign($campaignId: ID!, $questId: ID!) {
+    addQuestToCampaign(campaignId: $campaignId, questId: $questId) {
+      _id
+      title
+      quests {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const ADD_DUNGEON_TO_CAMPAIGN = gql`
+  mutation addDungeonToCampaign($campaignId: ID!, $dungeonId: ID!) {
+    addDungeonToCampaign(campaignId: $campaignId, dungeonId: $dungeonId) {
+      _id
+      title
+      dungeons {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const REMOVE_ENCOUNTER_FROM_CAMPAIGN = gql`
+  mutation removeEncounterFromCampaign($campaignId: ID!, $encounterId: ID!) {
+    removeEncounterFromCampaign(campaignId: $campaignId, encounterId: $encounterId) {
+      _id
+      title
+      encounters {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const REMOVE_QUEST_FROM_CAMPAIGN = gql`
+  mutation removeQuestFromCampaign($campaignId: ID!, $questId: ID!) {
+    removeQuestFromCampaign(campaignId: $campaignId, questId: $questId) {
+      _id
+      title
+      quests {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const REMOVE_DUNGEON_FROM_CAMPAIGN = gql`
+  mutation removeDungeonFromCampaign($campaignId: ID!, $dungeonId: ID!) {
+    removeDungeonFromCampaign(campaignId: $campaignId, dungeonId: $dungeonId) {
+      _id
+      title
+      dungeons {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const ADD_CREATURE_TO_CAMPAIGN = gql`
+  mutation addCreatureToCampaign($campaignId: ID!, $creatureId: ID!) {
+    addCreatureToCampaign(campaignId: $campaignId, creatureId: $creatureId) {
+      _id
+      title
+      creatures {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+export const DELETE_CREATURE_FROM_CAMPAIGN = gql`
+  mutation deleteCreatureFromCampaign($campaignId: ID!, $creatureId: ID!) {
+    deleteCreatureFromCampaign(campaignId: $campaignId, creatureId: $creatureId) {
+      _id
+      title
+      creatures {
+        _id
+        name
+      }
+    }
+  }
+`;

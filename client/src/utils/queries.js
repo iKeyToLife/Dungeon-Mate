@@ -115,3 +115,47 @@ export const GET_DUNGEON = gql`
     }
   }
 `;
+
+export const GET_CAMPAIGNS = gql`
+  query getAllCampaigns {
+    campaigns {
+      _id
+      title
+      description
+      encounters {
+        _id
+        title
+      }
+      quests {
+        _id
+        title
+      }
+      dungeons {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const GET_CAMPAIGN = gql`
+  query getCampaignById($campaignId: ID!) {
+    campaign(campaignId: $campaignId) {
+      _id
+      title
+      description
+      encounters {
+        _id
+        title
+      }
+      quests {
+        _id
+        title
+      }
+      dungeons {
+        _id
+        title
+      }
+    }
+  }
+`;
