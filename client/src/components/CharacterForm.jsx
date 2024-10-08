@@ -27,7 +27,7 @@ const CharacterForm = ({ onSubmit }) => {
       // Update characterImg based on current selections
       if (updatedData.race && updatedData.gender && updatedData.class.length > 0) {
         const selectedClass = updatedData.class[0].className; // Assuming single class selection
-        updatedData.characterImg = `public/images/${updatedData.race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${updatedData.race}${selectedClass}.png`;
+        updatedData.characterImg = `public/images/${updatedData.race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${updatedData.race.replace('-', '')}${selectedClass}.png`;
       }
 
       return updatedData;
@@ -46,7 +46,7 @@ const CharacterForm = ({ onSubmit }) => {
 
       // Update characterImg based on current selections
       if (updatedData.race && updatedData.gender) {
-        updatedData.characterImg = `public/images/${updatedData.race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${updatedData.race}${selectedClass}.png`;
+        updatedData.characterImg = `public/images/${updatedData.race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${updatedData.race.replace('-', '')}${selectedClass}.png`;
       }
 
       return updatedData;
