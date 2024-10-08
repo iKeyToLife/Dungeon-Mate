@@ -19,13 +19,13 @@ export const GET_ENCOUNTERS = gql`
 
 export const GET_ENCOUNTER = gql`
   query getEncounterById($encounterId: ID!) {
-  encounter(encounterId: $encounterId) {
-    _id
-    title
-    details
+    encounter(encounterId: $encounterId) {
+      _id
+      title
+      details
+    }
   }
-}
-`
+`;
 
 export const GET_CHARACTERS_BY_USER_ID = gql`
     query GetCharactersByUserId{
@@ -125,10 +125,13 @@ export const GET_CAMPAIGNS = gql`
       encounters {
         _id
         title
+        details
       }
       quests {
         _id
         title
+        details
+        rewards
       }
       dungeons {
         _id
@@ -147,10 +150,13 @@ export const GET_CAMPAIGN = gql`
       encounters {
         _id
         title
+        details
       }
       quests {
         _id
         title
+        details
+        rewards
       }
       dungeons {
         _id

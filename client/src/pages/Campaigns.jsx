@@ -76,6 +76,7 @@ const Campaigns = () => {
   };
 
   const handleViewItem = async (item, type) => {
+    console.log('Item passed to handleViewItem:', item);
     try {
       let query;
       let variableName;
@@ -94,6 +95,9 @@ const Campaigns = () => {
         const response = await fetch(`https://www.dnd5eapi.co${item.url}`);
         const creatureData = await response.json();
         if (!response.ok) throw new Error('Failed to fetch creature data');
+
+        console.log('Creature data fetched:', creatureData);
+
         setSelectedCreatures((prevCreatures) =>
           prevCreatures.map((creature) =>
             creature.index === item.index
@@ -104,11 +108,16 @@ const Campaigns = () => {
         return;
       }
 
+      console.log(`Fetching details for ${type} with ID: ${item._id}`);
+
+
       // Fetch encounters, quests, and dungeons from GraphQL API
       const { data } = await client.query({
         query,
-        variables: { [variableName]: item._id }
+        variables: { [variableName]: item._id ? item._id : item.id }
       });
+
+      console.log(`Fetched data:`, data);
 
       let expandedItemDetails;
       if (type === 'encounter') expandedItemDetails = data.encounter;
@@ -429,8 +438,8 @@ const Campaigns = () => {
                     <h3>{encounter.title}</h3>
                     {encounter.expanded && encounter.details && (
                       <div className="expanded-details">
-                        <p><strong>Description:</strong> {encounter.details.description}</p>
-                        {/* Add other encounter details here */}
+                        <p><strong>Details:</strong> {encounter.details.details}</p>
+                        {/* Add more encounter fields here */}
                       </div>
                     )}
                     <div className="campaign-button-row">
@@ -457,8 +466,9 @@ const Campaigns = () => {
                     <h3>{quest.title}</h3>
                     {quest.expanded && quest.details && (
                       <div className="expanded-details">
-                        <p><strong>Details:</strong> {quest.details.objective}</p>
-                        <p><strong>Reward:</strong> {quest.details.reward}</p>
+                        <p><strong>Details:</strong> {quest.details.details}</p>
+                        <p><strong>Reward:</strong> {quest.details.rewards}</p>
+                        {/* Add more quest fields here */}
                       </div>
                     )}
                     <div className="campaign-button-row">
