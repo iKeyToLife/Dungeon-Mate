@@ -27,6 +27,30 @@ export const GET_ENCOUNTER = gql`
 }
 `
 
+export const GET_CHARACTERS_BY_USER_ID = gql`
+    query GetCharactersByUserId{
+        characters {
+            _id
+            name
+            race
+            gender
+            class {
+                className
+                level
+            }
+            attributes {
+                strength
+                dexterity
+                constitution
+                intelligence
+                wisdom
+                charisma
+            }
+            characterImg
+            alignment
+        }
+    }
+
 export const GET_QUESTS = gql`
   query getAllQuests {
     quests {

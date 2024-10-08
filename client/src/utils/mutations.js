@@ -63,6 +63,35 @@ export const UPDATE_ENCOUNTER = gql`
 }
 `
 
+export const ADD_CHARACTER = gql`
+mutation AddCharacter(
+  $name: String!,
+  $race: String!,
+  $gender: String!,
+  $class: [ClassInput]!,
+  $level: Int!,
+  $attributes: AttributesInput!,
+  $spells: [SpellsInput!],
+  $inventory: [InventoryInput!]
+  $characterImg: String!
+  $alignment: String!
+) {
+  addCharacter(
+    name: $name,
+    race: $race,
+    gender: $gender,
+    class: $class,
+    level: $level,
+    attributes: $attributes,
+    spells: $spells,
+    inventory: $inventory,
+    characterImg: $characterImg,
+    alignment: $alignment
+  ) {
+    _id
+  }
+}`
+
 export const ADD_QUEST = gql`
   mutation addQuest($title: String!, $details: String!, $rewards: String!) {
     addQuest(title: $title, details: $details, rewards: $rewards) {

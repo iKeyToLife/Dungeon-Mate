@@ -16,6 +16,7 @@ const characterTypeDefs = gql`
   }
 
   type Character {
+    userId: ID
     _id: ID
     name: String!
     race: String!
