@@ -16,12 +16,13 @@ const getRandomGender = () => Math.random() < 0.5 ? 'Male' : 'Female';
 
 const getCharacterImagePath = (race, characterClass, gender) => {
     // formatted to lowerCase
-    const formattedRace = race.toLowerCase();
+    const formattedRaceFolder = race.toLowerCase();
+    const formattedRaceImage = race === 'Dragonborn' ? 'DB' : race;
     const formattedClass = characterClass.toLowerCase();
     const formattedGender = gender.toLowerCase();
 
     // create path image
-    return `images/${formattedRace}/${formattedClass}/${formattedGender}/${gender}${race.replace('-', '')}${characterClass}.png`;
+    return `images/${formattedRaceFolder}/${formattedClass}/${formattedGender}/${gender}${formattedRaceImage.replace('-', '')}${characterClass}.png`;
 };
 
 const seedCharacters = async () => {
