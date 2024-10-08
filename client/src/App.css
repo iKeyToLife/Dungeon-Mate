@@ -1,3 +1,13 @@
+.create-character-button {
+  width: 300px !important;
+}
+
+.characters-container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
 #login-container {
   display: flex;
   justify-content: center;

@@ -50,6 +50,7 @@ export const GET_CHARACTERS_BY_USER_ID = gql`
             alignment
         }
     }
+    `;
 
 export const GET_QUESTS = gql`
   query getAllQuests {
