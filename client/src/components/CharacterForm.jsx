@@ -24,10 +24,14 @@ const CharacterForm = ({ onSubmit }) => {
     setFormData((prevData) => {
       const updatedData = { ...prevData, [name]: value };
 
+      const raceFolder = updatedData.race;
+      const raceImage = updatedData.race === 'Dragonborn' ? 'DB' : updatedData.race;
+
+
       // Update characterImg based on current selections
-      if (updatedData.race && updatedData.gender && updatedData.class.length > 0) {
+      if (raceFolder && updatedData.gender && updatedData.class.length > 0) {
         const selectedClass = updatedData.class[0].className; // Assuming single class selection
-        updatedData.characterImg = `public/images/${updatedData.race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${updatedData.race.replace('-', '')}${selectedClass}.png`;
+        updatedData.characterImg = `public/images/${raceFolder}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${raceImage.replace('-', '')}${selectedClass}.png`;
       }
 
       return updatedData;
@@ -44,9 +48,17 @@ const CharacterForm = ({ onSubmit }) => {
         class: [classObject], // Replace with selected class (or modify for multiple classes)
       };
 
+      const race = updatedData.race === 'Dragonborn' ? 'DB' : updatedData.race;
+
       // Update characterImg based on current selections
-      if (updatedData.race && updatedData.gender) {
-        updatedData.characterImg = `public/images/${updatedData.race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${updatedData.race.replace('-', '')}${selectedClass}.png`;
+      const raceFolder = updatedData.race;
+      const raceImage = updatedData.race === 'Dragonborn' ? 'DB' : updatedData.race;
+
+
+      // Update characterImg based on current selections
+      if (raceFolder && updatedData.gender) {
+        const selectedClass = updatedData.class[0].className; // Assuming single class selection
+        updatedData.characterImg = `public/images/${raceFolder}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${raceImage.replace('-', '')}${selectedClass}.png`;
       }
 
       return updatedData;
