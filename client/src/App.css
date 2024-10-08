@@ -1167,8 +1167,8 @@ tbody tr:nth-child(odd) {
 /* Sidebar Styling */
 .sidebar-container {
   width: 275px;
-  max-height: 100vh;
-  overflow: hidden;
+  height: auto;
+  overflow: visible;
 }
 
 .sidebar {

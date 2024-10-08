@@ -300,7 +300,7 @@ const Campaigns = () => {
   return (
     <div className="campaign-page">
       <div className="sidebar-container">
-        <div className="sidebar scrollable">
+        <div className="sidebar">
           <p>{window.innerWidth <= 768 ? 'Select your creations to add!' : 'Drag & Drop your creations!'}</p>
 
           {/* Encounters Dropdown */}
