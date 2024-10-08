@@ -1,4 +1,4 @@
-const { Dungeon } = require("../../models");
+const { Dungeon, Quest, Encounter } = require("../../models");
 const { AuthenticationError } = require("../../utils/auth");
 
 
@@ -50,6 +50,20 @@ const dungeonMutations = {
                 args.userId = context.user._id
                 const newDungeon = new Dungeon(args);
 
+                if (args.quests && args.quests.length > 0) {
+                    const existingQuests = await Quest.find({ _id: { $in: args.quests } });
+                    if (existingQuests.length !== args.quests.length) {
+                        throw new Error("One or more quest IDs are invalid.");
+                    }
+                }
+
+                if (args.encounters && args.encounters.length > 0) {
+                    const existingEncounters = await Encounter.find({ _id: { $in: args.encounters } });
+                    if (existingEncounters.length !== args.encounters.length) {
+                        throw new Error("One or more encounter IDs are invalid.");
+                    }
+                }
+
                 await newDungeon.save(); // Save the dungeon to the database
 
                 return newDungeon; // Return the newly created dungeon
@@ -69,6 +83,11 @@ const dungeonMutations = {
                 if (!dungeon) {
                     throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
                 }
+
+                await validateIds(args.quests, Quest, 'quest'); // check have we quest at db
+
+                await validateIds(args.encounters, Encounter, 'encounter'); // check have we encounter at db
+
                 Object.assign(dungeon, args);
 
                 await dungeon.save();
@@ -111,6 +130,8 @@ const dungeonMutations = {
                 if (!dungeon) {
                     throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
                 }
+
+                await validateIds(args.encounters, Encounter, 'encounter'); // check have we encounter at db
 
                 // check unique encounter
                 const encounterIndex = dungeon.encounters.findIndex(encounter => encounter._id.toString() === encounterId);
@@ -173,6 +194,8 @@ const dungeonMutations = {
                 if (!dungeon) {
                     throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
                 }
+
+                await validateIds(args.quests, Quest, 'quest'); // check have we quest at db
 
                 // check unique quest
                 const questIndex = dungeon.quests.findIndex(quest => quest._id.toString() === questId);
