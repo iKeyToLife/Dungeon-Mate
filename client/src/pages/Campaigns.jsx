@@ -84,7 +84,39 @@ const Campaigns = () => {
     try {
       let query;
       let variableName;
-
+  
+      // Handling creatures from the DnD API
+      if (type === 'creature') {
+        // Check if we already have the details
+        if (!item.details) {
+          // Build the API URL dynamically using the creature's index
+          const creatureUrl = item.index ? `/api/monsters/${item.index}` : item.url;
+          const response = await fetch(`https://www.dnd5eapi.co${creatureUrl}`);
+          const creatureData = await response.json();
+          if (!response.ok) throw new Error('Failed to fetch creature data');
+  
+          // Set the creature details and toggle expanded state
+          setSelectedCreatures((prevCreatures) =>
+            prevCreatures.map((creature) =>
+              creature.index === item.index
+                ? { ...creature, details: creatureData, expanded: !creature.expanded }
+                : creature
+            )
+          );
+        } else {
+          // If details already exist, simply toggle expanded state
+          setSelectedCreatures((prevCreatures) =>
+            prevCreatures.map((creature) =>
+              creature.index === item.index
+                ? { ...creature, expanded: !creature.expanded }
+                : creature
+            )
+          );
+        }
+        return;
+      }
+  
+      // Handling encounters, quests, and dungeons from your GraphQL API
       if (type === 'encounter') {
         query = GET_ENCOUNTER;
         variableName = 'encounterId';
@@ -94,33 +126,19 @@ const Campaigns = () => {
       } else if (type === 'dungeon') {
         query = GET_DUNGEON;
         variableName = 'dungeonId';
-      } else if (type === 'creature') {
-        // Fetch creature data from the DnD API
-        const response = await fetch(`https://www.dnd5eapi.co${item.url}`);
-        const creatureData = await response.json();
-        if (!response.ok) throw new Error('Failed to fetch creature data');
-
-        setSelectedCreatures((prevCreatures) =>
-          prevCreatures.map((creature) =>
-            creature.index === item.index
-              ? { ...creature, details: creatureData, expanded: !creature.expanded }
-              : creature
-          )
-        );
-        return;
       }
-
+  
       // Fetch encounters, quests, and dungeons from GraphQL API
       const { data } = await client.query({
         query,
-        variables: { [variableName]: item._id ? item._id : item.id }
+        variables: { [variableName]: item._id ? item._id : item.id },
       });
-
+  
       let expandedItemDetails;
       if (type === 'encounter') expandedItemDetails = data.encounter;
       else if (type === 'quest') expandedItemDetails = data.quest;
       else if (type === 'dungeon') expandedItemDetails = data.dungeon;
-
+  
       // Set the expanded state for encounters, quests, and dungeons
       if (type === 'encounter') {
         setSelectedEncounters((prevEncounters) =>
@@ -136,7 +154,7 @@ const Campaigns = () => {
             quest._id === item._id
               ? { ...quest, details: expandedItemDetails, expanded: !quest.expanded }
               : quest
-          )
+            )
         );
       } else if (type === 'dungeon') {
         setSelectedDungeons((prevDungeons) =>
@@ -670,17 +688,73 @@ const Campaigns = () => {
         <div className="existing-campaigns-container">
           <h2>Existing Campaigns:</h2>
           <div className="campaign-grid">
-            {campaigns.length === 0 ? <p>No campaigns created yet</p> : campaigns.map((campaign) => (
-              <div className="campaign-card" key={campaign._id}>
-                <h3>{campaign.title}</h3>
-                <p>{campaign.description}</p>
+            {campaigns.length === 0 ? (
+              <p>No campaigns created yet</p>
+            ) : (
+              campaigns.map((campaign) => (
+                <div className="campaign-card" key={campaign._id}>
+                  <h5 className="campaign-title">{campaign.title}</h5>
+                  <p className="campaign-description">{campaign.description}</p>
 
-                <div className="campaign-button-row">
-                  <button onClick={() => handleEditCampaign(campaign)}>Edit</button>
-                  <button onClick={() => openDeleteModal(campaign._id)}>Delete</button>
+                  {/* Display NPCs if available */}
+                  {campaign.npcs && (
+                    <div className="campaign-npcs">
+                      <h6>NPCs:</h6>
+                      <p>{campaign.npcs}</p>
+                    </div>
+                  )}
+
+                  {/* Display Notes if available */}
+                  {campaign.notes && (
+                    <div className="campaign-notes">
+                      <h6>Notes:</h6>
+                      <p>{campaign.notes}</p>
+                    </div>
+                  )}
+
+                  {/* Display Encounters */}
+                  <div className="campaign-encounters">
+                    <h6>Encounters:</h6>
+                    {campaign.encounters.map((encounter) => (
+                      <p key={encounter._id}>{encounter.title}</p>
+                    ))}
+                  </div>
+
+                  {/* Display Quests */}
+                  <div className="campaign-quests">
+                    <h6>Quests:</h6>
+                    {campaign.quests.map((quest) => (
+                      <p key={quest._id}>{quest.title}</p>
+                    ))}
+                  </div>
+
+                  {/* Display Dungeons */}
+                  {campaign.dungeons && (
+                    <div className="campaign-dungeons">
+                      <h6>Dungeons:</h6>
+                      {campaign.dungeons.map((dungeon) => (
+                        <p key={dungeon._id}>{dungeon.title}</p>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Display Creatures */}
+                  {campaign.creatures && (
+                    <div className="campaign-creatures">
+                      <h6>Creatures:</h6>
+                      {campaign.creatures.map((creature) => (
+                        <p key={creature.index}>{creature.name}</p>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="campaign-button-row">
+                    <button className="campaign-button-edit" onClick={() => handleEditCampaign(campaign)}>Edit</button>
+                    <button className="campaign-button-delete" onClick={() => openDeleteModal(campaign._id)}>Delete</button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 

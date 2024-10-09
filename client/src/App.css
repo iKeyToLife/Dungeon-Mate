@@ -1529,6 +1529,117 @@ tbody tr:nth-child(odd) {
   margin: 20px auto;
 }
 
+/* Existing Campaigns Container */
+.existing-campaigns-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 2px solid gold;
+  margin-top: 30px;
+}
+
+.campaign-card {
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  color: gold;
+  min-height: 250px;
+  background-image: url('/images/otherImages/existingCampaignBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: 5px 5px 10px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center; 
+}
+
+.campaign-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.308); 
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.campaign-card * {
+  position: relative;
+  z-index: 2;
+}
+
+.campaign-card h3,
+.campaign-card h4 {
+  color: gold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 2px black;
+  text-decoration: underline;
+}
+
+.campaign-card p {
+  color: white;
+  text-shadow: 3px 2px 2px black;
+  margin-bottom: 20px;
+}
+
+.campaign-section-title {
+  font-size: 1.5rem;
+  text-shadow: 3px 2px 2px black;
+  color: #FFD700;
+}
+
+.campaign-button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.campaign-button {
+  padding: 10px 15px;
+  background-color: #8B0000;
+  color: gold;
+  border: 2px solid gold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.campaign-button:hover {
+  background-color: #A50000;
+}
+
+.campaign-title {
+  text-shadow: 2px 2px 2px black;
+  text-decoration: underline;
+  font-size: 38px;
+}
+
+.campaign-card h6 {
+  font-size: 24px;
+  text-shadow: 2px 2px 2px black;
+  color: gold;
+  font-weight: bold;
+}
+
+.campaign-card p {
+  text-shadow: 2px 2px 2px black;
+  font-size: 18px;
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+}
+
 /* Mobile styles (screens smaller than 768px) */
 @media only screen and (max-width: 768px) {
 
