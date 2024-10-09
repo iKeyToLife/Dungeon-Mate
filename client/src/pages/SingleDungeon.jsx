@@ -1,8 +1,7 @@
-import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GET_DUNGEON } from '../utils/queries';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 
 const SingleDungeon = () => {
@@ -65,8 +64,8 @@ const SingleDungeon = () => {
       </div>
 
       <div className="button-container">
-        <button className="standard-button-dungeon" onClick={() => navigate('/dungeons')}>
-          Back to Dungeons
+        <button className="standard-button-dungeon" onClick={() => window.history.back()}>
+          Go Back
         </button>
       </div>
     </div>

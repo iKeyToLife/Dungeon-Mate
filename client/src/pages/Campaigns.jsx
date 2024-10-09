@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
-import { ADD_CAMPAIGN, ADD_CREATURE_TO_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN } from '../utils/mutations';
+import { ADD_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN } from '../utils/mutations';
 import { GET_CAMPAIGNS, GET_DUNGEON, GET_DUNGEONS, GET_ENCOUNTER, GET_ENCOUNTERS, GET_QUEST, GET_QUESTS } from '../utils/queries';
 
 const Campaigns = () => {
@@ -171,21 +171,30 @@ const Campaigns = () => {
     }
   };
 
-  const [addCreatureToCampaign] = useMutation(ADD_CREATURE_TO_CAMPAIGN, {
-    refetchQueries: [{ query: GET_CAMPAIGNS }],
-  });
-
-  const handleAddCreature = async (creature) => {
-    try {
-
-      // Finding an creature in an array
-      const isCreatureInArray = selectedCreatures.some(c => c.index === creature.index);
-      // If it is not in the array, set in the array
-      if (!isCreatureInArray) {
-        setSelectedCreatures([...selectedCreatures, creature]);
+  const handleAddElement = (item, type) => {
+    // check unique before add at array
+    const addUniqueItem = (array, item, key) => {
+      if (!array.some(existingItem => existingItem[key] === item[key])) {
+        return [...array, item];
       }
-    } catch (err) {
-      console.error("Error adding creature to campaign:", err);
+      return array;
+    };
+
+    switch (type) {
+      case 'encounter':
+        setSelectedEncounters(prevState => addUniqueItem(prevState, item, '_id'));
+        break;
+      case 'quest':
+        setSelectedQuests(prevState => addUniqueItem(prevState, item, '_id'));
+        break;
+      case 'dungeon':
+        setSelectedDungeons(prevState => addUniqueItem(prevState, item, '_id'));
+        break;
+      case 'creature':
+        setSelectedCreatures(prevState => addUniqueItem(prevState, item, 'index'));
+        break;
+      default:
+        break;
     }
   };
 
@@ -344,7 +353,6 @@ const Campaigns = () => {
           setSelectedEncounters(prevState => addUniqueItem(prevState, item, '_id'));
           break;
         case 'quest':
-          console.log(item)
           setSelectedQuests(prevState => addUniqueItem(prevState, item, '_id'));
           break;
         case 'dungeon':
@@ -422,6 +430,9 @@ const Campaigns = () => {
                 <li key={encounter._id} className="draggable" draggable={!window.innerWidth <= 768} onDragStart={(e) => onDragStart(e, encounter, 'encounter')}>
                   <div className="sidebar-card">
                     <span>{encounter.title}</span>
+                    <button onClick={() => handleAddElement(encounter, 'encounter')}>
+                      Add
+                    </button>
                     <button onClick={() => navigate(`/encounter/${encounter._id}`)}>View</button>
                     {window.innerWidth <= 768 && <button onClick={() => setSelectedEncounters([...selectedEncounters, encounter])}>Add</button>}
                   </div>
@@ -443,6 +454,9 @@ const Campaigns = () => {
                 <li key={quest._id} className="draggable" draggable={!window.innerWidth <= 768} onDragStart={(e) => onDragStart(e, quest, 'quest')}>
                   <div className="sidebar-card">
                     <span>{quest.title}</span>
+                    <button onClick={() => handleAddElement(quest, 'quest')}>
+                      Add
+                    </button>
                     <button onClick={() => navigate(`/quest/${quest._id}`)}>View</button>
                     {window.innerWidth <= 768 && <button onClick={() => setSelectedQuests([...selectedQuests, quest])}>Add</button>}
                   </div>
@@ -464,6 +478,9 @@ const Campaigns = () => {
                 <li key={dungeon._id} className="draggable" draggable={!window.innerWidth <= 768} onDragStart={(e) => onDragStart(e, dungeon, 'dungeon')}>
                   <div className="sidebar-card">
                     <span>{dungeon.title}</span>
+                    <button onClick={() => handleAddElement(dungeon, 'dungeon')}>
+                      Add
+                    </button>
                     <button onClick={() => navigate(`/dungeon/${dungeon._id}`)}>View</button>
                     {window.innerWidth <= 768 && <button onClick={() => setSelectedDungeons([...selectedDungeons, dungeon])}>Add</button>}
                   </div>
@@ -512,7 +529,7 @@ const Campaigns = () => {
                     >
                       <div className="sidebar-card">
                         <span>{creature.name}</span>
-                        <button onClick={() => handleAddCreature(creature)}>
+                        <button onClick={() => handleAddElement(creature, 'creature')}>
                           Add
                         </button>
                       </div>

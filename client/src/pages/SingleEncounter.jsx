@@ -1,8 +1,7 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GET_ENCOUNTER } from '../utils/queries';
-import { useNavigate } from 'react-router-dom';
 
 const SingleEncounter = () => {
     const navigate = useNavigate();
@@ -29,14 +28,15 @@ const SingleEncounter = () => {
     }
 
     return (
-      <div className="encounter-details"> 
-        <h2>{encounter.title}</h2>
-        <p><strong>Details:</strong> {encounter.details}</p>
-        <div className="button-container">
-        <button className="standard-button-encounter" onClick={() => navigate(`/dungeons`)}>To Dungeons Page</button>
-        <button className="standard-button-encounter" onClick={() => navigate('/encounters')}>To Encounters Page</button>
+        <div className="encounter-details">
+            <h2>{encounter.title}</h2>
+            <p><strong>Details:</strong> {encounter.details}</p>
+            <div className="button-container">
+                <button className="standard-button-encounter" onClick={() => window.history.back()}>
+                    Go Back
+                </button>
+            </div>
         </div>
-      </div>
     );
 };
 
