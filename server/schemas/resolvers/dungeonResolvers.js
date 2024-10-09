@@ -1,5 +1,6 @@
 const { Dungeon, Quest, Encounter } = require("../../models");
 const { AuthenticationError } = require("../../utils/auth");
+const { validateIds } = require("../../utils/validators");
 
 
 const dungeonQueries = {
