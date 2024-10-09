@@ -1,5 +1,6 @@
 const { Dungeon, Quest, Encounter } = require("../../models");
 const { AuthenticationError } = require("../../utils/auth");
+const { validateIds } = require("../../utils/validators");
 
 
 const dungeonQueries = {
@@ -131,7 +132,7 @@ const dungeonMutations = {
                     throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
                 }
 
-                await validateIds(args.encounters, Encounter, 'encounter'); // check have we encounter at db
+                await validateIds([encounterId], Encounter, 'encounter'); // check have we encounter at db
 
                 // check unique encounter
                 const encounterIndex = dungeon.encounters.findIndex(encounter => encounter._id.toString() === encounterId);
@@ -195,7 +196,7 @@ const dungeonMutations = {
                     throw new Error("Dungeon not found or you are not authorized to update this dungeon.");
                 }
 
-                await validateIds(args.quests, Quest, 'quest'); // check have we quest at db
+                await validateIds([questId], Quest, 'quest'); // check have we quest at db
 
                 // check unique quest
                 const questIndex = dungeon.quests.findIndex(quest => quest._id.toString() === questId);

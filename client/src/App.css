@@ -78,6 +78,206 @@ img:hover {
   align-items: start;
 }
 
+/* Campaign Page Styling */
+.campaign-page {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.campaign-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1200px;
+  margin-left: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  border: 2px solid gold;
+}
+
+.campaign-title {
+  color: #FFD700;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Campaign Input Section */
+.campaign-input-section {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid gold;
+  margin-bottom: 20px;
+}
+
+/* New class for grid layout */
+.campaign-dropzone-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  grid-gap: 20px;
+  margin-top: 20px;
+  width: 80%;
+}
+
+/* Adjust the dropzone size */
+.encounter-dropzone2, 
+.quest-dropzone2, 
+.dungeon-dropzone, 
+.creature-dropzone2 {
+  padding: 20px;
+  min-height: 200px; 
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px outset gold;
+  border-radius: 10px;
+  color: #FFD700;
+  text-align: center;
+}
+
+/* Consistent title styling for all dropzones */
+.encounter-dropzone2 h3, 
+.quest-dropzone2 h3, 
+.dungeon-dropzone h3, 
+.creature-dropzone2 h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: gold;
+  text-shadow: 2px 2px 2px black;
+}
+
+.creature-dropzone2 {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 2px solid gold;
+  border-radius: 10px;
+  min-height: 150px;
+  color: #FFD700;
+}
+
+.creature-dropzone2 h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.creature-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.897);
+  border: 2px solid gold;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Campaign Save Button */
+.save-campaign-button {
+  width: 50% !important;
+  padding: 15px;
+  background-color: #8B0000;
+  color: #FFD700;
+  border: 2px solid gold;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.save-campaign-button:hover {
+  background-color: #A30000;
+}
+
+/* Campaign Grid */
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.campaign-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  border: 2px solid gold;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 0;
+  min-width: 250px;
+  color: #FFD700;
+}
+
+.campaign-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.campaign-button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.campaign-card .campaign-button-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Campaign Button Styles */
+.campaign-button-view, 
+.campaign-button-remove {
+  background-color: #800000;
+  color: #FFD700;
+  border: 2px solid gold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.campaign-button-view:hover,
+.campaign-button-remove:hover {
+  background-color: #A50000;
+}
+
+.campaign-card-expanded {
+  max-height: none;
+  padding: 15px;
+}
+
+.expanded-details {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border: 1px solid gold;
+  margin-top: 10px;
+  color: #FFD700;
+}
+
+/* Sidebar p for Drag & Drop Your Creations Text */
+.sidebar p {
+  color: #FFD700;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-size: 26px;
+  text-shadow: 2px 2px 2px black;
+}
+
 #login-container {
   display: flex;
   justify-content: center;
@@ -895,6 +1095,7 @@ tbody tr:nth-child(odd) {
 
 .dungeon-title-input {
   font-size: 1.2rem;
+  width: 40%;
 }
 
 .dungeon-input {
@@ -966,8 +1167,8 @@ tbody tr:nth-child(odd) {
 /* Sidebar Styling */
 .sidebar-container {
   width: 275px;
-  max-height: 100vh;
-  overflow: hidden;
+  height: auto;
+  overflow: visible;
 }
 
 .sidebar {
@@ -1259,6 +1460,62 @@ tbody tr:nth-child(odd) {
 .standard-button-dungeon:hover {
   background-color: #FFD700;
   color: #8B0000;
+}
+
+.character-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.character-card {
+  flex: 1 1 calc(33.33% - 2rem);
+  max-width: calc(33.33% - 2rem);
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.character-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.character-card img {
+  border-radius: 5px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.character-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.character-card p {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+  color: #666;
+}
+
+.character-card ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.character-card li {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0.2rem 0;
 }
 
 /* Mobile styles (screens smaller than 768px) */
@@ -1661,60 +1918,70 @@ tbody tr:nth-child(odd) {
     margin-top: 20px;
     margin-bottom: 0; 
   }
+  /* Campaign page mobile adjustments */
+  .campaign-page {
+    flex-direction: column;
+  }
+
+  .sidebar-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    border: 2px solid gold;
+    margin-bottom: 20px;
+  }
+
+  .campaign-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .campaign-title-input,
+  .campaign-input {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 1.1rem;
+  }
+
+  /* Dropzones for Encounters, Quests, Creatures */
+  .campaign-subcontainer {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .encounter-dropzone,
+  .quest-dropzone,
+  .creature-dropzone {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Save Campaign Button */
+  .save-campaign-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  /* Campaign Grid */
+  .campaign-grid {
+    display: block;
+    width: 100%;
+  }
+
+  .campaign-card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }
 
-.character-card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.character-card {
-  flex: 1 1 calc(33.33% - 2rem);
-  max-width: calc(33.33% - 2rem);
-  box-sizing: border-box;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: center;
-  transition: box-shadow 0.3s ease;
-}
-
-.character-card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.character-card img {
-  border-radius: 5px;
-  width: 100%;
-  height: auto;
-  margin-bottom: 1rem;
-}
-
-.character-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-.character-card p {
-  font-size: 1rem;
-  margin: 0.3rem 0;
-  color: #666;
-}
-
-.character-card ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.character-card li {
-  font-size: 0.9rem;
-  color: #444;
-  margin: 0.2rem 0;
-}

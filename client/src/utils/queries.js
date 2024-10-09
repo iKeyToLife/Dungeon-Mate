@@ -19,13 +19,13 @@ export const GET_ENCOUNTERS = gql`
 
 export const GET_ENCOUNTER = gql`
   query getEncounterById($encounterId: ID!) {
-  encounter(encounterId: $encounterId) {
-    _id
-    title
-    details
+    encounter(encounterId: $encounterId) {
+      _id
+      title
+      details
+    }
   }
-}
-`
+`;
 
 export const GET_CHARACTERS_BY_USER_ID = gql`
     query GetCharactersByUserId{
@@ -111,6 +111,62 @@ export const GET_DUNGEON = gql`
         title
         details
         rewards
+      }
+    }
+  }
+`;
+
+export const GET_CAMPAIGNS = gql`
+  query getAllCampaigns {
+    campaigns {
+      _id
+      title
+      description
+      npcs   
+      notes   
+      creatures {
+        index
+        name
+      }
+      encounters {
+        _id
+        title
+      }
+      quests {
+        _id
+        title
+      }
+      dungeons {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const GET_CAMPAIGN = gql`
+  query getCampaignById($campaignId: ID!) {
+    campaign(campaignId: $campaignId) {
+      _id
+      title
+      description
+      npcs    
+      notes   
+      creatures {
+        index
+        name
+      }
+      encounters {
+        _id
+        title
+      }
+      quests {
+        _id
+        title
+      }
+      dungeons {
+        _id
+        title
       }
     }
   }

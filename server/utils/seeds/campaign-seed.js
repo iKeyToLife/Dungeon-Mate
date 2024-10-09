@@ -23,14 +23,9 @@ const seedCampaigns = async () => {
                     { index: 'creature1', name: 'Gandalf the Grey' },
                     { index: 'creature2', name: 'Legolas Greenleaf' }
                 ];
-                const npcs = [
-                    { description: 'npc1' },
-                    { description: 'npc2' }
-                ];
-                const notes = [
-                    { description: 'note1' },
-                    { description: 'note2' }
-                ];
+                
+                const npcs = 'npc1, npc2';  
+                const notes = 'note1, note2';
 
                 // Randomly select some quests, encounters, and dungeons
                 const randomQuests = userQuests.sort(() => 0.5 - Math.random()).slice(0, 2); // Select 2 quests
