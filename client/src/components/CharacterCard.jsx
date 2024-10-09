@@ -1,6 +1,25 @@
 import React from 'react';
+import { useMutation } from '@apollo/client';
+import { DELETE_CHARACTER } from '../utils/mutations';
+import { GET_CHARACTERS_BY_USER_ID } from '../utils/queries';
 
-const CharacterCard = ({ character }) => {
+const CharacterCard = ({ character, onEdit, onDelete }) => {
+    const [deleteCharacter] = useMutation(DELETE_CHARACTER, {
+        refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],
+        onCompleted: () => {
+            if (onDelete) {
+                onDelete(character._id);  // Call parent component's onDelete callback if provided
+            }
+        },
+        onError: (error) => {
+            console.error("Error deleting character:", error);
+        }
+    });
+
+    const handleDelete = () => {
+        deleteCharacter({ variables: { characterId: character._id } });
+    };
+
     return (
         <div className="character-card">
             <h3>{character.name}</h3>
@@ -18,6 +37,12 @@ const CharacterCard = ({ character }) => {
                 <li>Charisma: {character.attributes.charisma}</li>
             </ul>
             <img src={character.characterImg} alt={`${character.name} Character`} />
+            <div className="character-button-row">
+
+                <button className="character-button-edit" onClick={() => onEdit(character.id)}>Edit</button>
+
+                <button className="character-button-delete" onClick={handleDelete}>Delete</button>
+            </div>
         </div>
     );
 };

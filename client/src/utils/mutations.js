@@ -92,6 +92,38 @@ mutation AddCharacter(
   }
 }`
 
+export const UPDATE_CHARACTER = gql`
+mutation UpdateCharacter($characterId: ID!, $name: String, $race: String, $gender: String, $class: [ClassInput], $alignment: String, $level: Int, $characterImg: String) {
+  updateCharacter(characterId: $characterId, name: $name, race: $race, gender: $gender, class: $class, alignment: $alignment, level: $level, characterImg: $characterImg) {
+    race
+    name
+    level
+    gender
+    class {
+      className
+      level
+    }
+    characterImg
+    attributes {
+      charisma
+      constitution
+      dexterity
+      intelligence
+      strength
+      wisdom
+    }
+    alignment
+    _id
+  }
+}`
+
+export const DELETE_CHARACTER = gql`
+mutation DeleteCharacter($characterId: ID!) {
+   deleteCharacter(characterId: $characterId) {
+     _id
+  }
+}`
+
 export const ADD_QUEST = gql`
   mutation addQuest($title: String!, $details: String!, $rewards: String!) {
     addQuest(title: $title, details: $details, rewards: $rewards) {

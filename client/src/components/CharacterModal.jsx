@@ -24,7 +24,6 @@ const CharacterModal = ({ isOpen, toggle }) => {
         },
       });
   
-      console.log('Character added:', data.addCharacter);
       toggle(); // Close the modal after successful submission
     } catch (error) {
       console.error('Error adding character:', error);

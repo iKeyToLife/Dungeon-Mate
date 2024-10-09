@@ -1,22 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const CharacterForm = ({ onSubmit }) => {
+const CharacterForm = ({ onSubmit, character = {} }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    race: '',
-    gender: '',
-    class: [],
-    alignment: '', // Ensure this is set
-    level: 1,
-    attributes: {
-      strength: 8, 
-      dexterity: 8, 
-      constitution: 8,
-      intelligence: 8,
-      wisdom: 8,
-      charisma: 8,
+    name: character?.name || '',
+    race: character?.race || '',
+    gender: character?.gender || '',
+    class: character?.class?.map(c => ({ className: c.className, level: c.level }) ) || [],
+    alignment: character?.alignment || '',
+    level: character?.level || 1,
+    attributes: {strength: character?.attributes?.strength || 8,
+      dexterity: character?.attributes?.dexterity || 8,
+      constitution: character?.attributes?.constitution || 8,
+      intelligence: character?.attributes?.intelligence  || 8,
+      wisdom: character?.attributes?.wisdom || 8,
+      charisma: character?.attributes?.charisma || 8
     },
-    characterImg: '',
+    characterImg: character?.characterImg || '',
   });
 
   const handleChange = (e) => {
@@ -27,10 +26,8 @@ const CharacterForm = ({ onSubmit }) => {
       const raceFolder = updatedData.race;
       const raceImage = updatedData.race === 'Dragonborn' ? 'DB' : updatedData.race;
 
-
-      // Update characterImg based on current selections
       if (raceFolder && updatedData.gender && updatedData.class.length > 0) {
-        const selectedClass = updatedData.class[0].className; // Assuming single class selection
+        const selectedClass = updatedData.class[0].className;
         updatedData.characterImg = `public/images/${raceFolder}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${raceImage.replace('-', '')}${selectedClass}.png`;
       }
 
@@ -45,20 +42,14 @@ const CharacterForm = ({ onSubmit }) => {
     setFormData((prevData) => {
       const updatedData = {
         ...prevData,
-        class: [classObject], // Replace with selected class (or modify for multiple classes)
+        class: [classObject],
       };
 
       const race = updatedData.race === 'Dragonborn' ? 'DB' : updatedData.race;
 
-      // Update characterImg based on current selections
-      const raceFolder = updatedData.race;
-      const raceImage = updatedData.race === 'Dragonborn' ? 'DB' : updatedData.race;
-
-
-      // Update characterImg based on current selections
-      if (raceFolder && updatedData.gender) {
-        const selectedClass = updatedData.class[0].className; // Assuming single class selection
-        updatedData.characterImg = `public/images/${raceFolder}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${raceImage.replace('-', '')}${selectedClass}.png`;
+      if (race && updatedData.gender) {
+        const selectedClass = updatedData.class[0].className;
+        updatedData.characterImg = `public/images/${race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${race.replace('-', '')}${selectedClass}.png`;
       }
 
       return updatedData;
@@ -67,13 +58,10 @@ const CharacterForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Check if all required fields are filled
     if (!formData.name || !formData.race || !formData.gender || !formData.alignment || formData.class.length === 0) {
       alert("Please fill in all required fields.");
-      return; // Prevent form submission
+      return;
     }
-
     onSubmit(formData);
   };
 
@@ -157,7 +145,7 @@ const CharacterForm = ({ onSubmit }) => {
         </div>
       )}
 
-      <button type="submit">Create Character</button>
+      <button type="submit">Save Character</button>
     </form>
   );
 };

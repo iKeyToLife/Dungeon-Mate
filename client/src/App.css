@@ -727,7 +727,9 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-button-edit,
-.encounter-button-delete {
+.encounter-button-delete,
+.character-button-edit,
+.character-button-delete {
   width: 100px !important;
   padding: 5px 10px;
   font-size: 0.9rem;
@@ -1983,5 +1985,13 @@ tbody tr:nth-child(odd) {
     width: 100%;
     margin-bottom: 20px;
   }
+}
+.characters-card-holder {
+background: rgba(0, 0, 0, 0.5);
+padding: 20px;
+border: 2px solid gold;
+border-radius: 10px;
+max-width: 1500px;
+margin: 20px auto;
 }
 
