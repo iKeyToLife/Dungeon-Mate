@@ -1,5 +1,5 @@
 import { useApolloClient, useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
@@ -49,6 +49,31 @@ const Campaigns = () => {
       setCampaigns(data.campaigns || []);
     },
   });
+
+  // Load dungeon data from localStorage when the component mounts
+  useEffect(() => {
+    const savedCampaign = localStorage.getItem('unsavedCampaign');
+    if (savedCampaign) {
+      const { title, description, encounters, quests, isEdit, editId, npcs, notes, dungeons, creatures } = JSON.parse(savedCampaign);
+      setTitle(title || '');
+      setDescription(description || '');
+      setSelectedEncounters(encounters || []);
+      setSelectedQuests(quests || []);
+      setIsEditing(isEdit || false);
+      setEditingId(editId || null);
+      setNpcs(npcs || '');
+      setNotes(notes || '');
+      setSelectedDungeons(dungeons || []);
+      setSelectedCreatures(creatures || []);
+    }
+  }, []);
+
+  // Save the campaign state to localStorage on updates to title, description, encounters, or quests
+  useEffect(() => {
+    const unsavedCampaign = { title, description, encounters: selectedEncounters, quests: selectedQuests, isEdit: isEditing, editId: editingId, npcs, notes, dungeons: selectedDungeons, creatures: selectedCreatures };
+    localStorage.setItem('unsavedCampaign', JSON.stringify(unsavedCampaign));
+  }, [title, description, selectedEncounters, selectedQuests, isEditing, editingId, npcs, notes, selectedDungeons, selectedCreatures]);
+
 
   const [addCampaign] = useMutation(ADD_CAMPAIGN, {
     refetchQueries: [{ query: GET_CAMPAIGNS }],
@@ -252,6 +277,7 @@ const Campaigns = () => {
       setSelectedCreatures([]);
       setIsEditing(false);
       setEditingId(null);
+      localStorage.removeItem('unsavedCampaign');
 
       // Refetch campaigns to update the list
       const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
@@ -315,6 +341,7 @@ const Campaigns = () => {
       setSelectedQuests([]);
       setSelectedDungeons([]);
       setSelectedCreatures([]);
+      localStorage.removeItem('unsavedCampaign');
 
       // Refetch campaigns to display updates
       const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
