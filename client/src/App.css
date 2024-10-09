@@ -453,7 +453,9 @@ tbody tr:nth-child(odd) {
 }
 
 .encounter-button-edit,
-.encounter-button-delete {
+.encounter-button-delete,
+.character-button-edit,
+.character-button-delete {
   width: 100px !important;
   padding: 5px 10px;
   font-size: 0.9rem;
