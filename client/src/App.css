@@ -1559,6 +1559,14 @@ tbody tr:nth-child(odd) {
     margin: 0 auto;
   }
 }
+.characters-card-holder {
+background: rgba(0, 0, 0, 0.5);
+padding: 20px;
+border: 2px solid gold;
+border-radius: 10px;
+max-width: 1500px;
+margin: 20px auto;
+}
 
 .character-card-container {
   display: flex;

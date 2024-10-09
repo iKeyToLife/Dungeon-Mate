@@ -26,10 +26,12 @@ const Characters = ({ user = { _id: null } }) => {
           {loading && <p>Loading characters...</p>}
           {error && <p>Error loading characters: {error.message}</p>}
           {data && data.characters && data.characters.length > 0 ? (
+            <div className="characters-card-holder">
               <div className="character-card-container">
                   {data.characters.map((character) => (
                       <CharacterCard key={character._id} character={character} />
                   ))}
+              </div>
               </div>
           ) : (
               !loading && <p>No characters found for this user.</p>
