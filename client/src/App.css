@@ -1269,6 +1269,8 @@ tbody tr:nth-child(odd) {
   background-image: url('/images/otherImages/scroll-background.png');
   background-size: cover;
   background-position: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .dungeon-card h3 {
@@ -1527,6 +1529,299 @@ tbody tr:nth-child(odd) {
   border-radius: 10px;
   max-width: 1500px;
   margin: 20px auto;
+}
+
+/* Existing Campaigns Container */
+.existing-campaigns-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 2px solid gold;
+  margin-top: 30px;
+}
+
+.campaign-card {
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  color: gold;
+  min-height: 250px;
+  background-image: url('/images/otherImages/existingCampaignBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 20px;
+  position: relative;
+  box-shadow: 5px 5px 10px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.campaign-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.308);
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.campaign-card * {
+  position: relative;
+  z-index: 2;
+}
+
+.campaign-card h3,
+.campaign-card h4 {
+  color: gold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 2px black;
+  text-decoration: underline;
+}
+
+.campaign-section-title {
+  font-size: 1.5rem;
+  text-shadow: 3px 2px 2px black;
+  color: #FFD700;
+}
+
+.campaign-button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.campaign-button {
+  padding: 10px 15px;
+  background-color: #8B0000;
+  color: gold;
+  border: 2px solid gold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.campaign-button:hover {
+  background-color: #A50000;
+}
+
+.campaign-title {
+  text-shadow: 2px 2px 2px black;
+  text-decoration: underline;
+  font-size: 38px;
+}
+
+.campaign-card h6 {
+  font-size: 24px;
+  text-shadow: 2px 2px 2px black;
+  color: gold;
+  font-weight: bold;
+}
+
+.campaign-card p {
+  text-shadow: 2px 2px 2px black;
+  font-size: 18px;
+  padding: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.campaign-text {
+  overflow-wrap: anywhere; 
+  word-wrap: break-word;
+  white-space: normal;
+  word-break: break-word; 
+}
+
+.single-campaign-container {
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  background-image: url('/images/otherImages/singleCampaignBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: gold;
+  max-width: 900px;
+  margin: 20px auto 40px auto;
+  position: relative;
+  box-shadow: 10px 10px 8px black;
+  word-wrap: break-word; 
+  white-space: normal; 
+  overflow-wrap: break-word; 
+}
+
+.single-campaign-container h1 {
+  font-size: 46px;
+  text-shadow: 2px 2px 2px gold;
+  color: black;
+  text-align: center;
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+
+.single-campaign-container h3 {
+  font-size: 34px;
+  margin: 15px 0;
+  text-align: center;
+  color: gold;
+  text-shadow: 2px 2px 1px black;
+  display: flex;
+  justify-content: center;
+}
+
+.single-campaign-container p {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: black;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+}
+
+.single-campaign-encounters, .single-campaign-quests, .single-campaign-dungeons, .single-campaign-creatures {
+  border: 2px solid gold;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.76); 
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.single-campaign-encounters, .single-campaign-quests, .single-campaign-dungeons, .single-campaign-creatures h4 {
+  text-shadow: 2px 2px 2px black;
+}
+
+.single-campaign-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+  justify-items: center;
+}
+
+.single-campaign-item {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border-radius: 5px;
+  text-align: center;
+  color: whitesmoke;
+  border: 1px outset gold;
+  word-wrap: break-word; 
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.single-campaign-encounters h4, .single-campaign-quests h4, .single-campaign-dungeons h4, .single-campaign-creatures h4 {
+  color: white;
+  text-shadow: 2px 2px 2px black;
+  font-size: 20px;
+}
+
+.single-campaign-encounters h5, .single-campaign-quests h5, .single-campaign-dungeons h5, .single-campaign-creatures h5 {
+  color: goldenrod;
+  text-shadow: 2px 2px 2px black;
+  font-size: 26px;
+  text-decoration: underline;
+}
+
+.single-campaign-button {
+  padding: 10px;
+  margin: 10px auto 0 auto;
+  font-size: 16px;
+  border: 2px solid gold;
+  background-color: darkred;
+  color: gold;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 150px !important;
+  display: block;
+}
+
+.single-campaign-button:hover {
+  background-color: red;
+}
+
+.expanded-details-campaign {
+  background-color: rgba(0, 0, 0, 0.664);
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  color: whitesmoke;
+  text-align: center; 
+  width: auto; 
+  word-wrap: break-word; 
+}
+
+.expanded-details-campaign p {
+  color: whitesmoke;
+  margin: 15px;
+  text-align: center;
+}
+
+.expanded-details-campaign strong {
+  margin-right: 8px;
+  color: gold;
+}
+
+.item-container {
+  background-color: rgba(0, 0, 0, 0.6); 
+  padding: 10px;
+  border: 1px solid gold; 
+  border-radius: 8px; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+  width: 100%;
+  max-width: 350px; 
+  text-align: center; 
+  margin: 0 auto; 
+}
+
+.back-button {
+  max-width: 300px !important;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; 
+}
+
+.back-button:hover {
+  background-color: red;
+}
+
+.campaign-details {
+  display: block;
+  overflow-wrap: anywhere; 
+  word-wrap: break-word;
+  white-space: normal;
+  margin: 15px;
+  padding-bottom: 10px;
+}
+
+.campaign-details h1,
+.campaign-details h3,
+.campaign-details p {
+  display: block;
+  overflow-wrap: anywhere; 
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 /* Mobile styles (screens smaller than 768px) */
