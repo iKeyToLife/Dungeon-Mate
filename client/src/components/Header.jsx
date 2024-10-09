@@ -2,7 +2,7 @@ import { gsap } from 'gsap';
 import { useEffect, useState } from 'react';
 import { useLocation, NavLink as RouterNavLink } from 'react-router-dom'; 
 import { Container, Nav, Navbar, NavbarBrand, NavItem } from 'reactstrap';
-import DMLogoTrans from '../../DungeonMateLogo2.png';
+import DMLogoTrans from '/images/otherImages/DungeonMateLogo2.png';
 import AuthService from '../utils/auth';
 
 const Header = () => {

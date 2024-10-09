@@ -28,7 +28,7 @@ const CharacterForm = ({ onSubmit, character = {} }) => {
 
       if (raceFolder && updatedData.gender && updatedData.class.length > 0) {
         const selectedClass = updatedData.class[0].className;
-        updatedData.characterImg = `public/images/${raceFolder}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${raceImage.replace('-', '')}${selectedClass}.png`;
+        updatedData.characterImg = `/images/${raceFolder}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${raceImage.replace('-', '')}${selectedClass}.png`;
       }
 
       return updatedData;
@@ -49,7 +49,7 @@ const CharacterForm = ({ onSubmit, character = {} }) => {
 
       if (race && updatedData.gender) {
         const selectedClass = updatedData.class[0].className;
-        updatedData.characterImg = `public/images/${race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${race.replace('-', '')}${selectedClass}.png`;
+        updatedData.characterImg = `/images/${race}/${selectedClass}/${updatedData.gender}/${updatedData.gender}${race.replace('-', '')}${selectedClass}.png`;
       }
 
       return updatedData;
