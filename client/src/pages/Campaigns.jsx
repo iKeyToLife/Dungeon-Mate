@@ -84,7 +84,7 @@ const Campaigns = () => {
     try {
       let query;
       let variableName;
-  
+
       // Handling creatures from the DnD API
       if (type === 'creature') {
         // Check if we already have the details
@@ -94,7 +94,7 @@ const Campaigns = () => {
           const response = await fetch(`https://www.dnd5eapi.co${creatureUrl}`);
           const creatureData = await response.json();
           if (!response.ok) throw new Error('Failed to fetch creature data');
-  
+
           // Set the creature details and toggle expanded state
           setSelectedCreatures((prevCreatures) =>
             prevCreatures.map((creature) =>
@@ -115,7 +115,7 @@ const Campaigns = () => {
         }
         return;
       }
-  
+
       // Handling encounters, quests, and dungeons from your GraphQL API
       if (type === 'encounter') {
         query = GET_ENCOUNTER;
@@ -127,18 +127,18 @@ const Campaigns = () => {
         query = GET_DUNGEON;
         variableName = 'dungeonId';
       }
-  
+
       // Fetch encounters, quests, and dungeons from GraphQL API
       const { data } = await client.query({
         query,
         variables: { [variableName]: item._id ? item._id : item.id },
       });
-  
+
       let expandedItemDetails;
       if (type === 'encounter') expandedItemDetails = data.encounter;
       else if (type === 'quest') expandedItemDetails = data.quest;
       else if (type === 'dungeon') expandedItemDetails = data.dungeon;
-  
+
       // Set the expanded state for encounters, quests, and dungeons
       if (type === 'encounter') {
         setSelectedEncounters((prevEncounters) =>
@@ -154,7 +154,7 @@ const Campaigns = () => {
             quest._id === item._id
               ? { ...quest, details: expandedItemDetails, expanded: !quest.expanded }
               : quest
-            )
+          )
         );
       } else if (type === 'dungeon') {
         setSelectedDungeons((prevDungeons) =>
@@ -217,19 +217,9 @@ const Campaigns = () => {
         index: creature.index,
         name: creature.name
       }));
-      console.log("Updating campaign with:", {
-        campaignId: editingId,
-        title,
-        description,
-        npcs,
-        notes,
-        creatures: validCreatures,
-        encounters: validEncounters.map(enc => enc._id),
-        quests: validQuests.map(quest => quest._id),
-        dungeons: validDungeons,
-      });
 
-      const response = await updateCampaign({
+      // Update the campaign with the selected data
+      await updateCampaign({
         variables: {
           campaignId: editingId,
           title,
@@ -242,8 +232,6 @@ const Campaigns = () => {
           dungeons: validDungeons,
         },
       });
-
-      console.log("Campaign updated successfully:", response.data.updateCampaign);
 
       // Clear the fields after updating
       setTitle('');
@@ -749,6 +737,7 @@ const Campaigns = () => {
                   )}
 
                   <div className="campaign-button-row">
+                    <button className="campaign-button-view" onClick={() => navigate(`/campaign/${campaign._id}`)}>View</button>
                     <button className="campaign-button-edit" onClick={() => handleEditCampaign(campaign)}>Edit</button>
                     <button className="campaign-button-delete" onClick={() => openDeleteModal(campaign._id)}>Delete</button>
                   </div>
