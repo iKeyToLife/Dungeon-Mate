@@ -2,9 +2,12 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 const Character = require('./Character');
 const Dungeon = require('./Dungeon');
+const Quest = require('./Quest');
+const Campaign = require('./Campaign');
+const Encounter = require('./Encounter');
 
 // Schema to create User model
-const userSchema = new Schema(
+const UserSchema = new Schema(
     {
         username: {
             type: String,
@@ -50,27 +53,27 @@ const userSchema = new Schema(
 );
 
 // check validate password
-userSchema.statics.validatePassword = function (password) {
+UserSchema.statics.validatePassword = function (password) {
     const passwordRegex = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}/;
     return passwordRegex.test(password);
 };
 
 
-userSchema.pre('save', async function (next) {
+UserSchema.pre('save', async function (next) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
     this.email = this.email.toLowerCase();
     next();
 })
 
-userSchema.pre('findOne', function (next) {
+UserSchema.pre('findOne', function (next) {
     if (this.getQuery().email) {
         this.getQuery().email = this.getQuery().email.toLowerCase();
     }
     next();
 });
 
-userSchema.pre('findOneAndUpdate', async function (next) {
+UserSchema.pre('findOneAndUpdate', async function (next) {
     const update = this.getUpdate();
     if (update.password) {
         const User = model('user');
@@ -89,23 +92,26 @@ userSchema.pre('findOneAndUpdate', async function (next) {
     next();
 });
 
-userSchema.pre('findOneAndDelete', async function (next) {
+UserSchema.pre('findOneAndDelete', async function (next) {
 
     const query = this.getQuery();
     // Retrieve userId from query
     const userId = query._id;
 
-    await Character.deleteMany({ userId: userId }); // Delete all characters by userId
-    await Dungeon.deleteMany({ userId: userId }); // Delete all Dungeon by userId
+    await Character.deleteMany({ userId: userId });     // Delete all characters by userId
+    await Campaign.deleteMany({ userId: userId });      // Delete all Campaign by userId
+    await Dungeon.deleteMany({ userId: userId });       // Delete all Dungeon by userId
+    await Quest.deleteMany({ userId: userId });           // Delete all Dungeon by userId
+    await Encounter.deleteMany({ userId: userId });       // Delete all Dungeon by userId
 
     next();
 });
 
-userSchema.virtual('fullName').get(function () {
+UserSchema.virtual('fullName').get(function () {
     return `${this.profile.firstName} ${this.profile.lastName}`;
 });
 
 // Initialize our User model
-const User = model('user', userSchema);
+const User = model('user', UserSchema);
 
 module.exports = User;

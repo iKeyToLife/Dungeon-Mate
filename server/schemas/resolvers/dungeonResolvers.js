@@ -51,18 +51,11 @@ const dungeonMutations = {
                 args.userId = context.user._id
                 const newDungeon = new Dungeon(args);
 
-                if (args.quests && args.quests.length > 0) {
-                    const existingQuests = await Quest.find({ _id: { $in: args.quests } });
-                    if (existingQuests.length !== args.quests.length) {
-                        throw new Error("One or more quest IDs are invalid.");
-                    }
+                if (args.quests) {
+                    await validateIds(args.quests, Quest, 'quest'); // check have we quest at db
                 }
-
-                if (args.encounters && args.encounters.length > 0) {
-                    const existingEncounters = await Encounter.find({ _id: { $in: args.encounters } });
-                    if (existingEncounters.length !== args.encounters.length) {
-                        throw new Error("One or more encounter IDs are invalid.");
-                    }
+                if (args.encounters) {
+                    await validateIds(args.encounters, Encounter, 'encounter'); // check have we quest at db
                 }
 
                 await newDungeon.save(); // Save the dungeon to the database

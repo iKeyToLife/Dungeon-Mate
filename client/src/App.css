@@ -16,12 +16,12 @@
   border-radius: 50px;
   width: 80%;
   max-width: 1200px;
-  background-image: url('../HomePageBackground.png');
+  background-image: url('../public/images/otherImages/HomePageBackground.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 550px !important;
-  margin: 0 auto; 
+  margin: 0 auto;
   box-shadow: 10px 10px 8px black;
 }
 
@@ -32,16 +32,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.438); 
+  background-color: rgba(0, 0, 0, 0.438);
   border-radius: 50px;
-  z-index: 1; 
+  z-index: 1;
 }
 
 .home-styling * {
   position: relative;
-  z-index: 2; 
-  text-align: center; 
-  padding-top: 20px; 
+  z-index: 2;
+  text-align: center;
+  padding-top: 20px;
 }
 
 .home-styling h1 {
@@ -53,19 +53,19 @@
 }
 
 .nat20-image {
-  background-image: url('../nat20.png');
+  background-image: url('../public/images/otherImages/nat20.png');
   background-size: contain;
   background-position: center top;
   background-repeat: no-repeat;
-  width: 250px; 
-  height: 350px; 
+  width: 250px;
+  height: 350px;
   margin-top: 10px;
   margin-bottom: -70px;
 }
 
 img:hover {
   transform: scale(1.3);
-  transition: transform 0.6s ease; 
+  transition: transform 0.6s ease;
 }
 
 .create-character-button {
@@ -122,19 +122,19 @@ img:hover {
 /* New class for grid layout */
 .campaign-dropzone-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
   margin-top: 20px;
   width: 80%;
 }
 
 /* Adjust the dropzone size */
-.encounter-dropzone2, 
-.quest-dropzone2, 
-.dungeon-dropzone, 
+.encounter-dropzone2,
+.quest-dropzone2,
+.dungeon-dropzone,
 .creature-dropzone2 {
   padding: 20px;
-  min-height: 200px; 
+  min-height: 200px;
   background-color: rgba(0, 0, 0, 0.7);
   border: 2px outset gold;
   border-radius: 10px;
@@ -143,9 +143,9 @@ img:hover {
 }
 
 /* Consistent title styling for all dropzones */
-.encounter-dropzone2 h3, 
-.quest-dropzone2 h3, 
-.dungeon-dropzone h3, 
+.encounter-dropzone2 h3,
+.quest-dropzone2 h3,
+.dungeon-dropzone h3,
 .creature-dropzone2 h3 {
   margin-bottom: 15px;
   font-size: 1.2rem;
@@ -239,7 +239,7 @@ img:hover {
 }
 
 /* Campaign Button Styles */
-.campaign-button-view, 
+.campaign-button-view,
 .campaign-button-remove {
   background-color: #800000;
   color: #FFD700;
@@ -765,7 +765,7 @@ tbody tr:nth-child(odd) {
 }
 
 .parchment-modal {
-  background-image: url('../scroll.png');
+  background-image: url('../public/images/otherImages/scroll.png');
   background-size: 130% 130%;
   background-position: center;
   background-repeat: no-repeat;
@@ -890,7 +890,7 @@ tbody tr:nth-child(odd) {
   min-height: 200px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  background-image: url('../scroll-background.png');
+  background-image: url('../public/images/otherImages/scroll-background.png');
   background-position: center;
   background-size: 110%;
 }
@@ -947,9 +947,9 @@ tbody tr:nth-child(odd) {
 }
 
 .quest-details {
-  background-image: url('../scroll-background.png');
+  background-image: url('../public/images/otherImages/scroll-background.png');
   background-position: center;
-  background-size:cover;
+  background-size: cover;
   text-shadow: 2px 2px 1px black;
 }
 
@@ -1266,7 +1266,7 @@ tbody tr:nth-child(odd) {
   border-radius: 10px;
   color: gold;
   min-height: 250px;
-  background-image: url('../scroll-background.png');
+  background-image: url('../public/images/otherImages/scroll-background.png');
   background-size: cover;
   background-position: center;
 }
@@ -1385,7 +1385,7 @@ tbody tr:nth-child(odd) {
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
-  background-image: url('../scroll-background.png');
+  background-image: url('../public/images/otherImages/scroll-background.png');
   background-size: cover;
   background-position: center;
 }
@@ -1520,6 +1520,15 @@ tbody tr:nth-child(odd) {
   margin: 0.2rem 0;
 }
 
+.characters-card-holder {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  max-width: 1500px;
+  margin: 20px auto;
+}
+
 /* Mobile styles (screens smaller than 768px) */
 @media only screen and (max-width: 768px) {
 
@@ -1555,7 +1564,8 @@ tbody tr:nth-child(odd) {
   }
 
   thead {
-    display: none; /* Hide table headers */
+    display: none;
+    /* Hide table headers */
   }
 
   tbody {
@@ -1589,8 +1599,8 @@ tbody tr:nth-child(odd) {
   }
 
   .monster-list td:first-child {
-    background-color: darkred; 
-    color: #fff; 
+    background-color: darkred;
+    color: #fff;
   }
 
   /* Table cells adjustment on mobile */
@@ -1642,7 +1652,7 @@ tbody tr:nth-child(odd) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap; 
+    flex-wrap: nowrap;
     width: 100%;
   }
 
@@ -1650,14 +1660,14 @@ tbody tr:nth-child(odd) {
     padding: 8px 10px;
     margin: 0;
     font-size: 14px;
-    width: 40px; 
+    width: 40px;
     box-sizing: border-box;
     background-color: #800000;
     color: #FFD700;
     border: 2px solid gold;
     border-radius: 5px;
     cursor: pointer;
-    flex: none; 
+    flex: none;
   }
 
   .pagination button:hover {
@@ -1894,32 +1904,33 @@ tbody tr:nth-child(odd) {
 
   .welcome-container {
     padding: 20px;
-    margin-bottom: 0; 
+    margin-bottom: 0;
   }
 
   .home-styling {
-    width: 95%; 
+    width: 95%;
     max-width: 100%;
     height: auto;
-    font-size: 20px; 
-    padding: 20px; 
-    border-radius: 20px; 
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 20px;
   }
 
   .home-styling h1 {
-    font-size: 45px; 
+    font-size: 45px;
   }
 
   .home-styling h5 {
-    font-size: 22px; 
+    font-size: 22px;
   }
 
   .nat20-image {
-    width: 150px; 
-    height: 200px; 
+    width: 150px;
+    height: 200px;
     margin-top: 20px;
-    margin-bottom: 0; 
+    margin-bottom: 0;
   }
+
   /* Campaign page mobile adjustments */
   .campaign-page {
     flex-direction: column;
@@ -1985,13 +1996,5 @@ tbody tr:nth-child(odd) {
     width: 100%;
     margin-bottom: 20px;
   }
-}
-.characters-card-holder {
-background: rgba(0, 0, 0, 0.5);
-padding: 20px;
-border: 2px solid gold;
-border-radius: 10px;
-max-width: 1500px;
-margin: 20px auto;
 }
 
