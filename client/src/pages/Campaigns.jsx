@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useLazyQuery, useApolloClient } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useApolloClient, useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { ADD_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN, ADD_ENCOUNTER_TO_CAMPAIGN, ADD_QUEST_TO_CAMPAIGN, ADD_DUNGEON_TO_CAMPAIGN, ADD_CREATURE_TO_CAMPAIGN, DELETE_CREATURE_FROM_CAMPAIGN } from '../utils/mutations';
-import { GET_CAMPAIGNS, GET_ENCOUNTERS, GET_QUESTS, GET_DUNGEONS, GET_ENCOUNTER, GET_QUEST, GET_DUNGEON } from '../utils/queries';
 import AuthService from '../utils/auth';
+import { ADD_CAMPAIGN, ADD_CREATURE_TO_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN } from '../utils/mutations';
+import { GET_CAMPAIGNS, GET_DUNGEON, GET_DUNGEONS, GET_ENCOUNTER, GET_ENCOUNTERS, GET_QUEST, GET_QUESTS } from '../utils/queries';
 
 const Campaigns = () => {
   const client = useApolloClient();
@@ -302,7 +302,8 @@ const Campaigns = () => {
       setSelectedCreatures([]);
 
       // Refetch campaigns to display updates
-      await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+      const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+      setCampaigns(result[0].data.campaigns);
     } catch (err) {
       console.error('Error saving campaign:', err);
     }

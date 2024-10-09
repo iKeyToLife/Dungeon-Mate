@@ -274,26 +274,6 @@ export const ADD_CAMPAIGN = gql`
       description
       npcs   
       notes   
-      encounters {
-        _id
-        title
-      }
-      quests {
-        _id
-        title
-      }
-      dungeons {
-        _id
-        title
-        encounters {
-          _id
-          title
-        }
-        quests {
-          _id
-          title
-        }
-      }
       creatures {
         index
         name
