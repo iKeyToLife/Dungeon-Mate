@@ -274,26 +274,6 @@ export const ADD_CAMPAIGN = gql`
       description
       npcs   
       notes   
-      encounters {
-        _id
-        title
-      }
-      quests {
-        _id
-        title
-      }
-      dungeons {
-        _id
-        title
-        encounters {
-          _id
-          title
-        }
-        quests {
-          _id
-          title
-        }
-      }
       creatures {
         index
         name
@@ -319,9 +299,10 @@ export const UPDATE_CAMPAIGN = gql`
     $description: String,
     $npcs: String,     
     $notes: String,    
-    $encounters: [ID!],        
+    $encounters: [ID!],  
+    $creatures: [CreatureInput],      
     $quests: [ID!],             
-    $dungeons: [DungeonInput!]   
+    $dungeons: [ID!]   
   ) {
     updateCampaign(
       campaignId: $campaignId,
@@ -330,6 +311,7 @@ export const UPDATE_CAMPAIGN = gql`
       npcs: $npcs,       
       notes: $notes,     
       encounters: $encounters,
+      creatures: $creatures,
       quests: $quests,
       dungeons: $dungeons        
     ) {
@@ -338,26 +320,6 @@ export const UPDATE_CAMPAIGN = gql`
       description
       npcs   
       notes   
-      encounters {
-        _id
-        title
-      }
-      quests {
-        _id
-        title
-      }
-      dungeons {
-        _id
-        title
-        encounters {           
-          _id
-          title
-        }
-        quests {                
-          _id
-          title
-        }
-      }
     }
   }
 `;

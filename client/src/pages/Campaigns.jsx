@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useLazyQuery, useApolloClient } from '@apollo/client';
-import { useState, useEffect } from 'react';
+import { useApolloClient, useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { ADD_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN, ADD_ENCOUNTER_TO_CAMPAIGN, ADD_QUEST_TO_CAMPAIGN, ADD_DUNGEON_TO_CAMPAIGN, ADD_CREATURE_TO_CAMPAIGN, DELETE_CREATURE_FROM_CAMPAIGN } from '../utils/mutations';
-import { GET_CAMPAIGNS, GET_ENCOUNTERS, GET_QUESTS, GET_DUNGEONS, GET_ENCOUNTER, GET_QUEST, GET_DUNGEON } from '../utils/queries';
 import AuthService from '../utils/auth';
+import { ADD_CAMPAIGN, ADD_CREATURE_TO_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN } from '../utils/mutations';
+import { GET_CAMPAIGNS, GET_DUNGEON, GET_DUNGEONS, GET_ENCOUNTER, GET_ENCOUNTERS, GET_QUEST, GET_QUESTS } from '../utils/queries';
 
 const Campaigns = () => {
   const client = useApolloClient();
@@ -194,19 +194,18 @@ const Campaigns = () => {
     try {
       const validEncounters = selectedEncounters.filter(enc => enc.title);
       const validQuests = selectedQuests.filter(quest => quest.title);
-      const validDungeons = selectedDungeons.map(dungeon => ({
-        dungeonId: dungeon._id,
-        title: dungeon.title,
-        encounters: dungeon.encounters.map(enc => enc._id),
-        quests: dungeon.quests.map(quest => quest._id),
+      const validDungeons = selectedDungeons.map(dungeon => dungeon._id);
+      const validCreatures = selectedCreatures.map(creature => ({
+        index: creature.index,
+        name: creature.name
       }));
-
       console.log("Updating campaign with:", {
         campaignId: editingId,
         title,
         description,
         npcs,
         notes,
+        creatures: validCreatures,
         encounters: validEncounters.map(enc => enc._id),
         quests: validQuests.map(quest => quest._id),
         dungeons: validDungeons,
@@ -217,9 +216,10 @@ const Campaigns = () => {
           campaignId: editingId,
           title,
           description,
-          npcs: npcs ? [{ description: npcs }] : [],
-          notes: notes ? [{ description: notes }] : [],
+          npcs: npcs ? npcs : "",
+          notes: notes ? notes : "",
           encounters: validEncounters.map(enc => enc._id),
+          creatures: validCreatures,
           quests: validQuests.map(quest => quest._id),
           dungeons: validDungeons,
         },
@@ -240,7 +240,8 @@ const Campaigns = () => {
       setEditingId(null);
 
       // Refetch campaigns to update the list
-      await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+      const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+      setCampaigns(result[0].data.campaigns);
     } catch (err) {
       console.error('Error updating campaign:', err);
     }
@@ -259,8 +260,8 @@ const Campaigns = () => {
       setIsModalOpen(false);
       setCampaignToDelete(null);
 
-      await client.refetchQueries({ include: [GET_CAMPAIGNS] });
-
+      const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+      setCampaigns(result[0].data.campaigns);
     } catch (err) {
       console.error('Error deleting campaign:', err);
     }
@@ -302,7 +303,8 @@ const Campaigns = () => {
       setSelectedCreatures([]);
 
       // Refetch campaigns to display updates
-      await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+      const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+      setCampaigns(result[0].data.campaigns);
     } catch (err) {
       console.error('Error saving campaign:', err);
     }
