@@ -12,7 +12,8 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "client": "cd client && npm run dev",
     "seed": "cd server && npm run seed",
-    "develop": "concurrently \"npm run server\" \"cd client && npm run dev\""
+    "develop": "concurrently \"npm run server\" \"cd client && npm run dev\"",
+    "test": "cd client && npm run test"
   },
   "keywords": [],
   "author": "",
