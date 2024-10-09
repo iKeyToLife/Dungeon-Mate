@@ -1269,6 +1269,8 @@ tbody tr:nth-child(odd) {
   background-image: url('/images/otherImages/scroll-background.png');
   background-size: cover;
   background-position: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .dungeon-card h3 {
@@ -1588,12 +1590,6 @@ tbody tr:nth-child(odd) {
   text-decoration: underline;
 }
 
-.campaign-card p {
-  color: white;
-  text-shadow: 3px 2px 2px black;
-  margin-bottom: 20px;
-}
-
 .campaign-section-title {
   font-size: 1.5rem;
   text-shadow: 3px 2px 2px black;
@@ -1640,6 +1636,13 @@ tbody tr:nth-child(odd) {
   font-weight: bold;
 }
 
+.campaign-text {
+  overflow-wrap: anywhere; 
+  word-wrap: break-word;
+  white-space: normal;
+  word-break: break-word; 
+}
+
 .single-campaign-container {
   padding: 20px;
   border: 2px solid gold;
@@ -1653,6 +1656,9 @@ tbody tr:nth-child(odd) {
   margin: 20px auto 40px auto;
   position: relative;
   box-shadow: 10px 10px 8px black;
+  word-wrap: break-word; 
+  white-space: normal; 
+  overflow-wrap: break-word; 
 }
 
 .single-campaign-container h1 {
@@ -1784,6 +1790,38 @@ tbody tr:nth-child(odd) {
   max-width: 350px; 
   text-align: center; 
   margin: 0 auto; 
+}
+
+.back-button {
+  max-width: 300px !important;
+}
+
+.back-button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; 
+}
+
+.back-button:hover {
+  background-color: red;
+}
+
+.campaign-details {
+  display: block;
+  overflow-wrap: anywhere; 
+  word-wrap: break-word;
+  white-space: normal;
+  margin: 15px;
+  padding-bottom: 10px;
+}
+
+.campaign-details h1,
+.campaign-details h3,
+.campaign-details p {
+  display: block;
+  overflow-wrap: anywhere; 
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 /* Mobile styles (screens smaller than 768px) */

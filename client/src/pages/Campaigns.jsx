@@ -681,14 +681,14 @@ const Campaigns = () => {
             ) : (
               campaigns.map((campaign) => (
                 <div className="campaign-card" key={campaign._id}>
-                  <h5 className="campaign-title">{campaign.title}</h5>
-                  <p className="campaign-description">{campaign.description}</p>
+                  <h5 className="campaign-title campaign-text">{campaign.title}</h5>
+                  <p className="campaign-text">{campaign.description}</p>
 
                   {/* Display NPCs if available */}
                   {campaign.npcs && (
                     <div className="campaign-npcs">
                       <h6>NPCs:</h6>
-                      <p>{campaign.npcs}</p>
+                      <p className="campaign-text">{campaign.npcs}</p>
                     </div>
                   )}
 
@@ -696,7 +696,7 @@ const Campaigns = () => {
                   {campaign.notes && (
                     <div className="campaign-notes">
                       <h6>Notes:</h6>
-                      <p>{campaign.notes}</p>
+                      <p className="campaign-text">{campaign.notes}</p>
                     </div>
                   )}
 
