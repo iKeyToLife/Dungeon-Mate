@@ -177,14 +177,13 @@ const Campaigns = () => {
 
   const handleAddCreature = async (creature) => {
     try {
-      await addCreatureToCampaign({
-        variables: {
-          campaignId: editingId || campaignsData.campaigns[0]._id,
-          creatureId: creature.index
-        },
-      });
 
-      setSelectedCreatures([...selectedCreatures, creature]);
+      // Finding an creature in an array
+      const isCreatureInArray = selectedCreatures.some(c => c.index === creature.index);
+      // If it is not in the array, set in the array
+      if (!isCreatureInArray) {
+        setSelectedCreatures([...selectedCreatures, creature]);
+      }
     } catch (err) {
       console.error("Error adding creature to campaign:", err);
     }
@@ -331,14 +330,32 @@ const Campaigns = () => {
     const item = JSON.parse(e.dataTransfer.getData('item'));
     const type = e.dataTransfer.getData('type');
 
-    if (dropType === 'encounter' && type === 'encounter') {
-      setSelectedEncounters([...selectedEncounters, item]);
-    } else if (dropType === 'quest' && type === 'quest') {
-      setSelectedQuests([...selectedQuests, item]);
-    } else if (dropType === 'dungeon' && type === 'dungeon') {
-      setSelectedDungeons([...selectedDungeons, item]);
-    } else if (dropType === 'creature' && type === 'creature') {
-      setSelectedCreatures([...selectedCreatures, item]);
+    // check unique item
+    const addUniqueItem = (array, item, key) => {
+      if (!array.some(existingItem => existingItem[key] === item[key])) {
+        return [...array, item];
+      }
+      return array; // return array if element is already
+    };
+
+    if (dropType === type) {
+      switch (dropType) {
+        case 'encounter':
+          setSelectedEncounters(prevState => addUniqueItem(prevState, item, '_id'));
+          break;
+        case 'quest':
+          console.log(item)
+          setSelectedQuests(prevState => addUniqueItem(prevState, item, '_id'));
+          break;
+        case 'dungeon':
+          setSelectedDungeons(prevState => addUniqueItem(prevState, item, '_id'));
+          break;
+        case 'creature':
+          setSelectedCreatures(prevState => addUniqueItem(prevState, item, 'index'));
+          break;
+        default:
+          break;
+      }
     }
   };
 
