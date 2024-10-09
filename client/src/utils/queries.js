@@ -159,14 +159,27 @@ export const GET_CAMPAIGN = gql`
       encounters {
         _id
         title
+        details
       }
       quests {
         _id
         title
+        details
+        rewards
       }
       dungeons {
         _id
         title
+        description
+        encounters {
+          title
+          details
+        }
+        quests {
+          title
+          details
+          rewards
+        }
       }
     }
   }
