@@ -217,14 +217,59 @@ export const REMOVE_QUEST_FROM_DUNGEON = gql`
 `;
 
 export const ADD_CAMPAIGN = gql`
-  mutation addCampaign($title: String!, $description: String!) {
-    addCampaign(title: $title, description: $description) {
+  mutation addCampaign(
+    $title: String!,
+    $description: String,
+    $npcs: String,    
+    $notes: String,    
+    $encounters: [ID!],
+    $quests: [ID!],
+    $dungeons: [ID!],
+    $creatures: [CreatureInput!]
+  ) {
+    addCampaign(
+      title: $title,
+      description: $description,
+      npcs: $npcs,        
+      notes: $notes,       
+      encounters: $encounters,
+      quests: $quests,
+      dungeons: $dungeons,
+      creatures: $creatures
+    ) {
       _id
       title
       description
+      npcs   
+      notes   
+      encounters {
+        _id
+        title
+      }
+      quests {
+        _id
+        title
+      }
+      dungeons {
+        _id
+        title
+        encounters {
+          _id
+          title
+        }
+        quests {
+          _id
+          title
+        }
+      }
+      creatures {
+        index
+        name
+      }
     }
   }
 `;
+
 
 export const DELETE_CAMPAIGN = gql`
   mutation deleteCampaign($campaignId: ID!) {
@@ -236,11 +281,51 @@ export const DELETE_CAMPAIGN = gql`
 `;
 
 export const UPDATE_CAMPAIGN = gql`
-  mutation updateCampaign($campaignId: ID!, $title: String!, $description: String!) {
-    updateCampaign(campaignId: $campaignId, title: $title, description: $description) {
+  mutation updateCampaign(
+    $campaignId: ID!,
+    $title: String!,
+    $description: String,
+    $npcs: String,     
+    $notes: String,    
+    $encounters: [ID!],        
+    $quests: [ID!],             
+    $dungeons: [DungeonInput!]   
+  ) {
+    updateCampaign(
+      campaignId: $campaignId,
+      title: $title,
+      description: $description,
+      npcs: $npcs,       
+      notes: $notes,     
+      encounters: $encounters,
+      quests: $quests,
+      dungeons: $dungeons        
+    ) {
       _id
       title
       description
+      npcs   
+      notes   
+      encounters {
+        _id
+        title
+      }
+      quests {
+        _id
+        title
+      }
+      dungeons {
+        _id
+        title
+        encounters {           
+          _id
+          title
+        }
+        quests {                
+          _id
+          title
+        }
+      }
     }
   }
 `;

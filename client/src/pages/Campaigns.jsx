@@ -62,17 +62,22 @@ const Campaigns = () => {
     refetchQueries: [{ query: GET_CAMPAIGNS }],
   });
 
-  const handleEditCampaign = (campaign) => {
+  const handleEditCampaign = async (campaign) => {
     setIsEditing(true);
     setEditingId(campaign._id);
     setTitle(campaign.title);
     setDescription(campaign.description);
     setNpcs(campaign.npcs || '');
     setNotes(campaign.notes || '');
+
+    // Populate selected encounters, quests, dungeons, and creatures
     setSelectedEncounters(campaign.encounters || []);
     setSelectedQuests(campaign.quests || []);
     setSelectedDungeons(campaign.dungeons || []);
     setSelectedCreatures(campaign.creatures || []);
+
+    // Scroll to the top when editing
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleViewItem = async (item, type) => {
@@ -166,22 +171,76 @@ const Campaigns = () => {
     }
   };
 
-  const handleAddCreature = (creature) => {
-    setSelectedCreatures([...selectedCreatures, creature]);
+  const [addCreatureToCampaign] = useMutation(ADD_CREATURE_TO_CAMPAIGN, {
+    refetchQueries: [{ query: GET_CAMPAIGNS }],
+  });
+
+  const handleAddCreature = async (creature) => {
+    try {
+      await addCreatureToCampaign({
+        variables: {
+          campaignId: editingId || campaignsData.campaigns[0]._id,
+          creatureId: creature.index
+        },
+      });
+
+      setSelectedCreatures([...selectedCreatures, creature]);
+    } catch (err) {
+      console.error("Error adding creature to campaign:", err);
+    }
   };
 
   const handleUpdateCampaign = async () => {
     try {
-      await updateCampaign({
-        variables: { campaignId: editingId, title, description, npcs, notes },
+      const validEncounters = selectedEncounters.filter(enc => enc.title);
+      const validQuests = selectedQuests.filter(quest => quest.title);
+      const validDungeons = selectedDungeons.map(dungeon => ({
+        dungeonId: dungeon._id,
+        title: dungeon.title,
+        encounters: dungeon.encounters.map(enc => enc._id),
+        quests: dungeon.quests.map(quest => quest._id),
+      }));
+
+      console.log("Updating campaign with:", {
+        campaignId: editingId,
+        title,
+        description,
+        npcs,
+        notes,
+        encounters: validEncounters.map(enc => enc._id),
+        quests: validQuests.map(quest => quest._id),
+        dungeons: validDungeons,
       });
 
+      const response = await updateCampaign({
+        variables: {
+          campaignId: editingId,
+          title,
+          description,
+          npcs: npcs ? [{ description: npcs }] : [],
+          notes: notes ? [{ description: notes }] : [],
+          encounters: validEncounters.map(enc => enc._id),
+          quests: validQuests.map(quest => quest._id),
+          dungeons: validDungeons,
+        },
+      });
+
+      console.log("Campaign updated successfully:", response.data.updateCampaign);
+
+      // Clear the fields after updating
       setTitle('');
       setDescription('');
       setNpcs('');
       setNotes('');
+      setSelectedEncounters([]);
+      setSelectedQuests([]);
+      setSelectedDungeons([]);
+      setSelectedCreatures([]);
       setIsEditing(false);
       setEditingId(null);
+
+      // Refetch campaigns to update the list
+      await client.refetchQueries({ include: [GET_CAMPAIGNS] });
     } catch (err) {
       console.error('Error updating campaign:', err);
     }
@@ -189,7 +248,19 @@ const Campaigns = () => {
 
   const handleDeleteCampaign = async (campaignId) => {
     try {
-      await deleteCampaign({ variables: { campaignId } });
+      await deleteCampaign({
+        variables: { campaignId },
+      });
+
+      // Immediately update the state to remove the deleted campaign from the UI
+      setCampaigns((prevCampaigns) => prevCampaigns.filter(c => c._id !== campaignId));
+
+      // Close the modal
+      setIsModalOpen(false);
+      setCampaignToDelete(null);
+
+      await client.refetchQueries({ include: [GET_CAMPAIGNS] });
+
     } catch (err) {
       console.error('Error deleting campaign:', err);
     }
@@ -205,17 +276,33 @@ const Campaigns = () => {
 
     try {
       await addCampaign({
-        variables: { title, description, npcs, notes },
+        variables: {
+          title,
+          description,
+          npcs: npcs.trim(), // Ensure it's just a string, no array
+          notes: notes.trim(), // Ensure it's just a string, no array
+          encounters: selectedEncounters.map(encounter => encounter._id),
+          quests: selectedQuests.map(quest => quest._id),
+          dungeons: selectedDungeons.map(dungeon => dungeon._id),
+          creatures: selectedCreatures.map(creature => ({
+            index: creature.index,
+            name: creature.name
+          })),
+        },
       });
 
+      // Reset form after save
       setTitle('');
       setDescription('');
-      setNpcs('');
-      setNotes('');
+      setNpcs(''); // Reset to empty string
+      setNotes(''); // Reset to empty string
       setSelectedEncounters([]);
       setSelectedQuests([]);
       setSelectedDungeons([]);
       setSelectedCreatures([]);
+
+      // Refetch campaigns to display updates
+      await client.refetchQueries({ include: [GET_CAMPAIGNS] });
     } catch (err) {
       console.error('Error saving campaign:', err);
     }
@@ -289,10 +376,10 @@ const Campaigns = () => {
 
   const safeRender = (value) => {
     if (Array.isArray(value)) {
-      return value.join(', '); 
+      return value.join(', ');
     }
     if (typeof value === 'object' && value !== null) {
-      return JSON.stringify(value); 
+      return JSON.stringify(value);
     }
     return value;
   };
@@ -406,7 +493,7 @@ const Campaigns = () => {
                     >
                       <div className="sidebar-card">
                         <span>{creature.name}</span>
-                        <button onClick={() => setSelectedCreatures([...selectedCreatures, creature])}>
+                        <button onClick={() => handleAddCreature(creature)}>
                           Add
                         </button>
                       </div>
@@ -573,7 +660,7 @@ const Campaigns = () => {
             </div>
           </div>
 
-          <button className="save-campaign-button" onClick={handleSave}>
+          <button className="save-campaign-button" onClick={isEditing ? handleUpdateCampaign : handleSave}>
             {isEditing ? 'Update Campaign' : 'Save Campaign'}
           </button>
         </div>

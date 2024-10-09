@@ -6,8 +6,8 @@ const campaignTypeDefs = gql`
     userId: ID!
     title: String!
     description: String
-    npcs: [NPC]
-    notes: [Note]
+    npcs: String
+    notes: String
     creatures: [Creature]!
     encounters: [Encounter]!
     quests: [Quest]!
@@ -18,22 +18,6 @@ const campaignTypeDefs = gql`
     index: String!
     name: String!
   }
-
-  type NPC {
-    description: String!
-  }
-
-  type Note {
-    description: String!
-  }
-
-  input NpcInput {
-  description: String
-}
-
-input NoteInput {
-  description: String
-}
 
 input CreatureInput {
   index: String!

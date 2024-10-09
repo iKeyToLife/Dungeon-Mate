@@ -195,6 +195,8 @@ const Dungeons = () => {
         // Populate the encounters and quests fields
         setDungeonEncounters(selectedDungeon.encounters);
         setDungeonQuests(selectedDungeon.quests);
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleUpdate = async () => {

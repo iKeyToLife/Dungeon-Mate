@@ -64,7 +64,6 @@ const campaignMutations = {
             try {
 
                 args.userId = context.user._id
-                const newCampaign = new Campaign(args);
 
                 await validateIds(args.quests, Quest, 'quest'); // check have we quest at db
 
@@ -72,7 +71,13 @@ const campaignMutations = {
 
                 await validateIds(args.dungeons, Dungeon, 'dungeon'); // check have we dungeon at db
 
-                await newCampaign.save(); // Save the campaign to the database
+                const newCampaign = new Campaign({
+                    ...args,  // args now include npcs and notes as strings
+                    npcs: args.npcs,  // simply storing the string value
+                    notes: args.notes  // simply storing the string value
+                });
+
+                await newCampaign.save();
 
                 return newCampaign; // Return the newly created campaign
             } catch (error) {
@@ -105,8 +110,12 @@ const campaignMutations = {
 
                 await validateIds(args.dungeons, Dungeon, 'dungeon'); // check have we dungeon at db
 
-
-                Object.assign(campaign, args);
+                // Assign new values, including npcs and notes as strings
+                Object.assign(campaign, {
+                    ...args,
+                    npcs: args.npcs,  // assign the string value for npcs
+                    notes: args.notes  // assign the string value for notes
+                });
 
                 await campaign.save();
                 return campaign;

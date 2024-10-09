@@ -122,16 +122,19 @@ export const GET_CAMPAIGNS = gql`
       _id
       title
       description
+      npcs   
+      notes   
+      creatures {
+        index
+        name
+      }
       encounters {
         _id
         title
-        details
       }
       quests {
         _id
         title
-        details
-        rewards
       }
       dungeons {
         _id
@@ -147,16 +150,19 @@ export const GET_CAMPAIGN = gql`
       _id
       title
       description
+      npcs    
+      notes   
+      creatures {
+        index
+        name
+      }
       encounters {
         _id
         title
-        details
       }
       quests {
         _id
         title
-        details
-        rewards
       }
       dungeons {
         _id
