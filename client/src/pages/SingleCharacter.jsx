@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GET_CHARACTER_BY_ID } from '../utils/queries';
 import { Button } from 'reactstrap';
 
 const SingleCharacter = () => {
     const { characterId } = useParams();
+    const navigate = useNavigate();
 
     const { loading, error, data } = useQuery(GET_CHARACTER_BY_ID, {
         variables: { characterId },
@@ -123,7 +124,11 @@ const SingleCharacter = () => {
                     <p>No inventory items selected</p>
                 )}
             </div>
+            <Button onClick={() => navigate(-1)} className="back-button">
+                Back
+            </Button>
         </div>
+
     );
 };
 
