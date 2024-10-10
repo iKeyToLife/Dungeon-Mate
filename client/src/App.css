@@ -1900,27 +1900,71 @@ tbody tr:nth-child(odd) {
   transform: scale(1.05);
 }
 
-/* Character preview container */
-.character-preview-container {
-  margin-top: 20px;
-  padding: 20px;
+/* Character preview */
+.character-image-preview {
+  width: 275px;
+  height: auto;
+  border: 2px solid gold;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  padding: 10px;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
   border: 2px solid gold;
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
-.character-preview-container h3 {
-  font-size: 1.5rem;
-  color: #FFD700;
-  margin-bottom: 10px;
-}
-
-.character-preview-container img {
-  width: 150px;
-  height: auto;
-  border: 2px solid gold;
+.character-image-preview img {
   border-radius: 10px;
+  width: 100% !important;
+}
+
+.image-preview-container {
+  display: flex;
+  justify-content: center;
+}
+
+.character-form-container div {
+  margin-bottom: 30px;
+}
+
+.remove-button-inv-spell {
+  width: 200px !important;
+  margin-top: 10px;
+}
+
+.confirm-bio-button {
+  width: 200px !important;
+  margin-bottom: 30px !important;
+}
+
+.character-form-container select,
+.character-form-container input,
+.character-form-container textarea,
+.character-form-container button {
+  margin-bottom: 15px; 
+}
+
+.proficiency-checkbox-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; 
+  margin-top: 40px;
+}
+
+.proficiency-checkbox-list input[type="checkbox"] {
+  transform: scale(1.2); 
+  margin-right: 8px; 
+  width: 10px;
+}
+
+.proficiency-checkbox-list label {
+  font-size: 1.1rem;
+  color: #FFD700; 
+  margin-top: 10px;
 }
 
 /* Selected spells and inventory */
@@ -2071,6 +2115,7 @@ tbody tr:nth-child(odd) {
 .create-character-button {
   width: 200px !important;
   margin-top: 10px;
+  margin-bottom: 40px;
 }
 
 .create-character-button-container {

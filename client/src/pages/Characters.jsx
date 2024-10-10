@@ -18,14 +18,14 @@ const Characters = ({ user = { _id: null } }) => {
     class: '',
     alignment: '',
     level: 1,
-    bio: '', 
+    bio: '',
     attributes: {
-      strength: 8,
-      dexterity: 8,
-      constitution: 8,
-      intelligence: 8,
-      wisdom: 8,
-      charisma: 8
+      strength: 0,
+      dexterity: 0,
+      constitution: 0,
+      intelligence: 0,
+      wisdom: 0,
+      charisma: 0,
     },
     characterImg: '',
     spells: [],
@@ -33,15 +33,18 @@ const Characters = ({ user = { _id: null } }) => {
     stats: {
       hitPoints: 0,
       armorClass: 0,
-    }
+    },
+    addProficiencies: 'no', 
+    proficiencies: [] 
   });
 
   const [confirmedBio, setConfirmedBio] = useState('');
   const [showForm, setShowForm] = useState(false);
-  const [showPreview, setShowPreview] = useState(false); // Toggle for the preview
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [characterToDelete, setCharacterToDelete] = useState(null);
+  const [availableProficiencies] = useState(['Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception', 'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion', 'Sleight of Hand', 'Stealth', 'Survival']);
+  const [selectedProficiencies, setSelectedProficiencies] = useState([]);
 
   const [deleteCharacter] = useMutation(DELETE_CHARACTER);
   const [addCharacter] = useMutation(ADD_CHARACTER);
@@ -129,14 +132,28 @@ const Characters = ({ user = { _id: null } }) => {
   // Stat calculation based on attributes
   const calculateStats = () => {
     const { strength, dexterity, constitution, intelligence, wisdom, charisma } = formData.attributes;
-
-    // Basic stat calculation
-    const hitPoints = constitution * 2;
+  
+    // Example custom logic for calculation
+    const hitPoints = constitution * 2 + 10;
     const armorClass = 10 + Math.floor(dexterity / 2);
-
+    const attackPower = Math.floor(strength * 1.5);
+    const magicPower = Math.floor((intelligence * 1.2) + (wisdom * 1.1));
+  
+    // Update the formData with the calculated stats
     setFormData((prevData) => ({
       ...prevData,
-      stats: { hitPoints, armorClass }
+      stats: {
+        hitPoints,
+        armorClass,
+        strength,
+        dexterity,
+        constitution,
+        intelligence,
+        wisdom,
+        charisma,
+        attackPower,
+        magicPower,
+      }
     }));
   };
 
@@ -167,13 +184,60 @@ const Characters = ({ user = { _id: null } }) => {
     setCharacterToDelete(null); // Clear the state for the next deletion
   };
 
+  const handleSpellRemove = (index) => {
+    setFormData((prevData) => {
+      const newSpells = [...prevData.spells];
+      newSpells.splice(index, 1);
+      return { ...prevData, spells: newSpells };
+    });
+  };
+
+  const handleInventoryRemove = (index) => {
+    setFormData((prevData) => {
+      const newInventory = [...prevData.inventory];
+      newInventory.splice(index, 1);
+      return { ...prevData, inventory: newInventory };
+    });
+  };
+
+  const handleProficiencySelect = (e) => {
+  const { value } = e.target;
+  setFormData((prevData) => {
+    const selectedProficiencies = prevData.proficiencies;
+
+    if (selectedProficiencies.includes(value)) {
+      // Remove proficiency if already selected
+      return {
+        ...prevData,
+        proficiencies: selectedProficiencies.filter((prof) => prof !== value),
+      };
+    } else if (selectedProficiencies.length < 5) {
+      // Add proficiency if less than 5 are selected
+      return {
+        ...prevData,
+        proficiencies: [...selectedProficiencies, value],
+      };
+    }
+
+    // Otherwise, do nothing (limit reached)
+    return prevData;
+  });
+};
+
+  const confirmProficiencies = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      proficiencies: selectedProficiencies
+    }));
+  };
+
   return (
     <div className="characters-page-container">
 
       <div className="create-character-button-container">
-      <Button className="create-character-button" onClick={() => { setShowForm(true); setSelectedCharacter(null); }}>
-        Create a Character
-      </Button>
+        <Button className="create-character-button" onClick={() => { setShowForm(true); setSelectedCharacter(null); }}>
+          Create a Character
+        </Button>
       </div>
 
       {/* Character Form - Hidden initially */}
@@ -236,6 +300,15 @@ const Characters = ({ user = { _id: null } }) => {
             </select>
           </div>
 
+          {/* Character Image Preview */}
+          {formData.characterImg && (
+            <div className="image-preview-container">
+              <div className="character-image-preview">
+                <img src={formData.characterImg} alt="Character" style={{ width: '150px' }} />
+              </div>
+            </div>
+          )}
+
           {/* Conditional rendering of level */}
           <div>
             <label>Level:</label>
@@ -259,7 +332,7 @@ const Characters = ({ user = { _id: null } }) => {
           </div>
 
           {/* Confirm Bio Button */}
-          <Button type="button" onClick={confirmBio}>
+          <Button type="button" className="confirm-bio-button" onClick={confirmBio}>
             Confirm Bio
           </Button>
 
@@ -271,9 +344,10 @@ const Characters = ({ user = { _id: null } }) => {
             </div>
           )}
 
+          {/* Spell Selection */}
           <div>
             <label>Spells, Select up to Two:</label>
-            <select name="spells" onChange={handleSpellSelect}>
+            <select name="spells" onChange={handleSpellSelect} disabled={formData.spells.length >= 2}>
               <option value="">Select Spell...</option>
               {availableSpells.map((spell) => (
                 <option key={spell.index} value={spell.name}>
@@ -290,13 +364,15 @@ const Characters = ({ user = { _id: null } }) => {
               <div key={index}>
                 <h5>{spell.name}</h5>
                 <p>{spell.desc ? spell.desc.join(" ") : "No description available"}</p>
+                <Button className="remove-button-inv-spell" onClick={() => handleSpellRemove(index)}>Remove</Button>
               </div>
             ))}
           </div>
 
+          {/* Inventory Selection */}
           <div>
             <label>Inventory, Select up to Three:</label>
-            <select name="inventory" onChange={handleInventorySelect}>
+            <select name="inventory" onChange={handleInventorySelect} disabled={formData.inventory.length >= 3}>
               <option value="">Select Item...</option>
               {availableInventory.map((item) => (
                 <option key={item.index} value={item.name}>
@@ -313,6 +389,7 @@ const Characters = ({ user = { _id: null } }) => {
               <div key={index}>
                 <h5>{item.name}</h5>
                 <p>{item.desc ? item.desc : "No description available"}</p>
+                <Button className="remove-button-inv-spell" onClick={() => handleInventoryRemove(index)}>Remove</Button>
               </div>
             ))}
           </div>
@@ -325,21 +402,59 @@ const Characters = ({ user = { _id: null } }) => {
             <h3>Stats:</h3>
             <p>Hit Points: {formData.stats.hitPoints}</p>
             <p>Armor Class: {formData.stats.armorClass}</p>
+            <p>Strength: {formData.stats.strength}</p>
+            <p>Dexterity: {formData.stats.dexterity}</p>
+            <p>Constitution: {formData.stats.constitution}</p>
+            <p>Intelligence: {formData.stats.intelligence}</p>
+            <p>Wisdom: {formData.stats.wisdom}</p>
+            <p>Charisma: {formData.stats.charisma}</p>
+            <p>Attack Power: {formData.stats.attackPower}</p>
+            <p>Magic Power: {formData.stats.magicPower}</p>
           </div>
 
-          <div className="character-preview-container">
-            <h3>Character Preview:</h3>
-            {formData.characterImg && (
-              <img src={formData.characterImg} alt="Character" style={{ width: '150px' }} />
-            )}
+          <div>
+            <label>Do you want to add proficiencies?</label>
+            <select name="addProficiencies" value={formData.addProficiencies} onChange={handleChange}>
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
           </div>
 
-          <Button type="button" onClick={() => setShowPreview(true)}>
-            Preview and Confirm
-          </Button>
+          {formData.addProficiencies === 'yes' && (
+            <div>
+              <h3>Select Proficiencies (up to 5)</h3>
+              <div className="proficiency-checkbox-list">
+                {availableProficiencies.map((proficiency, index) => (
+                  <div key={index}>
+                    <input
+                      type="checkbox"
+                      id={proficiency}
+                      name={proficiency}
+                      value={proficiency}
+                      onChange={handleProficiencySelect}
+                      disabled={formData.proficiencies.length >= 5 && !formData.proficiencies.includes(proficiency)}
+                    />
+                    <label htmlFor={proficiency}>{proficiency}</label>
+                  </div>
+                ))}
+              </div>
+              <Button onClick={confirmProficiencies}>Confirm Proficiencies</Button>
+            </div>
+          )}
+
+          {formData.proficiencies.length > 0 && (
+            <div className="proficiencies-container">
+              <h3>Selected Proficiencies:</h3>
+              <ul>
+                {formData.proficiencies.map((prof, index) => (
+                  <li key={index}>{prof}</li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <Button type="submit" color="primary">
-            {selectedCharacter ? 'Update Character' : 'Create Character'}
+            {selectedCharacter ? 'Update Character' : 'Save Character'}
           </Button>
         </form>
       )}
@@ -353,9 +468,9 @@ const Characters = ({ user = { _id: null } }) => {
               <h3>{character.name}</h3>
               <img src={character.characterImg} alt={`${character.name}`} style={{ width: '100px' }} />
               <div className="character-card-buttons">
-              <Button onClick={() => console.log("Navigate to SingleCharacter.jsx")}>View</Button>
-              <Button onClick={() => handleEdit(character)}>Edit</Button>
-              <Button onClick={() => handleDeleteClick(character._id)} color="danger">Delete</Button>
+                <Button onClick={() => console.log("Navigate to SingleCharacter.jsx")}>View</Button>
+                <Button onClick={() => handleEdit(character)}>Edit</Button>
+                <Button onClick={() => handleDeleteClick(character._id)} color="danger">Delete</Button>
               </div>
             </div>
           ))
