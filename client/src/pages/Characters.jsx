@@ -52,6 +52,7 @@ const Characters = ({ user = { _id: null } }) => {
   const [availableProficiencies] = useState(['Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception', 'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion', 'Sleight of Hand', 'Stealth', 'Survival']);
   const [selectedProficiencies, setSelectedProficiencies] = useState([]);
   const [proficienciesConfirmed, setProficienciesConfirmed] = useState(false);
+  const [characterList, setCharacterList] = useState([]);
 
   const [deleteCharacter] = useMutation(DELETE_CHARACTER);
   const [addCharacter] = useMutation(ADD_CHARACTER);
@@ -67,6 +68,13 @@ const Characters = ({ user = { _id: null } }) => {
 
   const [reRollCount, setReRollCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Fetch characters on component mount
+  useEffect(() => {
+    if (data && data.characters) {
+      setCharacterList(data.characters);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (formData.class) {
@@ -237,6 +245,24 @@ const Characters = ({ user = { _id: null } }) => {
     setReRollCount(reRollCount + 1);
   };
 
+  // Helper function to map inventory types to valid enum values
+  const mapInventoryType = (type) => {
+    switch (type.toLowerCase()) {
+      case 'weapon':
+        return 'weapon';
+      case 'armor':
+        return 'armor';
+      case 'potion':
+        return 'potion';
+      case 'tool':
+        return 'tool';
+      case 'magic item':
+        return 'magicItem';
+      default:
+        return 'miscellaneous';
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -253,38 +279,40 @@ const Characters = ({ user = { _id: null } }) => {
         constitution: formData.stats.constitution,
         intelligence: formData.stats.intelligence,
         wisdom: formData.stats.wisdom,
-        charisma: formData.stats.charisma
+        charisma: formData.stats.charisma,
       },
-      spells: formData.spells.map(spell => ({ index: spell.index, name: spell.name })),
-      inventory: formData.inventory.map(item => ({
+      spells: formData.spells.map((spell) => ({ index: spell.index, name: spell.name })),
+      inventory: formData.inventory.map((item) => ({
         name: item.name,
-        type: item.type || 'miscellaneous',
-        description: item.description || 'No description available'
+        type: mapInventoryType(item.type),
+        description: item.description || 'No description available',
       })),
       characterImg: formData.characterImg,
-      alignment: formData.alignment
+      alignment: formData.alignment,
     };
 
-    // Mutation call to save the character
     try {
       if (selectedCharacter) {
         // If editing an existing character
         await updateCharacter({
           variables: {
             characterId: selectedCharacter._id,
-            ...characterData
-          }
+            ...characterData,
+          },
+          refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],  // Refetch query after update
         });
       } else {
         // If creating a new character
         await addCharacter({
-          variables: characterData
+          variables: characterData,
+          refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],  // Refetch query after add
         });
       }
-      // Reset form or navigate to a character list page
+
+      // Reset form and hide the form after save
       setShowForm(false);
     } catch (error) {
-      console.error("Error saving character:", error);
+      console.error('Error saving character:', error);
     }
   };
 
@@ -300,9 +328,17 @@ const Characters = ({ user = { _id: null } }) => {
   };
 
   const confirmDelete = async () => {
-    await deleteCharacter({ variables: { characterId: characterToDelete } });
-    setShowDeleteModal(false); // Close the modal after deletion
-    setCharacterToDelete(null); // Clear the state for the next deletion
+    try {
+      await deleteCharacter({
+        variables: { characterId: characterToDelete },
+        refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }], // Refetch query after delete
+      });
+
+      setShowDeleteModal(false); // Close the modal after deletion
+      setCharacterToDelete(null); // Clear the state for the next deletion
+    } catch (error) {
+      console.error('Error deleting character:', error);
+    }
   };
 
   const handleSpellRemove = (index) => {
