@@ -1,5 +1,8 @@
 # Dungeon Mate
 
+![Alt text](/client/public/images/otherImages/DungeonMateLogo2.png)
+
+
 ## Table of Contents
 - [Description](#description)
 - [Usage](#usage)
