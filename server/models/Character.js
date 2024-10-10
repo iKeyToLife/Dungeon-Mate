@@ -75,6 +75,10 @@ const CharacterSchema = new Schema(
             }
         }],
         inventory: [{
+            index: {
+                type: String,
+                required: true
+            },
             name: {
                 type: String,
                 required: true,
