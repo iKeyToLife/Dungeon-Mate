@@ -75,7 +75,8 @@ mutation AddCharacter(
   $inventory: [InventoryInput!],
   $characterImg: String!,
   $alignment: String!,
-  $proficiencies: [String]
+  $proficiencies: [String],
+  $bio: String
 ) {
   addCharacter(
     name: $name,
@@ -88,7 +89,8 @@ mutation AddCharacter(
     inventory: $inventory,
     characterImg: $characterImg,
     alignment: $alignment,
-    proficiencies: $proficiencies
+    proficiencies: $proficiencies,
+    bio: $bio
   ) {
     _id
   }
@@ -107,7 +109,8 @@ mutation UpdateCharacter(
   $attributes: AttributesInput,
   $spells: [SpellsInput],
   $inventory: [InventoryInput],
-  $proficiencies: [String]
+  $proficiencies: [String],
+  $bio: String
 ) {
   updateCharacter(
     characterId: $characterId,
@@ -122,6 +125,7 @@ mutation UpdateCharacter(
     spells: $spells,
     inventory: $inventory,
     proficiencies: $proficiencies
+    bio: $bio,
   ) {
     race
     name
