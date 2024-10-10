@@ -287,7 +287,6 @@ const Characters = ({ user = { _id: null } }) => {
       inventory: formData.inventory.map((item) => ({
         name: item.name,
         type: mapInventoryType(item.type),
-        description: item.description || 'No description available',
       })),
       characterImg: formData.characterImg,
       alignment: formData.alignment,
