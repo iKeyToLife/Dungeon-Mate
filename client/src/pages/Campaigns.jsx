@@ -1,9 +1,9 @@
 import { useApolloClient, useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import AuthService from '../utils/auth';
-import { ADD_CAMPAIGN, ADD_CREATURE_TO_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN } from '../utils/mutations';
+import { ADD_CAMPAIGN, DELETE_CAMPAIGN, UPDATE_CAMPAIGN } from '../utils/mutations';
 import { GET_CAMPAIGNS, GET_DUNGEON, GET_DUNGEONS, GET_ENCOUNTER, GET_ENCOUNTERS, GET_QUEST, GET_QUESTS } from '../utils/queries';
 
 const Campaigns = () => {
@@ -49,6 +49,31 @@ const Campaigns = () => {
       setCampaigns(data.campaigns || []);
     },
   });
+
+  // Load dungeon data from localStorage when the component mounts
+  useEffect(() => {
+    const savedCampaign = localStorage.getItem('unsavedCampaign');
+    if (savedCampaign) {
+      const { title, description, encounters, quests, isEdit, editId, npcs, notes, dungeons, creatures } = JSON.parse(savedCampaign);
+      setTitle(title || '');
+      setDescription(description || '');
+      setSelectedEncounters(encounters || []);
+      setSelectedQuests(quests || []);
+      setIsEditing(isEdit || false);
+      setEditingId(editId || null);
+      setNpcs(npcs || '');
+      setNotes(notes || '');
+      setSelectedDungeons(dungeons || []);
+      setSelectedCreatures(creatures || []);
+    }
+  }, []);
+
+  // Save the campaign state to localStorage on updates to title, description, encounters, or quests
+  useEffect(() => {
+    const unsavedCampaign = { title, description, encounters: selectedEncounters, quests: selectedQuests, isEdit: isEditing, editId: editingId, npcs, notes, dungeons: selectedDungeons, creatures: selectedCreatures };
+    localStorage.setItem('unsavedCampaign', JSON.stringify(unsavedCampaign));
+  }, [title, description, selectedEncounters, selectedQuests, isEditing, editingId, npcs, notes, selectedDungeons, selectedCreatures]);
+
 
   const [addCampaign] = useMutation(ADD_CAMPAIGN, {
     refetchQueries: [{ query: GET_CAMPAIGNS }],
@@ -189,22 +214,30 @@ const Campaigns = () => {
     }
   };
 
-  const [addCreatureToCampaign] = useMutation(ADD_CREATURE_TO_CAMPAIGN, {
-    refetchQueries: [{ query: GET_CAMPAIGNS }],
-  });
+  const handleAddElement = (item, type) => {
+    // check unique before add at array
+    const addUniqueItem = (array, item, key) => {
+      if (!array.some(existingItem => existingItem[key] === item[key])) {
+        return [...array, item];
+      }
+      return array;
+    };
 
-  const handleAddCreature = async (creature) => {
-    try {
-      await addCreatureToCampaign({
-        variables: {
-          campaignId: editingId || campaignsData.campaigns[0]._id,
-          creatureId: creature.index
-        },
-      });
-
-      setSelectedCreatures([...selectedCreatures, creature]);
-    } catch (err) {
-      console.error("Error adding creature to campaign:", err);
+    switch (type) {
+      case 'encounter':
+        setSelectedEncounters(prevState => addUniqueItem(prevState, item, '_id'));
+        break;
+      case 'quest':
+        setSelectedQuests(prevState => addUniqueItem(prevState, item, '_id'));
+        break;
+      case 'dungeon':
+        setSelectedDungeons(prevState => addUniqueItem(prevState, item, '_id'));
+        break;
+      case 'creature':
+        setSelectedCreatures(prevState => addUniqueItem(prevState, item, 'index'));
+        break;
+      default:
+        break;
     }
   };
 
@@ -244,6 +277,7 @@ const Campaigns = () => {
       setSelectedCreatures([]);
       setIsEditing(false);
       setEditingId(null);
+      localStorage.removeItem('unsavedCampaign');
 
       // Refetch campaigns to update the list
       const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
@@ -307,6 +341,7 @@ const Campaigns = () => {
       setSelectedQuests([]);
       setSelectedDungeons([]);
       setSelectedCreatures([]);
+      localStorage.removeItem('unsavedCampaign');
 
       // Refetch campaigns to display updates
       const result = await client.refetchQueries({ include: [GET_CAMPAIGNS] });
@@ -337,14 +372,31 @@ const Campaigns = () => {
     const item = JSON.parse(e.dataTransfer.getData('item'));
     const type = e.dataTransfer.getData('type');
 
-    if (dropType === 'encounter' && type === 'encounter') {
-      setSelectedEncounters([...selectedEncounters, item]);
-    } else if (dropType === 'quest' && type === 'quest') {
-      setSelectedQuests([...selectedQuests, item]);
-    } else if (dropType === 'dungeon' && type === 'dungeon') {
-      setSelectedDungeons([...selectedDungeons, item]);
-    } else if (dropType === 'creature' && type === 'creature') {
-      setSelectedCreatures([...selectedCreatures, item]);
+    // check unique item
+    const addUniqueItem = (array, item, key) => {
+      if (!array.some(existingItem => existingItem[key] === item[key])) {
+        return [...array, item];
+      }
+      return array; // return array if element is already
+    };
+
+    if (dropType === type) {
+      switch (dropType) {
+        case 'encounter':
+          setSelectedEncounters(prevState => addUniqueItem(prevState, item, '_id'));
+          break;
+        case 'quest':
+          setSelectedQuests(prevState => addUniqueItem(prevState, item, '_id'));
+          break;
+        case 'dungeon':
+          setSelectedDungeons(prevState => addUniqueItem(prevState, item, '_id'));
+          break;
+        case 'creature':
+          setSelectedCreatures(prevState => addUniqueItem(prevState, item, 'index'));
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -411,6 +463,9 @@ const Campaigns = () => {
                 <li key={encounter._id} className="draggable" draggable={!window.innerWidth <= 768} onDragStart={(e) => onDragStart(e, encounter, 'encounter')}>
                   <div className="sidebar-card">
                     <span>{encounter.title}</span>
+                    <button onClick={() => handleAddElement(encounter, 'encounter')}>
+                      Add
+                    </button>
                     <button onClick={() => navigate(`/encounter/${encounter._id}`)}>View</button>
                     {window.innerWidth <= 768 && <button onClick={() => setSelectedEncounters([...selectedEncounters, encounter])}>Add</button>}
                   </div>
@@ -432,6 +487,9 @@ const Campaigns = () => {
                 <li key={quest._id} className="draggable" draggable={!window.innerWidth <= 768} onDragStart={(e) => onDragStart(e, quest, 'quest')}>
                   <div className="sidebar-card">
                     <span>{quest.title}</span>
+                    <button onClick={() => handleAddElement(quest, 'quest')}>
+                      Add
+                    </button>
                     <button onClick={() => navigate(`/quest/${quest._id}`)}>View</button>
                     {window.innerWidth <= 768 && <button onClick={() => setSelectedQuests([...selectedQuests, quest])}>Add</button>}
                   </div>
@@ -453,6 +511,9 @@ const Campaigns = () => {
                 <li key={dungeon._id} className="draggable" draggable={!window.innerWidth <= 768} onDragStart={(e) => onDragStart(e, dungeon, 'dungeon')}>
                   <div className="sidebar-card">
                     <span>{dungeon.title}</span>
+                    <button onClick={() => handleAddElement(dungeon, 'dungeon')}>
+                      Add
+                    </button>
                     <button onClick={() => navigate(`/dungeon/${dungeon._id}`)}>View</button>
                     {window.innerWidth <= 768 && <button onClick={() => setSelectedDungeons([...selectedDungeons, dungeon])}>Add</button>}
                   </div>
@@ -501,7 +562,7 @@ const Campaigns = () => {
                     >
                       <div className="sidebar-card">
                         <span>{creature.name}</span>
-                        <button onClick={() => handleAddCreature(creature)}>
+                        <button onClick={() => handleAddElement(creature, 'creature')}>
                           Add
                         </button>
                       </div>

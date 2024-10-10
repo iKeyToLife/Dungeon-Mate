@@ -1,11 +1,11 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import AuthService from '../utils/auth';
-import { ADD_DUNGEON, DELETE_DUNGEON, UPDATE_DUNGEON, ADD_ENCOUNTER_TO_DUNGEON, ADD_QUEST_TO_DUNGEON, REMOVE_ENCOUNTER_FROM_DUNGEON, REMOVE_QUEST_FROM_DUNGEON } from '../utils/mutations';
-import { GET_DUNGEONS, GET_ENCOUNTERS, GET_QUESTS } from '../utils/queries';
-import { RedirectToLoginError } from '../components/Error';
 import { useNavigate } from 'react-router-dom';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { RedirectToLoginError } from '../components/Error';
+import AuthService from '../utils/auth';
+import { ADD_DUNGEON, ADD_ENCOUNTER_TO_DUNGEON, ADD_QUEST_TO_DUNGEON, DELETE_DUNGEON, REMOVE_ENCOUNTER_FROM_DUNGEON, REMOVE_QUEST_FROM_DUNGEON, UPDATE_DUNGEON } from '../utils/mutations';
+import { GET_DUNGEONS, GET_ENCOUNTERS, GET_QUESTS } from '../utils/queries';
 
 const Dungeons = () => {
     const [dungeons, setDungeons] = useState([]);
@@ -46,19 +46,20 @@ const Dungeons = () => {
     useEffect(() => {
         const savedDungeon = localStorage.getItem('unsavedDungeon');
         if (savedDungeon) {
-            const { title, description, encounters, quests } = JSON.parse(savedDungeon);
+            const { title, description, encounters, quests, isEdit } = JSON.parse(savedDungeon);
             setTitle(title || '');
             setDescription(description || '');
             setDungeonEncounters(encounters || []);
             setDungeonQuests(quests || []);
+            setEditingIndex(isEdit || null);
         }
     }, []);
 
     // Save the dungeon state to localStorage on updates to title, description, encounters, or quests
     useEffect(() => {
-        const unsavedDungeon = { title, description, encounters: dungeonEncounters, quests: dungeonQuests };
+        const unsavedDungeon = { title, description, encounters: dungeonEncounters, quests: dungeonQuests, isEdit: editingIndex };
         localStorage.setItem('unsavedDungeon', JSON.stringify(unsavedDungeon));
-    }, [title, description, dungeonEncounters, dungeonQuests]);
+    }, [title, description, dungeonEncounters, dungeonQuests, editingIndex]);
 
     useEffect(() => {
         if (dungeonsResult.data && dungeonsResult.data.dungeons) {
@@ -258,6 +259,7 @@ const Dungeons = () => {
                 setDungeonEncounters([]);
                 setDungeonQuests([]);
                 setEditingIndex(null);
+                localStorage.removeItem('unsavedDungeon');
 
             } catch (error) {
                 console.error('Error updating dungeon:', error);
