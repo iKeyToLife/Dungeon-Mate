@@ -130,11 +130,11 @@ img:hover {
   border-radius: 10px;
   color: #FFD700;
   text-align: center;
-  max-width: 100%; 
+  max-width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: center;
 }
 
@@ -153,11 +153,13 @@ img:hover {
   word-wrap: break-word;
   overflow-wrap: break-word;
   text-align: center;
-  width: 100%; 
+  width: 100%;
 }
 
-.dungeon-dropzone2 p, .dungeon-dropzone2 h3 {
-  max-width: 100%; /* Prevent text from stretching beyond its container */
+.dungeon-dropzone2 p,
+.dungeon-dropzone2 h3 {
+  max-width: 100%;
+  /* Prevent text from stretching beyond its container */
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
@@ -270,10 +272,10 @@ img:hover {
 .campaign-card h3 {
   font-size: 1.1rem;
   font-weight: bold;
-  word-wrap: break-word; 
+  word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
-  text-align: center; 
+  text-align: center;
 }
 
 .campaign-button-row {
@@ -1945,26 +1947,48 @@ tbody tr:nth-child(odd) {
 .character-form-container input,
 .character-form-container textarea,
 .character-form-container button {
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 .proficiency-checkbox-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px; 
+  gap: 15px;
   margin-top: 40px;
+  border: 3px outset gold;
+  padding: 36px;
+  background-color: rgba(0, 0, 0, 0.726);
 }
 
 .proficiency-checkbox-list input[type="checkbox"] {
-  transform: scale(1.2); 
-  margin-right: 8px; 
+  transform: scale(1.2);
+  margin-right: 8px;
   width: 10px;
 }
 
 .proficiency-checkbox-list label {
   font-size: 1.1rem;
-  color: #FFD700; 
+  color: #FFD700;
   margin-top: 10px;
+}
+
+.proficiencies-container {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  margin-top: 10px;
+  color: #FFD700;
+}
+
+.proficiencies-container ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.proficiencies-container li {
+  margin-bottom: 5px;
+  font-size: 1.2rem;
 }
 
 /* Selected spells and inventory */
@@ -1975,7 +1999,9 @@ tbody tr:nth-child(odd) {
   margin-top: 20px;
 }
 
-.spells-box, .inventory-box, .bio-box {
+.spells-box,
+.inventory-box,
+.bio-box {
   background-color: rgba(0, 0, 0, 0.7);
   border: 2px solid gold;
   padding: 15px;
@@ -1983,13 +2009,17 @@ tbody tr:nth-child(odd) {
   width: 100%;
 }
 
-.spells-box h4, .inventory-box h4, .bio-box h4 {
+.spells-box h4,
+.inventory-box h4,
+.bio-box h4 {
   color: #FFD700;
   font-size: 1.2rem;
   text-decoration: underline;
 }
 
-.spells-box p, .inventory-box p, .bio-box p {
+.spells-box p,
+.inventory-box p,
+.bio-box p {
   color: #FFF;
   font-size: 1rem;
   margin: 5px 0;
@@ -2080,7 +2110,7 @@ tbody tr:nth-child(odd) {
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  width: 80px !important; 
+  width: 80px !important;
 }
 
 .character-card button:hover {
@@ -2089,27 +2119,27 @@ tbody tr:nth-child(odd) {
 }
 
 .character-card button.edit-button {
-  background-color: #006400; 
+  background-color: #006400;
 }
 
 .character-card button.delete-button {
-  background-color: #8B0000; 
+  background-color: #8B0000;
 }
 
 .character-card button.view-button {
-  background-color: #1E90FF; 
+  background-color: #1E90FF;
 }
 
 .character-card button.edit-button:hover {
-  background-color: #008000; 
+  background-color: #008000;
 }
 
 .character-card button.delete-button:hover {
-  background-color: #FF4500; 
+  background-color: #FF4500;
 }
 
 .character-card button.view-button:hover {
-  background-color: #00BFFF; 
+  background-color: #00BFFF;
 }
 
 .create-character-button {
@@ -2586,7 +2616,7 @@ tbody tr:nth-child(odd) {
     display: block;
     width: 100%;
   }
- 
+
   .campaign-dropzone-container {
     display: block;
     width: 100%;

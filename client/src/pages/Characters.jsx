@@ -20,12 +20,12 @@ const Characters = ({ user = { _id: null } }) => {
     level: 1,
     bio: '',
     attributes: {
-      strength: 0,
-      dexterity: 0,
-      constitution: 0,
-      intelligence: 0,
-      wisdom: 0,
-      charisma: 0,
+      strength: 8,
+      dexterity: 8,
+      constitution: 8,
+      intelligence: 8,
+      wisdom: 8,
+      charisma: 8,
     },
     characterImg: '',
     spells: [],
@@ -34,8 +34,8 @@ const Characters = ({ user = { _id: null } }) => {
       hitPoints: 0,
       armorClass: 0,
     },
-    addProficiencies: 'no', 
-    proficiencies: [] 
+    addProficiencies: 'no',
+    proficiencies: []
   });
 
   const [confirmedBio, setConfirmedBio] = useState('');
@@ -45,6 +45,7 @@ const Characters = ({ user = { _id: null } }) => {
   const [characterToDelete, setCharacterToDelete] = useState(null);
   const [availableProficiencies] = useState(['Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception', 'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion', 'Sleight of Hand', 'Stealth', 'Survival']);
   const [selectedProficiencies, setSelectedProficiencies] = useState([]);
+  const [proficienciesConfirmed, setProficienciesConfirmed] = useState(false);
 
   const [deleteCharacter] = useMutation(DELETE_CHARACTER);
   const [addCharacter] = useMutation(ADD_CHARACTER);
@@ -132,13 +133,13 @@ const Characters = ({ user = { _id: null } }) => {
   // Stat calculation based on attributes
   const calculateStats = () => {
     const { strength, dexterity, constitution, intelligence, wisdom, charisma } = formData.attributes;
-  
+
     // Example custom logic for calculation
     const hitPoints = constitution * 2 + 10;
     const armorClass = 10 + Math.floor(dexterity / 2);
     const attackPower = Math.floor(strength * 1.5);
     const magicPower = Math.floor((intelligence * 1.2) + (wisdom * 1.1));
-  
+
     // Update the formData with the calculated stats
     setFormData((prevData) => ({
       ...prevData,
@@ -201,34 +202,33 @@ const Characters = ({ user = { _id: null } }) => {
   };
 
   const handleProficiencySelect = (e) => {
-  const { value } = e.target;
-  setFormData((prevData) => {
-    const selectedProficiencies = prevData.proficiencies;
+    const { value } = e.target;
+    setFormData((prevData) => {
+      const selectedProficiencies = prevData.proficiencies;
 
-    if (selectedProficiencies.includes(value)) {
-      // Remove proficiency if already selected
-      return {
-        ...prevData,
-        proficiencies: selectedProficiencies.filter((prof) => prof !== value),
-      };
-    } else if (selectedProficiencies.length < 5) {
-      // Add proficiency if less than 5 are selected
-      return {
-        ...prevData,
-        proficiencies: [...selectedProficiencies, value],
-      };
-    }
+      if (selectedProficiencies.includes(value)) {
+        // Remove proficiency if already selected
+        return {
+          ...prevData,
+          proficiencies: selectedProficiencies.filter((prof) => prof !== value),
+        };
+      } else if (selectedProficiencies.length < 5) {
+        // Add proficiency if less than 5 are selected
+        return {
+          ...prevData,
+          proficiencies: [...selectedProficiencies, value],
+        };
+      }
 
-    // Otherwise, do nothing (limit reached)
-    return prevData;
-  });
-};
+      // Otherwise, do nothing (limit reached)
+      return prevData;
+    });
+  };
 
   const confirmProficiencies = () => {
-    setFormData((prevData) => ({
-      ...prevData,
-      proficiencies: selectedProficiencies
-    }));
+    if (formData.proficiencies.length > 0) {
+      setProficienciesConfirmed(true); // Set confirmation status to true
+    }
   };
 
   return (
@@ -420,7 +420,8 @@ const Characters = ({ user = { _id: null } }) => {
             </select>
           </div>
 
-          {formData.addProficiencies === 'yes' && (
+          {/* Only show the proficiency selection if "Yes" is selected */}
+          {formData.addProficiencies === 'yes' && !proficienciesConfirmed && (
             <div>
               <h3>Select Proficiencies (up to 5)</h3>
               <div className="proficiency-checkbox-list">
@@ -442,12 +443,13 @@ const Characters = ({ user = { _id: null } }) => {
             </div>
           )}
 
-          {formData.proficiencies.length > 0 && (
+          {/* Show selected proficiencies after confirmation */}
+          {proficienciesConfirmed && (
             <div className="proficiencies-container">
               <h3>Selected Proficiencies:</h3>
               <ul>
                 {formData.proficiencies.map((prof, index) => (
-                  <li key={index}>{prof}</li>
+                  <li key={index}>{prof} +1</li>
                 ))}
               </ul>
             </div>
