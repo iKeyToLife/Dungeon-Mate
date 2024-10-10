@@ -10,6 +10,12 @@ const fetchDnDData = async (url) => {
   return await response.json();
 };
 
+// Helper function to add a random variance of ±2 to a base stat
+const applyVariance = (baseStat) => {
+  const variance = Math.floor(Math.random() * 5) - 2; // Random number between -2 and +2
+  return baseStat + variance;
+};
+
 const Characters = ({ user = { _id: null } }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -55,6 +61,23 @@ const Characters = ({ user = { _id: null } }) => {
 
   const [availableSpells, setAvailableSpells] = useState([]);
   const [availableInventory, setAvailableInventory] = useState([]);
+
+  const [raceData, setRaceData] = useState(null);
+  const [classData, setClassData] = useState(null);
+
+  const [reRollCount, setReRollCount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (formData.class) {
+      fetchDnDData(`https://www.dnd5eapi.co/api/classes/${formData.class.toLowerCase()}`)
+        .then(data => setClassData(data));
+    }
+    if (formData.race) {
+      fetchDnDData(`https://www.dnd5eapi.co/api/races/${formData.race.toLowerCase()}`)
+        .then(data => setRaceData(data));
+    }
+  }, [formData.class, formData.race]);
 
   // Fetch spells and inventory when the form mounts
   useEffect(() => {
@@ -123,48 +146,145 @@ const Characters = ({ user = { _id: null } }) => {
       // Fetch item details from the API using the item index
       const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co${selectedItem.url}`);
 
+      // Ensure type and description exist, or add default values
+      const itemType = itemDetails.equipment_category?.name || "miscellaneous";
+      const itemDescription = itemDetails.desc?.join(" ") || "No description available";
+
       setFormData((prevData) => ({
         ...prevData,
-        inventory: [...prevData.inventory, itemDetails],
+        inventory: [...prevData.inventory, {
+          name: selectedItem.name,
+          type: itemType,
+          description: itemDescription
+        }],
       }));
     }
   };
 
-  // Stat calculation based on attributes
-  const calculateStats = () => {
+  // Stat calculation with random variance
+  const calculateStats = async () => {
+    if (reRollCount >= 3) {
+      setErrorMessage("You may only re roll your stats 2 times");
+      return;
+    }
+
     const { strength, dexterity, constitution, intelligence, wisdom, charisma } = formData.attributes;
 
-    // Example custom logic for calculation
-    const hitPoints = constitution * 2 + 10;
-    const armorClass = 10 + Math.floor(dexterity / 2);
-    const attackPower = Math.floor(strength * 1.5);
-    const magicPower = Math.floor((intelligence * 1.2) + (wisdom * 1.1));
+    // Fetch race and class details from D&D API
+    const raceData = await fetchDnDData(`https://www.dnd5eapi.co/api/races/${formData.race.toLowerCase()}`);
+    const classData = await fetchDnDData(`https://www.dnd5eapi.co/api/classes/${formData.class.toLowerCase()}`);
 
-    // Update the formData with the calculated stats
+    // Apply race and class modifiers with variance
+    let updatedStrength = applyVariance(strength);
+    let updatedDexterity = applyVariance(dexterity);
+    let updatedConstitution = applyVariance(constitution);
+    let updatedIntelligence = applyVariance(intelligence);
+    let updatedWisdom = applyVariance(wisdom);
+    let updatedCharisma = applyVariance(charisma);
+
+    raceData.ability_bonuses.forEach((bonus) => {
+      switch (bonus.ability_score.index) {
+        case 'str':
+          updatedStrength += bonus.bonus;
+          break;
+        case 'dex':
+          updatedDexterity += bonus.bonus;
+          break;
+        case 'con':
+          updatedConstitution += bonus.bonus;
+          break;
+        case 'int':
+          updatedIntelligence += bonus.bonus;
+          break;
+        case 'wis':
+          updatedWisdom += bonus.bonus;
+          break;
+        case 'cha':
+          updatedCharisma += bonus.bonus;
+          break;
+        default:
+          break;
+      }
+    });
+
+    // Calculate hit points and armor class with variance
+    const hitDie = parseInt(classData.hit_die);
+    const hitPoints = applyVariance(hitDie + Math.floor((updatedConstitution - 10) / 2));
+    const armorClass = 10 + Math.floor((updatedDexterity - 10) / 2);
+
+    // Calculate attack power and magic power
+    const attackPower = Math.floor(updatedStrength * 1.5);
+    const magicPower = Math.floor((updatedIntelligence * 1.2) + (updatedWisdom * 1.1));
+
+    // Update formData with the new randomized stats
     setFormData((prevData) => ({
       ...prevData,
       stats: {
         hitPoints,
         armorClass,
-        strength,
-        dexterity,
-        constitution,
-        intelligence,
-        wisdom,
-        charisma,
+        strength: updatedStrength,
+        dexterity: updatedDexterity,
+        constitution: updatedConstitution,
+        intelligence: updatedIntelligence,
+        wisdom: updatedWisdom,
+        charisma: updatedCharisma,
         attackPower,
         magicPower,
       }
     }));
+
+    // Increment the re-roll count
+    setReRollCount(reRollCount + 1);
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (selectedCharacter) {
-      await updateCharacter({ variables: { characterId: selectedCharacter._id, ...formData } });
-    } else {
-      await addCharacter({ variables: { ...formData } });
+
+    // Prepare the data to be saved
+    const characterData = {
+      name: formData.name,
+      race: formData.race,
+      gender: formData.gender,
+      class: [{ className: formData.class, level: formData.level }],
+      level: formData.level,
+      attributes: {
+        strength: formData.stats.strength,
+        dexterity: formData.stats.dexterity,
+        constitution: formData.stats.constitution,
+        intelligence: formData.stats.intelligence,
+        wisdom: formData.stats.wisdom,
+        charisma: formData.stats.charisma
+      },
+      spells: formData.spells.map(spell => ({ index: spell.index, name: spell.name })),
+      inventory: formData.inventory.map(item => ({
+        name: item.name,
+        type: item.type || 'miscellaneous',
+        description: item.description || 'No description available'
+      })),
+      characterImg: formData.characterImg,
+      alignment: formData.alignment
+    };
+
+    // Mutation call to save the character
+    try {
+      if (selectedCharacter) {
+        // If editing an existing character
+        await updateCharacter({
+          variables: {
+            characterId: selectedCharacter._id,
+            ...characterData
+          }
+        });
+      } else {
+        // If creating a new character
+        await addCharacter({
+          variables: characterData
+        });
+      }
+      // Reset form or navigate to a character list page
+      setShowForm(false);
+    } catch (error) {
+      console.error("Error saving character:", error);
     }
   };
 
@@ -309,6 +429,22 @@ const Characters = ({ user = { _id: null } }) => {
             </div>
           )}
 
+          <div>
+            <label>Alignment:</label>
+            <select name="alignment" value={formData.alignment} onChange={handleChange} required>
+              <option value="">Select Alignment...</option>
+              <option value="Lawful Good">Lawful Good</option>
+              <option value="Neutral Good">Neutral Good</option>
+              <option value="Chaotic Good">Chaotic Good</option>
+              <option value="Lawful Neutral">Lawful Neutral</option>
+              <option value="True Neutral">True Neutral</option>
+              <option value="Chaotic Neutral">Chaotic Neutral</option>
+              <option value="Lawful Evil">Lawful Evil</option>
+              <option value="Neutral Evil">Neutral Evil</option>
+              <option value="Chaotic Evil">Chaotic Evil</option>
+            </select>
+          </div>
+
           {/* Conditional rendering of level */}
           <div>
             <label>Level:</label>
@@ -394,9 +530,13 @@ const Characters = ({ user = { _id: null } }) => {
             ))}
           </div>
 
-          <Button type="button" onClick={calculateStats}>
-            Calculate Stats
+          <Button onClick={calculateStats} disabled={reRollCount >= 3}>
+            {reRollCount === 0 ? "Calculate Stats" : reRollCount >= 3 ? "No more re rolls" : "Re Roll?"}
           </Button>
+
+          {errorMessage && (
+            <p className="error-message">{errorMessage}</p>
+          )}
 
           <div>
             <h3>Stats:</h3>
@@ -470,9 +610,11 @@ const Characters = ({ user = { _id: null } }) => {
               <h3>{character.name}</h3>
               <img src={character.characterImg} alt={`${character.name}`} style={{ width: '100px' }} />
               <div className="character-card-buttons">
-                <Button onClick={() => console.log("Navigate to SingleCharacter.jsx")}>View</Button>
-                <Button onClick={() => handleEdit(character)}>Edit</Button>
-                <Button onClick={() => handleDeleteClick(character._id)} color="danger">Delete</Button>
+                <div className="flexbox-buttons">
+                  <Button onClick={() => console.log("Navigate to SingleCharacter.jsx")}>View</Button>
+                  <Button onClick={() => handleEdit(character)}>Edit</Button>
+                  <Button onClick={() => handleDeleteClick(character._id)} color="danger">Delete</Button>
+                </div>
               </div>
             </div>
           ))

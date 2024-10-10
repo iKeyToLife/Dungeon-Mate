@@ -2070,6 +2070,12 @@ tbody tr:nth-child(odd) {
   box-shadow: 5px 5px 10px black;
 }
 
+.flexbox-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 /* Character Image Styling */
 .character-card img {
   width: 150px;
@@ -2097,8 +2103,15 @@ tbody tr:nth-child(odd) {
 .existing-characters-container-h1 {
   display: flex;
   justify-content: center;
+  font-size: 38px;
+  padding: 5px;
   text-shadow: 2px 2px 2px black;
   text-decoration: underline;
+  background-color: rgba(0, 0, 0, 0.795);
+  border: 2px outset gold;
+  border-radius: 10px;
+  max-width: 50%;
+  margin: auto;
 }
 
 .character-card button {
@@ -2116,30 +2129,6 @@ tbody tr:nth-child(odd) {
 .character-card button:hover {
   background-color: #A50000;
   transform: scale(1.05);
-}
-
-.character-card button.edit-button {
-  background-color: #006400;
-}
-
-.character-card button.delete-button {
-  background-color: #8B0000;
-}
-
-.character-card button.view-button {
-  background-color: #1E90FF;
-}
-
-.character-card button.edit-button:hover {
-  background-color: #008000;
-}
-
-.character-card button.delete-button:hover {
-  background-color: #FF4500;
-}
-
-.character-card button.view-button:hover {
-  background-color: #00BFFF;
 }
 
 .create-character-button {
