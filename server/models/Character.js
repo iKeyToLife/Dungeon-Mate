@@ -86,11 +86,11 @@ const CharacterSchema = new Schema(
                 required: true,
                 enum: ['weapon', 'armor', 'potion', 'tool', 'magicItem', 'miscellaneous'],
             },
-        proficiencies: {
-                type: String,
-                required: false,
-            }
         }],
+        proficiencies: [{
+            type: String,
+            required: false,
+        }]
     },
     {
         timestamps: true, // createdAt, updatedAt
