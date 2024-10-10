@@ -2,7 +2,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { ADD_CHARACTER, DELETE_CHARACTER, UPDATE_CHARACTER } from '../utils/mutations';
-import { GET_CHARACTERS_BY_USER_ID } from '../utils/queries';
+import { GET_CHARACTERS_BY_USER_ID  } from '../utils/queries';
+import { useNavigate } from 'react-router-dom';
 
 // Helper function to fetch spells and inventory from DnD API
 const fetchDnDData = async (url) => {
@@ -44,6 +45,7 @@ const Characters = ({ user = { _id: null } }) => {
     proficiencies: []
   });
 
+  const navigate = useNavigate();
   const [confirmedBio, setConfirmedBio] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
@@ -64,6 +66,10 @@ const Characters = ({ user = { _id: null } }) => {
   const [reRollCount, setReRollCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
   const [isEditingBio, setIsEditingBio] = useState(false);
+
+  const handleViewCharacter = (characterId) => {
+    navigate(`/characters/${characterId}`);  
+  };
 
   // Fetch characters on component mount
   useEffect(() => {
@@ -744,7 +750,7 @@ const Characters = ({ user = { _id: null } }) => {
               <img src={character.characterImg} alt={`${character.name}`} style={{ width: '100px' }} />
               <div className="character-card-buttons">
                 <div className="flexbox-buttons">
-                  <Button onClick={() => console.log("Navigate to SingleCharacter.jsx")}>View</Button>
+                  <Button onClick={() => handleViewCharacter(character._id)}>View</Button>
                   <Button onClick={() => handleEdit(character)}>Edit</Button>
                   <Button onClick={() => handleDeleteClick(character._id)} color="danger">Delete</Button>
                 </div>
