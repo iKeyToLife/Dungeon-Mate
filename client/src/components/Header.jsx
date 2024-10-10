@@ -32,7 +32,7 @@ const Header = () => {
   }, [isLogout]);
 
   useEffect(() => {
-    const allLinks = document.querySelectorAll('.nav-link');
+    const allLinks = document.querySelectorAll('.custom-nav-link');
     const activeLink = document.querySelector('.nav-link.active');
 
     // Kill any existing animations on all links to prevent lingering effects
@@ -46,7 +46,7 @@ const Header = () => {
     // Apply glowing effect to the active link
     if (activeLink) {
       gsap.to(activeLink, {
-        textShadow: '0px 0px 15px gold',
+        textShadow: '1px 1px 15px gold',
         color: 'gold',
         duration: 0.9,
         repeat: -1,
@@ -56,35 +56,35 @@ const Header = () => {
   }, [location]); 
 
   return (
-    <Navbar color="dark" dark expand="md" style={{ padding: '0 1rem' }}>
+    <Navbar dark expand="md" style={{ padding: '0 1rem', backgroundColor: 'rgba(0, 0, 0, 0.7)' }}>
       <Container className="d-flex justify-content-between align-items-end">
         <NavbarBrand tag={RouterNavLink} to="/"className="d-flex align-items-center">
           <img src={DMLogoTrans} alt="Dungeon Mate Logo" style={{ height: '90px', marginRight: '20px', width: '125px' }} />
         </NavbarBrand>
         <Nav className="ml-3 d-flex align-items-end" navbar style={{ fontSize: '1.25rem' }}>
           <NavItem>
-            <RouterNavLink to="/characters" className="nav-link" activeclassname="active">Characters</RouterNavLink>
+            <RouterNavLink to="/characters" className="nav-link custom-nav-link" activeclassname="active" style={{ color: 'lightgray' }}>Characters</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/campaigns" className="nav-link" activeclassname="active">Campaigns</RouterNavLink>
+            <RouterNavLink to="/campaigns" className="nav-link custom-nav-link" activeclassname="active" style={{ color: 'lightgray' }}>Campaigns</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/dungeons" className="nav-link" activeclassname="active">Dungeons</RouterNavLink>
+            <RouterNavLink to="/dungeons" className="nav-link custom-nav-link" activeclassname="active" style={{ color: 'lightgray' }}>Dungeons</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/encounters" className="nav-link" activeclassname="active">Encounters</RouterNavLink>
+            <RouterNavLink to="/encounters" className="nav-link custom-nav-link" activeclassname="active" style={{ color: 'lightgray' }}>Encounters</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/quests" className="nav-link" activeclassname="active">Quests</RouterNavLink>
+            <RouterNavLink to="/quests" className="nav-link custom-nav-link" activeclassname="active" style={{ color: 'lightgray' }}>Quests</RouterNavLink>
           </NavItem>
           <NavItem>
-            <RouterNavLink to="/bestiary" className="nav-link" activeclassname="active">Bestiary</RouterNavLink>
+            <RouterNavLink to="/bestiary" className="nav-link custom-nav-link" activeclassname="active" style={{ color: 'lightgray' }}>Bestiary</RouterNavLink>
           </NavItem>
           <NavItem>
             {isLoggedIn ? (
-              <RouterNavLink to="/" className="nav-link" onClick={() => setIsLogout(true)}>Logout</RouterNavLink>
+              <RouterNavLink to="/" className="nav-link custom-nav-link" style={{ color: 'lightgray' }} activeclassname="active" onClick={() => setIsLogout(true)}>Logout</RouterNavLink>
             ) : (
-              <RouterNavLink to="/login" className="nav-link" activeclassname="active">Login/Signup</RouterNavLink>
+              <RouterNavLink to="/login" className="nav-link custom-nav-link" activeclassname="active" style={{ color: 'lightgray' }}>Login/Signup</RouterNavLink>
             )}
           </NavItem>
         </Nav>

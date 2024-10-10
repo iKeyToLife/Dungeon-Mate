@@ -32,7 +32,7 @@ footer {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: #FFD700; /* Global color for headings */
+  color: #FFD700; 
 }
 
 a {
@@ -60,4 +60,16 @@ button:hover {
   background-color: #A52A2A !important;
   color: #fff !important;
   transform: scale(1.05) !important;
+}
+
+.custom-nav-link {
+  color: rgb(212, 212, 212) !important;
+}
+
+.nav-link.active {
+  color: gold !important;
+}
+
+.nav-link:hover {
+  color: #fff !important; 
 }
