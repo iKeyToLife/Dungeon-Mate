@@ -32,10 +32,10 @@ const Characters = ({ user = { _id: null } }) => {
       intelligence: 8,
       wisdom: 8,
       charisma: 8,
-      hitPoints: 0,     
-      armorClass: 0,    
-      attackPower: 0,   
-      magicPower: 0,    
+      hitPoints: 0,
+      armorClass: 0,
+      attackPower: 0,
+      magicPower: 0,
     },
     characterImg: '',
     spells: [],
@@ -63,6 +63,7 @@ const Characters = ({ user = { _id: null } }) => {
   const [classData, setClassData] = useState(null);
   const [reRollCount, setReRollCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isEditingBio, setIsEditingBio] = useState(false);
 
   // Fetch characters on component mount
   useEffect(() => {
@@ -224,17 +225,17 @@ const Characters = ({ user = { _id: null } }) => {
     setFormData((prevData) => ({
       ...prevData,
       attributes: {
-        ...prevData.attributes,  
+        ...prevData.attributes,
         strength: updatedStrength,
         dexterity: updatedDexterity,
         constitution: updatedConstitution,
         intelligence: updatedIntelligence,
         wisdom: updatedWisdom,
         charisma: updatedCharisma,
-        hitPoints,    
-        armorClass,   
-        attackPower,  
-        magicPower,   
+        hitPoints,
+        armorClass,
+        attackPower,
+        magicPower,
       },
     }));
 
@@ -346,9 +347,34 @@ const Characters = ({ user = { _id: null } }) => {
     }
   };
 
-  const handleEdit = (character) => {
+  const handleEdit = async (character) => {
     setSelectedCharacter(character);
 
+    // Fetch spell descriptions again from the API
+    const fetchedSpells = await Promise.all(
+      character.spells.map(async (spell) => {
+        const spellDetails = await fetchDnDData(`https://www.dnd5eapi.co/api/spells/${spell.index}`);
+        return {
+          name: spellDetails.name,
+          description: spellDetails.desc?.join(' ') || 'No description available',
+          index: spell.index
+        };
+      })
+    );
+
+    // Fetch inventory item descriptions again from the API
+    const fetchedInventory = await Promise.all(
+      character.inventory.map(async (item) => {
+        const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co/api/equipment/${item.name.toLowerCase().replace(' ', '-')}`);
+        return {
+          name: itemDetails.name,
+          type: itemDetails.equipment_category?.name || 'miscellaneous',
+          description: itemDetails.desc?.join(' ') || 'No description available'
+        };
+      })
+    );
+
+    // Set form data with fetched descriptions
     setFormData({
       name: character.name || '',
       race: character.race || '',
@@ -358,23 +384,29 @@ const Characters = ({ user = { _id: null } }) => {
       level: character.level || 1,
       bio: character.bio || '',
       attributes: {
-        strength: character.attributes?.strength || 8,
-        dexterity: character.attributes?.dexterity || 8,
-        constitution: character.attributes?.constitution || 8,
-        intelligence: character.attributes?.intelligence || 8,
-        wisdom: character.attributes?.wisdom || 8,
-        charisma: character.attributes?.charisma || 8,
-        hitPoints: character.attributes?.hitPoints || 0,
-        armorClass: character.attributes?.armorClass || 0,
-        attackPower: character.attributes?.attackPower || 0,
-        magicPower: character.attributes?.magicPower || 0,
+        strength: character.attributes.strength || 8,
+        dexterity: character.attributes.dexterity || 8,
+        constitution: character.attributes.constitution || 8,
+        intelligence: character.attributes.intelligence || 8,
+        wisdom: character.attributes.wisdom || 8,
+        charisma: character.attributes.charisma || 8,
+        hitPoints: character.attributes.hitPoints || 0,
+        armorClass: character.attributes.armorClass || 0,
+        attackPower: character.attributes.attackPower || 0,
+        magicPower: character.attributes.magicPower || 0,
       },
       characterImg: character.characterImg || '',
-      spells: character.spells || [],
-      inventory: character.inventory || [],
+      spells: fetchedSpells,
+      inventory: fetchedInventory,
       proficiencies: character.proficiencies || [],
-      addProficiencies: character.proficiencies?.length > 0 ? 'yes' : 'no',
+      addProficiencies: character.proficiencies?.length > 0 ? 'yes' : 'no'
     });
+
+    if (character.proficiencies && character.proficiencies.length > 0) {
+      setProficienciesConfirmed(true);
+    } else {
+      setProficienciesConfirmed(false);
+    }
 
     setShowForm(true);
 
@@ -639,40 +671,8 @@ const Characters = ({ user = { _id: null } }) => {
             <p>Magic Power: {formData.attributes.magicPower}</p>
           </div>
 
-          <div>
-            <label>Do you want to add proficiencies?</label>
-            <select name="addProficiencies" value={formData.addProficiencies} onChange={handleChange}>
-              <option value="no">No</option>
-              <option value="yes">Yes</option>
-            </select>
-          </div>
-
-          {/* Only show the proficiency selection if "Yes" is selected */}
-          {formData.addProficiencies === 'yes' && !proficienciesConfirmed && (
+          {selectedCharacter ? (
             <div>
-              <h3>Select Proficiencies (up to 5)</h3>
-              <div className="proficiency-checkbox-list">
-                {availableProficiencies.map((proficiency, index) => (
-                  <div key={index}>
-                    <input
-                      type="checkbox"
-                      id={proficiency}
-                      name={proficiency}
-                      value={proficiency}
-                      onChange={handleProficiencySelect}
-                      disabled={formData.proficiencies.length >= 5 && !formData.proficiencies.includes(proficiency)}
-                    />
-                    <label htmlFor={proficiency}>{proficiency}</label>
-                  </div>
-                ))}
-              </div>
-              <Button onClick={confirmProficiencies}>Confirm Proficiencies</Button>
-            </div>
-          )}
-
-          {/* Show selected proficiencies after confirmation */}
-          {proficienciesConfirmed && (
-            <div className="proficiencies-container">
               <h3>Selected Proficiencies:</h3>
               <ul>
                 {formData.proficiencies.map((prof, index) => (
@@ -680,7 +680,52 @@ const Characters = ({ user = { _id: null } }) => {
                 ))}
               </ul>
             </div>
+          ) : (
+            <>
+              <div>
+                <label>Do you want to add proficiencies?</label>
+                <select name="addProficiencies" value={formData.addProficiencies} onChange={handleChange}>
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                </select>
+              </div>
+
+              {formData.addProficiencies === 'yes' && !proficienciesConfirmed && (
+                <div>
+                  <h3>Select Proficiencies (up to 5)</h3>
+                  <div className="proficiency-checkbox-list">
+                    {availableProficiencies.map((proficiency, index) => (
+                      <div key={index}>
+                        <input
+                          type="checkbox"
+                          id={proficiency}
+                          name={proficiency}
+                          value={proficiency}
+                          onChange={handleProficiencySelect}
+                          disabled={formData.proficiencies.length >= 5 && !formData.proficiencies.includes(proficiency)}
+                          checked={formData.proficiencies.includes(proficiency)}
+                        />
+                        <label htmlFor={proficiency}>{proficiency}</label>
+                      </div>
+                    ))}
+                  </div>
+                  <Button onClick={confirmProficiencies}>Confirm Proficiencies</Button>
+                </div>
+              )}
+
+              {proficienciesConfirmed && (
+                <div className="proficiencies-container">
+                  <h3>Selected Proficiencies:</h3>
+                  <ul>
+                    {formData.proficiencies.map((prof, index) => (
+                      <li key={index}>{prof} +1</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
           )}
+
           <Button type="submit" color="primary">
             {selectedCharacter ? 'Update Character' : 'Save Character'}
           </Button>
