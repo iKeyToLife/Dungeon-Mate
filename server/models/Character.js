@@ -89,7 +89,7 @@ const CharacterSchema = new Schema(
         }],
         proficiencies: [{
             type: String,
-            required: false,
+            required: true
         }]
     },
     {

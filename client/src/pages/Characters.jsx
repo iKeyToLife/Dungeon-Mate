@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { useMutation, useQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { ADD_CHARACTER, DELETE_CHARACTER, UPDATE_CHARACTER } from '../utils/mutations';
 import { GET_CHARACTERS_BY_USER_ID } from '../utils/queries';
-import { ADD_CHARACTER, UPDATE_CHARACTER, DELETE_CHARACTER } from '../utils/mutations';
 
 // Helper function to fetch spells and inventory from DnD API
 const fetchDnDData = async (url) => {
@@ -290,6 +290,7 @@ const Characters = ({ user = { _id: null } }) => {
       })),
       characterImg: formData.characterImg,
       alignment: formData.alignment,
+      proficiencies: formData.proficiencies,
     };
 
     try {
@@ -619,7 +620,7 @@ const Characters = ({ user = { _id: null } }) => {
             {formData.spells.map((spell, index) => (
               <div key={index}>
                 <h5>{spell.name}</h5>
-                <p>{spell.desc ? spell.desc.join(" ") : "No description available"}</p>
+                <p>{spell.desc?.join(" ") || spell.description || "No description available"}</p>
                 <Button className="remove-button-inv-spell" onClick={() => handleSpellRemove(index)}>Remove</Button>
               </div>
             ))}
