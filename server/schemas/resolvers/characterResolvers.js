@@ -36,7 +36,6 @@ const characterMutations = {
             try {
                 // Attach the userId to the character
                 args.userId = context.user._id;
-
                 // Ensure fields like inventory, spells, and proficiencies are initialized to avoid undefined errors
                 const newCharacter = new Character({
                     ...args,

@@ -62,7 +62,6 @@ const characterTypeDefs = gql`
   input InventoryInput {
     name: String!
     type: String!
-    description: String!
   }
 `;
 
