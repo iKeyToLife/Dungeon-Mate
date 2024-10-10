@@ -151,21 +151,31 @@ const Characters = ({ user = { _id: null } }) => {
     const selectedItem = availableInventory.find((item) => item.name === e.target.value);
 
     if (selectedItem && formData.inventory.length < 3) {
-      // Fetch item details from the API using the item index
-      const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co${selectedItem.url}`);
+      try {
+        // Fetch item details from the API using the item index
+        const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co${selectedItem.url}`);
 
-      // Ensure type and description exist, or add default values
-      const itemType = itemDetails.equipment_category?.name || "miscellaneous";
-      const itemDescription = itemDetails.desc?.join(" ") || "No description available";
+        // Log the item details for debugging purposes
+        console.log('Item details from API:', itemDetails);
 
-      setFormData((prevData) => ({
-        ...prevData,
-        inventory: [...prevData.inventory, {
-          name: selectedItem.name,
-          type: itemType,
-          description: itemDescription
-        }],
-      }));
+        // Ensure type and description exist, or add default values
+        const itemType = itemDetails.equipment_category?.name || "miscellaneous";
+        const itemDescription = (itemDetails.desc && itemDetails.desc.length > 0)
+          ? itemDetails.desc.join(" ")  // Join description array into a single string
+          : "No description available"; // Default if no description exists
+
+        // Update the formData with fetched details
+        setFormData((prevData) => ({
+          ...prevData,
+          inventory: [...prevData.inventory, {
+            name: selectedItem.name,
+            type: itemType,
+            description: itemDescription,
+          }],
+        }));
+      } catch (error) {
+        console.error('Error fetching item details:', error);
+      }
     }
   };
 
@@ -311,11 +321,43 @@ const Characters = ({ user = { _id: null } }) => {
 
       // Reset form and hide the form after save
       setShowForm(false);
+
+      // Clear form fields by resetting formData state
+      setFormData({
+        name: '',
+        race: '',
+        gender: '',
+        class: '',
+        alignment: '',
+        level: 1,
+        bio: '',
+        attributes: {
+          strength: 8,
+          dexterity: 8,
+          constitution: 8,
+          intelligence: 8,
+          wisdom: 8,
+          charisma: 8,
+        },
+        characterImg: '',
+        spells: [],
+        inventory: [],
+        stats: {
+          hitPoints: 0,
+          armorClass: 0,
+        },
+        addProficiencies: 'no',
+        proficiencies: []
+      });
+
+      // Clear other state variables like confirmedBio if needed
+      setConfirmedBio('');
+      setProficienciesConfirmed(false);
     } catch (error) {
       console.error('Error saving character:', error);
     }
   };
-
+  
   const handleEdit = (character) => {
     setSelectedCharacter(character);
     setFormData(character);
@@ -560,7 +602,7 @@ const Characters = ({ user = { _id: null } }) => {
             {formData.inventory.map((item, index) => (
               <div key={index}>
                 <h5>{item.name}</h5>
-                <p>{item.desc ? item.desc : "No description available"}</p>
+                <p>{item.description && item.description !== 'No description available' ? item.description : "No description available"}</p>
                 <Button className="remove-button-inv-spell" onClick={() => handleInventoryRemove(index)}>Remove</Button>
               </div>
             ))}
