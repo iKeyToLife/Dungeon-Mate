@@ -80,7 +80,7 @@ Bestiary:
 
 ## Full Presentation 
 
-
+[Presentation](https://docs.google.com/presentation/d/1OWz2V1mSYJpvTUQxyJk0dnNCOn-LIEjafUESvy4UxBg/edit?usp=sharing)
 
 ## Future Development
 

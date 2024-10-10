@@ -297,12 +297,13 @@ const Characters = ({ user = { _id: null } }) => {
       characterImg: formData.characterImg,
       alignment: formData.alignment,
       proficiencies: formData.proficiencies,
+      bio: formData.bio,
     };
 
     try {
       if (selectedCharacter) {
         // If editing an existing character
-        const result = await updateCharacter({
+        await updateCharacter({
           variables: {
             characterId: selectedCharacter._id,
             ...characterData,
@@ -602,11 +603,20 @@ const Characters = ({ user = { _id: null } }) => {
           </Button>
 
           {/* Bio Box - Display confirmed bio */}
-          {confirmedBio && (
-            <div className="bio-box">
-              <h4>Character Bio:</h4>
-              <p>{confirmedBio}</p>
-            </div>
+          {confirmedBio ? (
+            <>
+              <div className="bio-box">
+                <h4>Character Bio:</h4>
+                <p>{confirmedBio}</p>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="bio-box">
+                <h4>Character Bio:</h4>
+                <p>{formData.bio}</p>
+              </div>
+            </>
           )}
 
           {/* Spell Selection */}
