@@ -63,7 +63,8 @@ const typeDefs = gql`
       spells: [SpellsInput!],
       inventory: [InventoryInput!],
       alignment: String!
-      proficiencies: [String] 
+      proficiencies: [String],
+      bio: String 
     ): Character
     deleteCharacter(characterId: ID!): Character
     updateCharacter(
