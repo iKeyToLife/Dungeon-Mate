@@ -94,7 +94,7 @@ const Characters = ({ user = { _id: null } }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
-      let updatedData = { ...prevData, [name]: value };
+      let updatedData = { ...prevData, [name]: name === 'level' ? Number(value) : value };
       let raceFolder = updatedData.race.toLowerCase();
       let raceImage = updatedData.race;
       if (updatedData.race === 'Dragonborn') {
@@ -137,7 +137,6 @@ const Characters = ({ user = { _id: null } }) => {
 
   const handleInventorySelect = async (e) => {
     const selectedItem = availableInventory.find((item) => item.name === e.target.value);
-
     if (selectedItem && formData.inventory.length < 3) {
       try {
         // Fetch item details from the API using the item index
@@ -150,11 +149,11 @@ const Characters = ({ user = { _id: null } }) => {
         const itemDescription = (itemDetails.desc && itemDetails.desc.length > 0)
           ? itemDetails.desc.join(" ")  // Join description array into a single string
           : "No description available"; // Default if no description exists
-
         // Update the formData with fetched details
         setFormData((prevData) => ({
           ...prevData,
           inventory: [...prevData.inventory, {
+            index: selectedItem.index,
             name: selectedItem.name,
             type: itemType,
             description: itemDescription,
@@ -285,6 +284,7 @@ const Characters = ({ user = { _id: null } }) => {
       },
       spells: formData.spells.map((spell) => ({ index: spell.index, name: spell.name })),
       inventory: formData.inventory.map((item) => ({
+        index: item.index,
         name: item.name,
         type: mapInventoryType(item.type),
       })),
@@ -296,13 +296,14 @@ const Characters = ({ user = { _id: null } }) => {
     try {
       if (selectedCharacter) {
         // If editing an existing character
-        await updateCharacter({
+        const result = await updateCharacter({
           variables: {
             characterId: selectedCharacter._id,
             ...characterData,
           },
           refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],
         });
+
       } else {
         // If creating a new character
         await addCharacter({
@@ -365,8 +366,9 @@ const Characters = ({ user = { _id: null } }) => {
     // Fetch inventory item descriptions again from the API
     const fetchedInventory = await Promise.all(
       character.inventory.map(async (item) => {
-        const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co/api/equipment/${item.name.toLowerCase().replace(' ', '-')}`);
+        const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co/api/equipment/${item.index}`);
         return {
+          index: itemDetails.index,
           name: itemDetails.name,
           type: itemDetails.equipment_category?.name || 'miscellaneous',
           description: itemDetails.desc?.join(' ') || 'No description available'
