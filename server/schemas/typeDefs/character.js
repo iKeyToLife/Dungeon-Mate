@@ -21,7 +21,7 @@ const characterTypeDefs = gql`
     name: String!
     race: String!
     gender: String!
-    level: Int!
+    level: Int
     class: [Class]!
     characterImg: String
     bio: String
@@ -33,7 +33,7 @@ const characterTypeDefs = gql`
 
   input ClassInput {
     className: String!
-    level: Int!
+    level: Int
   }
 
   input AttributesInput {

@@ -1,12 +1,12 @@
 import { gsap } from 'gsap';
 import { useEffect, useState } from 'react';
-import { useLocation, NavLink as RouterNavLink } from 'react-router-dom'; 
+import { NavLink as RouterNavLink, useLocation } from 'react-router-dom';
 import { Container, Nav, Navbar, NavbarBrand, NavItem } from 'reactstrap';
-import DMLogoTrans from '/images/otherImages/DungeonMateLogo2.png';
 import AuthService from '../utils/auth';
+import DMLogoTrans from '/images/otherImages/DungeonMateLogo2.png';
 
 const Header = () => {
-  const location = useLocation(); 
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLogout, setIsLogout] = useState(false);
 
@@ -53,41 +53,45 @@ const Header = () => {
         yoyo: true
       });
     }
-  }, [location]); 
+  }, [location]);
 
   return (
     <Navbar color="dark" dark expand="md" style={{ padding: '0 1rem' }}>
       <Container className="d-flex justify-content-between align-items-end">
-        <NavbarBrand tag={RouterNavLink} to="/"className="d-flex align-items-center">
+        <NavbarBrand tag={RouterNavLink} to="/" className="d-flex align-items-center">
           <img src={DMLogoTrans} alt="Dungeon Mate Logo" style={{ height: '90px', marginRight: '20px', width: '125px' }} />
         </NavbarBrand>
-        <Nav className="ml-3 d-flex align-items-end" navbar style={{ fontSize: '1.25rem' }}>
-          <NavItem>
-            <RouterNavLink to="/characters" className="nav-link" activeclassname="active">Characters</RouterNavLink>
-          </NavItem>
-          <NavItem>
-            <RouterNavLink to="/campaigns" className="nav-link" activeclassname="active">Campaigns</RouterNavLink>
-          </NavItem>
-          <NavItem>
-            <RouterNavLink to="/dungeons" className="nav-link" activeclassname="active">Dungeons</RouterNavLink>
-          </NavItem>
-          <NavItem>
-            <RouterNavLink to="/encounters" className="nav-link" activeclassname="active">Encounters</RouterNavLink>
-          </NavItem>
-          <NavItem>
-            <RouterNavLink to="/quests" className="nav-link" activeclassname="active">Quests</RouterNavLink>
-          </NavItem>
-          <NavItem>
-            <RouterNavLink to="/bestiary" className="nav-link" activeclassname="active">Bestiary</RouterNavLink>
-          </NavItem>
-          <NavItem>
-            {isLoggedIn ? (
+        {isLoggedIn ? (
+          <Nav className="ml-3 d-flex align-items-end" navbar style={{ fontSize: '1.25rem' }}>
+            <NavItem>
+              <RouterNavLink to="/characters" className="nav-link" activeclassname="active">Characters</RouterNavLink>
+            </NavItem>
+            <NavItem>
+              <RouterNavLink to="/campaigns" className="nav-link" activeclassname="active">Campaigns</RouterNavLink>
+            </NavItem>
+            <NavItem>
+              <RouterNavLink to="/dungeons" className="nav-link" activeclassname="active">Dungeons</RouterNavLink>
+            </NavItem>
+            <NavItem>
+              <RouterNavLink to="/encounters" className="nav-link" activeclassname="active">Encounters</RouterNavLink>
+            </NavItem>
+            <NavItem>
+              <RouterNavLink to="/quests" className="nav-link" activeclassname="active">Quests</RouterNavLink>
+            </NavItem>
+            <NavItem>
+              <RouterNavLink to="/bestiary" className="nav-link" activeclassname="active">Bestiary</RouterNavLink>
+            </NavItem>
+            <NavItem>
               <RouterNavLink to="/" className="nav-link" onClick={() => setIsLogout(true)}>Logout</RouterNavLink>
-            ) : (
+            </NavItem>
+          </Nav>
+        ) : (
+          <Nav className="ml-3 d-flex align-items-end" navbar style={{ fontSize: '1.25rem' }}>
+            <NavItem>
               <RouterNavLink to="/login" className="nav-link" activeclassname="active">Login/Signup</RouterNavLink>
-            )}
-          </NavItem>
-        </Nav>
+            </NavItem>
+          </Nav>
+        )}
       </Container>
     </Navbar>
   );

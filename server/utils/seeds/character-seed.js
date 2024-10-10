@@ -50,7 +50,6 @@ const seedCharacters = async () => {
                 race: randomRace, // random race
                 class: [{
                     className: randomClass, // random class
-                    level: 1
                 }],
 
                 level: 1,
