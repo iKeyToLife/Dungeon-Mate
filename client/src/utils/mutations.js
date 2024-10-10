@@ -72,9 +72,10 @@ mutation AddCharacter(
   $level: Int!,
   $attributes: AttributesInput!,
   $spells: [SpellsInput!],
-  $inventory: [InventoryInput!]
-  $characterImg: String!
-  $alignment: String!
+  $inventory: [InventoryInput!],
+  $characterImg: String!,
+  $alignment: String!,
+  $proficiencies: [String]
 ) {
   addCharacter(
     name: $name,
@@ -86,15 +87,42 @@ mutation AddCharacter(
     spells: $spells,
     inventory: $inventory,
     characterImg: $characterImg,
-    alignment: $alignment
+    alignment: $alignment,
+    proficiencies: $proficiencies
   ) {
     _id
   }
 }`
 
 export const UPDATE_CHARACTER = gql`
-mutation UpdateCharacter($characterId: ID!, $name: String, $race: String, $gender: String, $class: [ClassInput], $alignment: String, $level: Int, $characterImg: String) {
-  updateCharacter(characterId: $characterId, name: $name, race: $race, gender: $gender, class: $class, alignment: $alignment, level: $level, characterImg: $characterImg) {
+mutation UpdateCharacter(
+  $characterId: ID!,
+  $name: String,
+  $race: String,
+  $gender: String,
+  $class: [ClassInput],
+  $alignment: String,
+  $level: Int,
+  $characterImg: String,
+  $attributes: AttributesInput,
+  $spells: [SpellsInput],
+  $inventory: [InventoryInput],
+  $proficiencies: [String]
+) {
+  updateCharacter(
+    characterId: $characterId,
+    name: $name,
+    race: $race,
+    gender: $gender,
+    class: $class,
+    alignment: $alignment,
+    level: $level,
+    characterImg: $characterImg,
+    attributes: $attributes,
+    spells: $spells,
+    inventory: $inventory,
+    proficiencies: $proficiencies
+  ) {
     race
     name
     level
@@ -111,8 +139,13 @@ mutation UpdateCharacter($characterId: ID!, $name: String, $race: String, $gende
       intelligence
       strength
       wisdom
+      hitPoints
+      armorClass
+      attackPower
+      magicPower
     }
     alignment
+    proficiencies
     _id
   }
 }`

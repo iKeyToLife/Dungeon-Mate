@@ -13,6 +13,10 @@ const characterTypeDefs = gql`
     intelligence: Int!
     wisdom: Int!
     charisma: Int!
+    hitPoints: Int!  
+    armorClass: Int!  
+    attackPower: Int!  
+    magicPower: Int!   
   }
 
   type Character {
@@ -29,6 +33,7 @@ const characterTypeDefs = gql`
     alignment: String!
     spells: [Spell]
     inventory: [Item]
+    proficiencies: [String]
   }
 
   input ClassInput {
@@ -43,6 +48,10 @@ const characterTypeDefs = gql`
     intelligence: Int
     wisdom: Int
     charisma: Int
+    hitPoints: Int  
+    armorClass: Int  
+    attackPower: Int  
+    magicPower: Int  
   }
 
   input SpellsInput {

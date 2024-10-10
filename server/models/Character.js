@@ -86,11 +86,9 @@ const CharacterSchema = new Schema(
                 required: true,
                 enum: ['weapon', 'armor', 'potion', 'tool', 'magicItem', 'miscellaneous'],
             },
-            description: {
+        proficiencies: {
                 type: String,
-                required: true,
-                minlength: 1,
-                maxlength: 500
+                required: false,
             }
         }],
     },
