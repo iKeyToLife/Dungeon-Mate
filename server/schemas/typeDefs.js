@@ -77,8 +77,9 @@ const typeDefs = gql`
       attributes: AttributesInput,
       spells: [SpellsInput],
       inventory: [InventoryInput],
-      alignment: String
-      proficiencies: [String] 
+      alignment: String,
+      proficiencies: [String],
+      bio: String 
       ): Character
     addSpellToCharacter(characterId: ID!, spell: SpellInput!): Character
     removeSpellFromCharacter(characterId: ID!, spellIndex: String!): Character
