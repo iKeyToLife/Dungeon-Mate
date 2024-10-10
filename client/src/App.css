@@ -2184,7 +2184,8 @@ tbody tr:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.795);
   border: 2px outset gold;
   border-radius: 10px;
-  max-width: 50%;
+  width: 450px;
+  max-width: 75%;
   margin: auto;
 }
 
