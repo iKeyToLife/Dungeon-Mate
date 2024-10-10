@@ -28,29 +28,80 @@ export const GET_ENCOUNTER = gql`
 `;
 
 export const GET_CHARACTERS_BY_USER_ID = gql`
-    query GetCharactersByUserId{
-        characters {
-            _id
-            name
-            race
-            gender
-            class {
-                className
-                level
-            }
-            attributes {
-                strength
-                dexterity
-                constitution
-                intelligence
-                wisdom
-                charisma
-            }
-            characterImg
-            alignment
-        }
+  query GetCharactersByUserId {
+    characters {
+      _id
+      name
+      race
+      gender
+      class {
+        className
+        level
+      }
+      attributes {
+        strength
+        dexterity
+        constitution
+        intelligence
+        wisdom
+        charisma
+        hitPoints
+        armorClass
+        attackPower
+        magicPower
+      }
+      proficiencies
+      inventory {
+        name
+        type
+      }
+      spells {
+        index
+        name
+      }
+      alignment
+      characterImg
     }
-    `;
+}`
+
+export const GET_CHARACTER_BY_ID = gql`
+  query GetCharacterById($characterId: ID!) {
+    character(characterId: $characterId) {
+      _id
+      name
+      race
+      gender
+      class {
+        className
+        level
+      }
+      attributes {
+        strength
+        dexterity
+        constitution
+        intelligence
+        wisdom
+        charisma
+        hitPoints
+        armorClass
+        attackPower
+        magicPower
+      }
+      characterImg
+      alignment
+      bio
+      spells {
+        index
+        name
+      }
+      inventory {
+        name
+        type
+      }
+      proficiencies
+    }
+  }
+`
 
 export const GET_QUESTS = gql`
   query getAllQuests {

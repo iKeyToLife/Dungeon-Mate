@@ -32,14 +32,14 @@ const Characters = ({ user = { _id: null } }) => {
       intelligence: 8,
       wisdom: 8,
       charisma: 8,
+      hitPoints: 0,     
+      armorClass: 0,    
+      attackPower: 0,   
+      magicPower: 0,    
     },
     characterImg: '',
     spells: [],
     inventory: [],
-    stats: {
-      hitPoints: 0,
-      armorClass: 0,
-    },
     addProficiencies: 'no',
     proficiencies: []
   });
@@ -53,19 +53,14 @@ const Characters = ({ user = { _id: null } }) => {
   const [selectedProficiencies, setSelectedProficiencies] = useState([]);
   const [proficienciesConfirmed, setProficienciesConfirmed] = useState(false);
   const [characterList, setCharacterList] = useState([]);
-
   const [deleteCharacter] = useMutation(DELETE_CHARACTER);
   const [addCharacter] = useMutation(ADD_CHARACTER);
   const [updateCharacter] = useMutation(UPDATE_CHARACTER);
-
   const { loading, error, data } = useQuery(GET_CHARACTERS_BY_USER_ID);
-
   const [availableSpells, setAvailableSpells] = useState([]);
   const [availableInventory, setAvailableInventory] = useState([]);
-
   const [raceData, setRaceData] = useState(null);
   const [classData, setClassData] = useState(null);
-
   const [reRollCount, setReRollCount] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -99,31 +94,25 @@ const Characters = ({ user = { _id: null } }) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
       let updatedData = { ...prevData, [name]: value };
-
       let raceFolder = updatedData.race.toLowerCase();
       let raceImage = updatedData.race;
-
       if (updatedData.race === 'Dragonborn') {
         raceFolder = 'dragonborn';
         raceImage = 'DB';
       }
-
       if (updatedData.race === 'Half-Orc' || updatedData.race === 'Half-Elf') {
         raceFolder = updatedData.race.toLowerCase();
         raceImage = updatedData.race.replace('-', '');
       }
-
       if (raceFolder && updatedData.gender) {
         const genderFolder = updatedData.gender.toLowerCase();
         updatedData.characterImg = `/images/default/${raceFolder}/${genderFolder}/${updatedData.gender}${raceImage}Default.png`;
-
         if (updatedData.class) {
           const selectedClassFolder = updatedData.class.toLowerCase();
           const capitalizedClass = updatedData.class.charAt(0).toUpperCase() + updatedData.class.slice(1);
           updatedData.characterImg = `/images/${raceFolder}/${selectedClassFolder}/${genderFolder}/${updatedData.gender}${raceImage}${capitalizedClass}.png`;
         }
       }
-
       return updatedData;
     });
   };
@@ -135,11 +124,9 @@ const Characters = ({ user = { _id: null } }) => {
 
   const handleSpellSelect = async (e) => {
     const selectedSpell = availableSpells.find((spell) => spell.name === e.target.value);
-
     if (selectedSpell && formData.spells.length < 2) {
       // Fetch spell details from the API using the spell index
       const spellDetails = await fetchDnDData(`https://www.dnd5eapi.co${selectedSpell.url}`);
-
       setFormData((prevData) => ({
         ...prevData,
         spells: [...prevData.spells, spellDetails],
@@ -155,7 +142,6 @@ const Characters = ({ user = { _id: null } }) => {
         // Fetch item details from the API using the item index
         const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co${selectedItem.url}`);
 
-        // Log the item details for debugging purposes
         console.log('Item details from API:', itemDetails);
 
         // Ensure type and description exist, or add default values
@@ -182,7 +168,7 @@ const Characters = ({ user = { _id: null } }) => {
   // Stat calculation with random variance
   const calculateStats = async () => {
     if (reRollCount >= 3) {
-      setErrorMessage("You may only re roll your stats 2 times");
+      setErrorMessage("You may only re-roll your stats 2 times");
       return;
     }
 
@@ -234,21 +220,22 @@ const Characters = ({ user = { _id: null } }) => {
     const attackPower = Math.floor(updatedStrength * 1.5);
     const magicPower = Math.floor((updatedIntelligence * 1.2) + (updatedWisdom * 1.1));
 
-    // Update formData with the new randomized stats
+    // Update formData with the new randomized stats, but within `attributes`
     setFormData((prevData) => ({
       ...prevData,
-      stats: {
-        hitPoints,
-        armorClass,
+      attributes: {
+        ...prevData.attributes,  
         strength: updatedStrength,
         dexterity: updatedDexterity,
         constitution: updatedConstitution,
         intelligence: updatedIntelligence,
         wisdom: updatedWisdom,
         charisma: updatedCharisma,
-        attackPower,
-        magicPower,
-      }
+        hitPoints,    
+        armorClass,   
+        attackPower,  
+        magicPower,   
+      },
     }));
 
     // Increment the re-roll count
@@ -284,12 +271,16 @@ const Characters = ({ user = { _id: null } }) => {
       class: [{ className: formData.class, level: formData.level }],
       level: formData.level,
       attributes: {
-        strength: formData.stats.strength,
-        dexterity: formData.stats.dexterity,
-        constitution: formData.stats.constitution,
-        intelligence: formData.stats.intelligence,
-        wisdom: formData.stats.wisdom,
-        charisma: formData.stats.charisma,
+        strength: formData.attributes.strength,
+        dexterity: formData.attributes.dexterity,
+        constitution: formData.attributes.constitution,
+        intelligence: formData.attributes.intelligence,
+        wisdom: formData.attributes.wisdom,
+        charisma: formData.attributes.charisma,
+        hitPoints: formData.attributes.hitPoints || 0,
+        armorClass: formData.attributes.armorClass || 0,
+        attackPower: formData.attributes.attackPower || 0,
+        magicPower: formData.attributes.magicPower || 0,
       },
       spells: formData.spells.map((spell) => ({ index: spell.index, name: spell.name })),
       inventory: formData.inventory.map((item) => ({
@@ -309,20 +300,20 @@ const Characters = ({ user = { _id: null } }) => {
             characterId: selectedCharacter._id,
             ...characterData,
           },
-          refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],  // Refetch query after update
+          refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],
         });
       } else {
         // If creating a new character
         await addCharacter({
           variables: characterData,
-          refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],  // Refetch query after add
+          refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],
         });
       }
 
       // Reset form and hide the form after save
       setShowForm(false);
 
-      // Clear form fields by resetting formData state
+      // Reset formData
       setFormData({
         name: '',
         race: '',
@@ -338,29 +329,57 @@ const Characters = ({ user = { _id: null } }) => {
           intelligence: 8,
           wisdom: 8,
           charisma: 8,
+          hitPoints: 0,
+          armorClass: 0,
+          attackPower: 0,
+          magicPower: 0,
         },
         characterImg: '',
         spells: [],
         inventory: [],
-        stats: {
-          hitPoints: 0,
-          armorClass: 0,
-        },
         addProficiencies: 'no',
         proficiencies: []
       });
 
-      // Clear other state variables like confirmedBio if needed
-      setConfirmedBio('');
-      setProficienciesConfirmed(false);
     } catch (error) {
       console.error('Error saving character:', error);
     }
   };
-  
+
   const handleEdit = (character) => {
     setSelectedCharacter(character);
-    setFormData(character);
+
+    setFormData({
+      name: character.name || '',
+      race: character.race || '',
+      gender: character.gender || '',
+      class: character.class[0]?.className || '',
+      alignment: character.alignment || '',
+      level: character.level || 1,
+      bio: character.bio || '',
+      attributes: {
+        strength: character.attributes?.strength || 8,
+        dexterity: character.attributes?.dexterity || 8,
+        constitution: character.attributes?.constitution || 8,
+        intelligence: character.attributes?.intelligence || 8,
+        wisdom: character.attributes?.wisdom || 8,
+        charisma: character.attributes?.charisma || 8,
+        hitPoints: character.attributes?.hitPoints || 0,
+        armorClass: character.attributes?.armorClass || 0,
+        attackPower: character.attributes?.attackPower || 0,
+        magicPower: character.attributes?.magicPower || 0,
+      },
+      characterImg: character.characterImg || '',
+      spells: character.spells || [],
+      inventory: character.inventory || [],
+      proficiencies: character.proficiencies || [],
+      addProficiencies: character.proficiencies?.length > 0 ? 'yes' : 'no',
+    });
+
+    setShowForm(true);
+
+    // Scroll to the form after editing starts
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Show modal for deleting a character
@@ -375,7 +394,6 @@ const Characters = ({ user = { _id: null } }) => {
         variables: { characterId: characterToDelete },
         refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }], // Refetch query after delete
       });
-
       setShowDeleteModal(false); // Close the modal after deletion
       setCharacterToDelete(null); // Clear the state for the next deletion
     } catch (error) {
@@ -403,7 +421,6 @@ const Characters = ({ user = { _id: null } }) => {
     const { value } = e.target;
     setFormData((prevData) => {
       const selectedProficiencies = prevData.proficiencies;
-
       if (selectedProficiencies.includes(value)) {
         // Remove proficiency if already selected
         return {
@@ -417,7 +434,6 @@ const Characters = ({ user = { _id: null } }) => {
           proficiencies: [...selectedProficiencies, value],
         };
       }
-
       // Otherwise, do nothing (limit reached)
       return prevData;
     });
@@ -431,7 +447,6 @@ const Characters = ({ user = { _id: null } }) => {
 
   return (
     <div className="characters-page-container">
-
       <div className="create-character-button-container">
         <Button className="create-character-button" onClick={() => { setShowForm(true); setSelectedCharacter(null); }}>
           Create a Character
@@ -453,7 +468,6 @@ const Characters = ({ user = { _id: null } }) => {
               maxLength="23"
             />
           </div>
-
           <div>
             <label>Race:</label>
             <select name="race" value={formData.race} onChange={handleChange}>
@@ -469,7 +483,6 @@ const Characters = ({ user = { _id: null } }) => {
               <option value="Tiefling">Tiefling</option>
             </select>
           </div>
-
           <div>
             <label>Gender:</label>
             <select name="gender" value={formData.gender} onChange={handleChange}>
@@ -478,7 +491,6 @@ const Characters = ({ user = { _id: null } }) => {
               <option value="Female">Female</option>
             </select>
           </div>
-
           <div>
             <label>Class:</label>
             <select name="class" value={formData.class} onChange={handleChange}>
@@ -506,7 +518,6 @@ const Characters = ({ user = { _id: null } }) => {
               </div>
             </div>
           )}
-
           <div>
             <label>Alignment:</label>
             <select name="alignment" value={formData.alignment} onChange={handleChange} required>
@@ -607,27 +618,25 @@ const Characters = ({ user = { _id: null } }) => {
               </div>
             ))}
           </div>
-
           <Button onClick={calculateStats} disabled={reRollCount >= 3}>
             {reRollCount === 0 ? "Calculate Stats" : reRollCount >= 3 ? "No more re rolls" : "Re Roll?"}
           </Button>
-
           {errorMessage && (
             <p className="error-message">{errorMessage}</p>
           )}
 
           <div>
             <h3>Stats:</h3>
-            <p>Hit Points: {formData.stats.hitPoints}</p>
-            <p>Armor Class: {formData.stats.armorClass}</p>
-            <p>Strength: {formData.stats.strength}</p>
-            <p>Dexterity: {formData.stats.dexterity}</p>
-            <p>Constitution: {formData.stats.constitution}</p>
-            <p>Intelligence: {formData.stats.intelligence}</p>
-            <p>Wisdom: {formData.stats.wisdom}</p>
-            <p>Charisma: {formData.stats.charisma}</p>
-            <p>Attack Power: {formData.stats.attackPower}</p>
-            <p>Magic Power: {formData.stats.magicPower}</p>
+            <p>Hit Points: {formData.attributes.hitPoints}</p>
+            <p>Armor Class: {formData.attributes.armorClass}</p>
+            <p>Strength: {formData.attributes.strength}</p>
+            <p>Dexterity: {formData.attributes.dexterity}</p>
+            <p>Constitution: {formData.attributes.constitution}</p>
+            <p>Intelligence: {formData.attributes.intelligence}</p>
+            <p>Wisdom: {formData.attributes.wisdom}</p>
+            <p>Charisma: {formData.attributes.charisma}</p>
+            <p>Attack Power: {formData.attributes.attackPower}</p>
+            <p>Magic Power: {formData.attributes.magicPower}</p>
           </div>
 
           <div>
@@ -672,7 +681,6 @@ const Characters = ({ user = { _id: null } }) => {
               </ul>
             </div>
           )}
-
           <Button type="submit" color="primary">
             {selectedCharacter ? 'Update Character' : 'Save Character'}
           </Button>
@@ -712,7 +720,6 @@ const Characters = ({ user = { _id: null } }) => {
           <Button color="secondary" onClick={() => setShowDeleteModal(false)}>No, Cancel</Button>
         </ModalFooter>
       </Modal>
-
       {loading && <p>Loading characters...</p>}
       {error && <p>Error loading characters: {error.message}</p>}
     </div>

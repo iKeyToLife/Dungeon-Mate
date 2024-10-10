@@ -4,13 +4,11 @@ const itemTypeDefs = gql`
   type Item {
     name: String!
     type: String!
-    description: String!
   }
 
   input InventoryItemInput {
   name: String!
   type: String!
-  description: String!
 }
 `;
 

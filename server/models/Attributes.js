@@ -43,7 +43,31 @@ const AttributesSchema = new Schema({
         default: 8,
         min: 1,
         max: 30
-    }
+    },
+    hitPoints: { 
+        type: Number, 
+        required: true, 
+        default: 0, 
+        min: 0
+    },
+    armorClass: { 
+        type: Number, 
+        required: true, 
+        default: 0, 
+        min: 0
+    },
+    attackPower: { 
+        type: Number, 
+        required: true, 
+        default: 0, 
+        min: 0
+    },
+    magicPower: { 
+        type: Number, 
+        required: true, 
+        default: 0, 
+        min: 0
+    },
 }, { _id: false });
 
 module.exports = AttributesSchema;

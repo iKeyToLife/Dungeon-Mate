@@ -12,7 +12,10 @@ const fetchData = async (url) => {
 
 const getRandomElement = (array) => array[Math.floor(Math.random() * array.length)];
 const getRandomAttribute = () => Math.floor(Math.random() * 20) + 1;
+const getRandomValue = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 const getRandomGender = () => Math.random() < 0.5 ? 'Male' : 'Female';
+
+const proficiencyList = ['Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception', 'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion', 'Sleight of Hand', 'Stealth', 'Survival'];
 
 const getCharacterImagePath = (race, characterClass, gender) => {
     // formatted to lowerCase
@@ -24,6 +27,12 @@ const getCharacterImagePath = (race, characterClass, gender) => {
     // create path image
     return `images/${formattedRaceFolder}/${formattedClass}/${formattedGender}/${gender}${formattedRaceImage.replace('-', '')}${characterClass}.png`;
 };
+
+const getRandomProficiencies = (count = 5) => {
+    const shuffled = proficiencyList.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count); 
+};
+
 
 const seedCharacters = async () => {
     try {
@@ -43,6 +52,7 @@ const seedCharacters = async () => {
             const randomGender = getRandomGender();
             const imageCharacter = getCharacterImagePath(randomRace, randomClass, randomGender);
             const randomSpell = getRandomElement(spells.results);
+            const randomProficiencies = getRandomProficiencies();
 
             const character = new Character({
                 userId: user._id,
@@ -62,10 +72,15 @@ const seedCharacters = async () => {
                     intelligence: getRandomAttribute(),
                     wisdom: getRandomAttribute(),
                     charisma: getRandomAttribute(),
+                    hitPoints: getRandomValue(10, 20),  
+                    armorClass: getRandomValue(10, 18), 
+                    attackPower: getRandomValue(5, 15), 
+                    magicPower: getRandomValue(3, 12),
                 },
                 spells: [randomSpell],
                 inventory: [],
-                alignment: "Lawful Good"
+                alignment: "Lawful Good",
+                proficiencies: randomProficiencies,
             });
 
             await character.save();
