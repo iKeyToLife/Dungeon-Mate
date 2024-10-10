@@ -52,6 +52,7 @@ export const GET_CHARACTERS_BY_USER_ID = gql`
       }
       proficiencies
       inventory {
+        index
         name
         type
       }
