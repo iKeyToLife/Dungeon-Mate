@@ -595,12 +595,12 @@ const Campaigns = () => {
                   <div className="campaign-card" key={encounter._id}>
                     <h3>{encounter.title}</h3>
                     {encounter.expanded && encounter.details && (
-                      <div className="expanded-details">
+                      <div className="expanded-details-campaign">
                         <p><strong>Details:</strong> {encounter.details.details}</p>
                         {/* Add more encounter fields here */}
                       </div>
                     )}
-                    <div className="campaign-button-row">
+                    <div className="button-row2">
                       <button className="campaign-button-view" onClick={() => handleViewItem(encounter, 'encounter')}>
                         {encounter.expanded ? 'Collapse' : 'View'}
                       </button>
@@ -623,13 +623,13 @@ const Campaigns = () => {
                   <div className="campaign-card" key={quest._id}>
                     <h3>{quest.title}</h3>
                     {quest.expanded && quest.details && (
-                      <div className="expanded-details">
+                      <div className="expanded-details-campaign">
                         <p><strong>Details:</strong> {quest.details.details}</p>
                         <p><strong>Reward:</strong> {quest.details.rewards}</p>
                         {/* Add more quest fields here */}
                       </div>
                     )}
-                    <div className="campaign-button-row">
+                    <div className="button-row2">
                       <button className="campaign-button-view" onClick={() => handleViewItem(quest, 'quest')}>
                         {quest.expanded ? 'Collapse' : 'View'}
                       </button>
@@ -643,7 +643,7 @@ const Campaigns = () => {
             </div>
 
             {/* Dungeons Dropzone */}
-            <div className="dungeon-dropzone" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'dungeon')}>
+            <div className="dungeon-dropzone2" onDragOver={onDragOver} onDrop={(e) => onDrop(e, 'dungeon')}>
               <h3>Dungeons:</h3>
               {selectedDungeons.length === 0 ? (
                 <p>Add dungeons here</p>
@@ -652,13 +652,13 @@ const Campaigns = () => {
                   <div className="campaign-card" key={dungeon._id}>
                     <h3>{dungeon.title}</h3>
                     {dungeon.expanded && dungeon.details && (
-                      <div className="expanded-details">
+                      <div className="expanded-details-campaign">
                         <p><strong>Description:</strong> {dungeon.details.description}</p>
                         <p><strong>Encounters:</strong> {dungeon.details.encounters.map(enc => enc.title).join(', ')}</p>
                         <p><strong>Quests:</strong> {dungeon.details.quests.map(quest => quest.title).join(', ')}</p>
                       </div>
                     )}
-                    <div className="campaign-button-row">
+                    <div className="button-row2">
                       <button className="campaign-button-view" onClick={() => handleViewItem(dungeon, 'dungeon')}>
                         {dungeon.expanded ? 'Collapse' : 'View'}
                       </button>
@@ -681,7 +681,7 @@ const Campaigns = () => {
                   <div className="campaign-card" key={creature.index}>
                     <h3>{creature.name}</h3>
                     {creature.expanded && creature.details && (
-                      <div className="expanded-details">
+                      <div className="expanded-details-campaign">
                         <p><strong>Type:</strong> {safeRender(creature.details.type)}</p>
                         <p><strong>Hit Points:</strong> {safeRender(creature.details.hit_points)}</p>
                         <p><strong>Armor Class:</strong> {typeof creature.details.armor_class === 'object' ? safeRender(creature.details.armor_class.value) : safeRender(creature.details.armor_class)}</p>
@@ -715,7 +715,7 @@ const Campaigns = () => {
                         )}
                       </div>
                     )}
-                    <div className="campaign-button-row">
+                    <div className="button-row2">
                       <button className="campaign-button-view" onClick={() => handleViewItem(creature, 'creature')}>
                         {creature.expanded ? 'Collapse' : 'View'}
                       </button>
