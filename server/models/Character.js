@@ -33,6 +33,7 @@ const CharacterSchema = new Schema(
             level: {
                 type: Number,
                 required: true,
+                default: 1,
                 min: 1
             }
         }],

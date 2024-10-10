@@ -1,16 +1,22 @@
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache, ApolloLink } from '@apollo/client';
+import { ApolloClient, ApolloLink, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './index.css';
+import AuthService from './utils/auth';
 
 // Error handling for Apollo Client
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(async ({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message }) => {
       console.error(`[GraphQL error]: ${message}`);
     });
+    if (graphQLErrors[0].message.includes('not authenticate')) {
+      const isTokenExpired = await AuthService.isTokenExpired();
+      if (!isTokenExpired)
+        AuthService.logout();
+    }
   }
 
   if (networkError) {
