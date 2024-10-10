@@ -1,3 +1,77 @@
+.single-character-container {
+  padding: 20px;
+  border: 2px solid gold;
+  border-radius: 10px;
+  background-image: url('/images/otherImages/scroll-background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: gold;
+  max-width: 900px;
+  margin: 20px auto;
+  position: relative;
+  box-shadow: 10px 10px 8px black;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.character-title {
+  font-size: 46px;
+  text-shadow: 2px 2px 2px gold;
+  color: black;
+  text-align: center;
+  margin-bottom: 20px;
+  text-decoration: underline;
+}
+
+.character-image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.character-image {
+  width: 200px;
+  height: auto;
+  border: 2px solid gold;
+  border-radius: 10px;
+}
+
+.character-info-container,
+.character-attributes-container,
+.character-bio-container,
+.character-proficiencies-container,
+.character-spells-container,
+.character-inventory-container {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 2px solid gold;
+}
+
+.character-info-container p,
+.character-attributes-container p,
+.character-bio-container p,
+.character-proficiencies-container p,
+.character-spells-container p,
+.character-inventory-container p {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.character-info-container h3,
+.character-attributes-container h3,
+.character-bio-container h3,
+.character-proficiencies-container h3,
+.character-spells-container h3,
+.character-inventory-container h3 {
+  color: gold;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 2px black;
+}
+
 .welcome-container {
   display: flex;
   flex-direction: column;

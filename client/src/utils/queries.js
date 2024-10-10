@@ -88,22 +88,21 @@ export const GET_CHARACTER_BY_ID = gql`
         attackPower
         magicPower
       }
-      characterImg
-      alignment
-      bio
-      spells {
-        index
-        name
-      }
+      proficiencies
       inventory {
         index
         name
         type
       }
-      proficiencies
+      spells {
+        index
+        name
+      }
+      alignment
+      characterImg
     }
   }
-`
+`;
 
 export const GET_QUESTS = gql`
   query getAllQuests {

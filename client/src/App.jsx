@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Characters from './pages/Characters';
+import SingleCharacter from './pages/SingleCharacter';
 import Campaigns from './pages/Campaigns';
 import SingleCampaign from './pages/SingleCampaign';
 import Dungeons from './pages/Dungeons';
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/characters" element={<Characters />} />
+            <Route path="/characters/:characterId" element={<SingleCharacter />} />
             <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/campaign/:campaignId" element={<SingleCampaign />} />
             <Route path="/dungeons" element={<Dungeons />} />
