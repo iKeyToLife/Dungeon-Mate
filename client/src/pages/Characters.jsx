@@ -296,13 +296,14 @@ const Characters = ({ user = { _id: null } }) => {
     try {
       if (selectedCharacter) {
         // If editing an existing character
-        await updateCharacter({
+        const result = await updateCharacter({
           variables: {
             characterId: selectedCharacter._id,
             ...characterData,
           },
           refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],
         });
+
       } else {
         // If creating a new character
         await addCharacter({
@@ -366,16 +367,14 @@ const Characters = ({ user = { _id: null } }) => {
     const fetchedInventory = await Promise.all(
       character.inventory.map(async (item) => {
         const itemDetails = await fetchDnDData(`https://www.dnd5eapi.co/api/equipment/${item.index}`);
-        console.log(item)
         return {
+          index: itemDetails.index,
           name: itemDetails.name,
           type: itemDetails.equipment_category?.name || 'miscellaneous',
           description: itemDetails.desc?.join(' ') || 'No description available'
         };
       })
     );
-
-    console.log(fetchedInventory)
 
     // Set form data with fetched descriptions
     setFormData({
