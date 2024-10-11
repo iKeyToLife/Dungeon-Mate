@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { ADD_CHARACTER, DELETE_CHARACTER, UPDATE_CHARACTER } from '../utils/mutations';
-import { GET_CHARACTERS_BY_USER_ID  } from '../utils/queries';
-import { useNavigate } from 'react-router-dom';
+import { GET_CHARACTERS_BY_USER_ID } from '../utils/queries';
 
 // Helper function to fetch spells and inventory from DnD API
 const fetchDnDData = async (url) => {
@@ -68,7 +68,7 @@ const Characters = ({ user = { _id: null } }) => {
   const [isEditingBio, setIsEditingBio] = useState(false);
 
   const handleViewCharacter = (characterId) => {
-    navigate(`/characters/${characterId}`);  
+    navigate(`/characters/${characterId}`);
   };
 
   // Fetch characters on component mount
@@ -310,7 +310,6 @@ const Characters = ({ user = { _id: null } }) => {
           },
           refetchQueries: [{ query: GET_CHARACTERS_BY_USER_ID }],
         });
-
       } else {
         // If creating a new character
         await addCharacter({
