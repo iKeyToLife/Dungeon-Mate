@@ -33,13 +33,13 @@ const userMutations = {
         // get user by email
         const user = await User.findOne({ email });
         if (!user) {
-            throw AuthenticationError;
+            throw new Error("User not found");
         }
 
         // compare password
         const correctPassword = await bcrypt.compare(password, user.password);
         if (!correctPassword) {
-            throw AuthenticationError;
+            throw new Error("Incorrect e-mail or password");
         }
 
         // generate token
