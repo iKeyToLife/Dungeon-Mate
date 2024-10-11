@@ -60,6 +60,12 @@ UserSchema.statics.validatePassword = function (password) {
 
 
 UserSchema.pre('save', async function (next) {
+    const User = model('user');
+
+    if (!User.validatePassword(this.password)) {
+        return next(new Error('Password validation failed. Password must contain at least 8 characters, including letters, numbers, and special characters.'));
+    }
+
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
     this.email = this.email.toLowerCase();

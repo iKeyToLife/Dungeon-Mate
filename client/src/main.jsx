@@ -12,10 +12,23 @@ const errorLink = onError(async ({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach(({ message }) => {
       console.error(`[GraphQL error]: ${message}`);
     });
+    const location = window.location.pathname;
+
     if (graphQLErrors[0].message.includes('not authenticate')) {
-      const isTokenExpired = await AuthService.isTokenExpired();
-      if (!isTokenExpired)
-        AuthService.logout();
+
+      // check current path "/login"
+      if (location !== '/login') {
+        const isTokenExpired = await AuthService.isTokenExpired();
+        if (!isTokenExpired) {
+          AuthService.logout();
+        }
+      }
+    } else if (graphQLErrors[0].message.includes('duplicate key error')) {
+      const match = graphQLErrors[0].message.match(/{ (.*)/);
+      const duplicateKeyInfo = match ? match[0] : 'Invalid key';
+      alert(`A user with this value already exists: ${duplicateKeyInfo}`);
+    } else {
+      alert(graphQLErrors[0].message);
     }
   }
 
